@@ -9,7 +9,7 @@ export const SignUpButton: React.FC<ButtonProps> = ({
   return (
     <button
       onClick={onClick}
-      className="flex gap-8 px-12 py-4 mt-24 max-w-full text-button-primary-desktop font-bold text-white rounded-lg border-r border-b border-solid bg-primary-3 border-b-accent border-r-accent max-md:px-5 max-md:mt-10"
+      className="flex gap-8 px-12 py-4 mt-24 max-w-full text-button-primary-desktop font-bold text-white rounded-lg border-r border-b border-solid bg-primary-3 border-b-accent border-r-accent max-md:px-5 max-md:mt-10 hover:bg-button-hover transition"
     >
       {icon && (
         <img
