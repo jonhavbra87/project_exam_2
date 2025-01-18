@@ -14,7 +14,7 @@ There are two aspects to this brief: the customer-facing side of the website whe
 
 ## 🖥️ **Live Demo**
 
-[Link to live demo]()
+[Link to live demo](https://pe2-jahb.netlify.app/)
 
 ---
 
