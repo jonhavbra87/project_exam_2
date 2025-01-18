@@ -21,29 +21,34 @@ There are two aspects to this brief: the customer-facing side of the website whe
 ## 🔧 **Features**
 
 ### Search & View
-- **View Venues**: A user may view a list of Venues  
-- **Search Venues**: A user may search for a specific Venue  
-- **View Venue Details**: A user may view a specific Venue page by id  
+
+- **View Venues**: A user may view a list of Venues
+- **Search Venues**: A user may search for a specific Venue
+- **View Venue Details**: A user may view a specific Venue page by id
 
 ### Calendar & Bookings
-- **View Venue Calendar**: A user may view a calendar with available dates for a Venue  
-- **Create Booking**: A registered customer may create a booking at a Venue  
-- **View Upcoming Bookings**: A registered customer may view their upcoming bookings  
+
+- **View Venue Calendar**: A user may view a calendar with available dates for a Venue
+- **Create Booking**: A registered customer may create a booking at a Venue
+- **View Upcoming Bookings**: A registered customer may view their upcoming bookings
 
 ### Registration & Roles
-- **Register as Customer**: A user with a stud.noroff.no email may register as a customer  
-- **Register as Venue Manager**: A user with a stud.noroff.no email may register as a Venue manager  
+
+- **Register as Customer**: A user with a stud.noroff.no email may register as a customer
+- **Register as Venue Manager**: A user with a stud.noroff.no email may register as a Venue manager
 
 ### Venue Management
-- **Create Venue**: A registered Venue manager may create a Venue  
-- **Update Venue**: A registered Venue manager may update a Venue they manage  
-- **Delete Venue**: A registered Venue manager may delete a Venue they manage  
-- **View Venue Bookings**: A registered Venue manager may view bookings for a Venue they manage  
+
+- **Create Venue**: A registered Venue manager may create a Venue
+- **Update Venue**: A registered Venue manager may update a Venue they manage
+- **Delete Venue**: A registered Venue manager may delete a Venue they manage
+- **View Venue Bookings**: A registered Venue manager may view bookings for a Venue they manage
 
 ### User Authentication & Profile
-- **Login**: A registered user may login  
-- **Update Avatar**: A registered user may update their avatar  
-- **Logout**: A registered user may logout  
+
+- **Login**: A registered user may login
+- **Update Avatar**: A registered user may update their avatar
+- **Logout**: A registered user may logout
 
 ### Contact form
 
