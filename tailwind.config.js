@@ -39,6 +39,16 @@ export default {
         'button-primary-mobile': ['12px', { lineHeight: '16px', letterSpacing: '0.0625em' }],
         'button-secondary-mobile': ['12px', { lineHeight: '16px', letterSpacing: '0.0625em' }],
       },
+      fontWeight: {
+        thin: '100',
+        light: '300',
+        normal: '400',
+        medium: '500',
+        semibold: '600',
+        bold: '700',
+        extrabold: '800',
+        black: '900',
+      },
       colors: {
         primary: {
           DEFAULT: '#49106B',

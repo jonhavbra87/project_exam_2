@@ -1,7 +1,7 @@
 export function Typography() {
   return (
     <div className="min-h-screen p-10 bg-background text-text-primary">
-    <h1 className="text-primary text-h1-desktop mb-4">Primary Heading</h1>
+    <h1 className="text-primary font-extrabold text-h1-desktop mb-4">Primary Heading</h1>
     <h2 className="text-secondary text-h2-desktop mb-4">Secondary Heading</h2>
     <h3 className="text-tertiary text-h3-desktop mb-4">Tertiary Heading</h3>
     <h4 className="text-body-large-desktop mb-4">Large Body Text</h4>
