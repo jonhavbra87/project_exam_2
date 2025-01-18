@@ -116,7 +116,8 @@ Run UNIT-tests:
 ```
 npm run test:unit
 ```
-
+### Bagdes
+[![Netlify Status](https://api.netlify.com/api/v1/badges/fef0fdc0-ba82-4823-834c-796f5b22d2ce/deploy-status)](https://app.netlify.com/sites/pe2-jahb/deploys)
 ## Contributing
 
 This is a Noroff Courtse Assignemt for the second exam. I appreciate a peer review if you got the time!
