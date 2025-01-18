@@ -7,6 +7,7 @@ export default {
   theme: {
     extend: {
       fontFamily: {
+        splash: ['Rubik', 'serif'],
         heading: ['Rubik', 'sans-serif'],
         body: ['Marcellus', 'serif'],
         ingress: ['Crete Round', 'serif'],
@@ -14,6 +15,16 @@ export default {
         label: ['Crete Round', 'serif'],
       },
       fontSize: {
+        // Splash
+        'splash-desktop': [
+          '48px',
+          { lineHeight: '56px', letterSpacing: '-0.01563em' },
+        ],
+        'splash-mobile': [
+          '32px',
+          { lineHeight: '40px', letterSpacing: '-0.01563em' },
+        ],
+
         // Headings
         'h1-desktop': [
           '64px',
@@ -42,7 +53,7 @@ export default {
         // Menu
         'menu-desktop': ['16px', { lineHeight: '24px', letterSpacing: '0.5' }],
         'menu-mobile': ['14px', { lineHeight: '20px', letterSpacing: '0' }],
-        
+
         // Body text
         'body-large-desktop': [
           '16px',
