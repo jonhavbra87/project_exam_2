@@ -1,14 +1,8 @@
-import { Typography } from './components/typography';
+import Layout from './components/Layout';
 import './index.css';
 
-
-
 function App() {
-
-
-  return (
-    <Typography />
-  );
+  return <Layout />;
 }
 
 export default App;

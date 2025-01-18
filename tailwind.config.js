@@ -1,5 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 
+import { menu } from 'framer-motion/client';
+
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   theme: {
@@ -8,36 +10,80 @@ export default {
         heading: ['Rubik', 'sans-serif'],
         body: ['Marcellus', 'serif'],
         ingress: ['Crete Round', 'serif'],
+        menu: ['Rubik', 'sans-serif'],
         label: ['Crete Round', 'serif'],
       },
       fontSize: {
         // Headings
-        'h1-desktop': ['64px', { lineHeight: '80px', letterSpacing: '-0.03125em' }],
-        'h2-desktop': ['40px', { lineHeight: '48px', letterSpacing: '-0.01563em' }],
+        'h1-desktop': [
+          '64px',
+          { lineHeight: '80px', letterSpacing: '-0.03125em' },
+        ],
+        'h2-desktop': [
+          '40px',
+          { lineHeight: '48px', letterSpacing: '-0.01563em' },
+        ],
         'h3-desktop': ['24px', { lineHeight: '32px', letterSpacing: '0' }],
 
-        'h1-mobile': ['48px', { lineHeight: '60px', letterSpacing: '-0.03125em' }],
-        'h2-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.01563em' }],
+        'h1-mobile': [
+          '48px',
+          { lineHeight: '60px', letterSpacing: '-0.03125em' },
+        ],
+        'h2-mobile': [
+          '32px',
+          { lineHeight: '40px', letterSpacing: '-0.01563em' },
+        ],
         'h3-mobile': ['20px', { lineHeight: '28px', letterSpacing: '0' }],
 
         // Ingress
         'ingress-desktop': ['20px', { lineHeight: '28px', letterSpacing: '0' }],
         'ingress-mobile': ['16px', { lineHeight: '24px', letterSpacing: '0' }],
 
+        // Menu
+        'menu-desktop': ['16px', { lineHeight: '24px', letterSpacing: '0.5' }],
+        'menu-mobile': ['14px', { lineHeight: '20px', letterSpacing: '0' }],
+        
         // Body text
-        'body-large-desktop': ['16px', { lineHeight: '24px', letterSpacing: '0' }],
-        'body-medium-desktop': ['14px', { lineHeight: '20px', letterSpacing: '0' }],
-        'body-small-desktop': ['12px', { lineHeight: '16px', letterSpacing: '0' }],
+        'body-large-desktop': [
+          '16px',
+          { lineHeight: '24px', letterSpacing: '0' },
+        ],
+        'body-medium-desktop': [
+          '14px',
+          { lineHeight: '20px', letterSpacing: '0' },
+        ],
+        'body-small-desktop': [
+          '12px',
+          { lineHeight: '16px', letterSpacing: '0' },
+        ],
 
-        'body-large-mobile': ['14px', { lineHeight: '20px', letterSpacing: '0' }],
-        'body-small-mobile': ['12px', { lineHeight: '16px', letterSpacing: '0' }],
+        'body-large-mobile': [
+          '14px',
+          { lineHeight: '20px', letterSpacing: '0' },
+        ],
+        'body-small-mobile': [
+          '12px',
+          { lineHeight: '16px', letterSpacing: '0' },
+        ],
 
         // Buttons
-        'button-primary-desktop': ['14px', { lineHeight: '20px', letterSpacing: '0.0625em' }],
-        'button-secondary-desktop': ['14px', { lineHeight: '20px', letterSpacing: '0.0625em' }],
+        'button-primary-desktop': [
+          '14px',
+          { lineHeight: '20px', letterSpacing: '0.0625em' },
+        ],
+        'button-secondary-desktop': [
+          '14px',
+          { lineHeight: '20px', letterSpacing: '0.0625em' },
+        ],
 
-        'button-primary-mobile': ['12px', { lineHeight: '16px', letterSpacing: '0.0625em' }],
-        'button-secondary-mobile': ['12px', { lineHeight: '16px', letterSpacing: '0.0625em' }],
+        'button-primary-mobile': [
+          '12px',
+          { lineHeight: '16px', letterSpacing: '0.0625em' },
+        ],
+        'button-secondary-mobile': [
+          '12px',
+          { lineHeight: '16px', letterSpacing: '0.0625em' },
+        ],
       },
       fontWeight: {
         thin: '100',
