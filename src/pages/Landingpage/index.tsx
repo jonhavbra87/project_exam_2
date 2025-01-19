@@ -4,7 +4,7 @@ import useApi from "../../hooks/useApi";
 import { BASE_API_URL } from "../../api/apiConfig";
 import VenueCard from "../../components/VenueCard";
 
-function Landingpage() {
+function LandingPage() {
   const [showLoader, setShowLoader] = useState(true);
   const {
     data: venues,
@@ -49,4 +49,4 @@ const data = venues || [];
   );
 }
 
-export default Landingpage;
+export default LandingPage;
