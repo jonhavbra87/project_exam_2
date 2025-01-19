@@ -2,7 +2,7 @@ import Logo from '../../assets/holidaze_logo.svg';
 
 function Header() {
   return (
-    <header className="bg-primary-3 w-full flex items-center fixed h-20">
+    <header className="bg-primary-3 w-full flex items-center fixed h-20 z-50">
       <div className="container mx-auto flex justify-between items-center h-full">
         <img src={Logo} alt="eCom logo" className="h-14" />
 
