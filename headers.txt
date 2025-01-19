@@ -1,0 +1,6 @@
+const options = {
+  headers: {
+    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoicGUyX2hvbGlkYXl6IiwiZW1haWwiOiJwZTJfaG9saWRheXpAc3R1ZC5ub3JvZmYubm8iLCJpYXQiOjE3MzcyMzQxMzR9.BCfxydg28Sx4PQVZml5WjXRWCRWb0RnTzvWoPzjznRs',
+    'X-Noroff-API-Key': 'c7592ae0-3ffc-4c0a-9fbc-43984ef9e0eb'
+  }
+};

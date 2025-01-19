@@ -1,8 +1,4 @@
-import {
-  FaInstagram,
-  FaSnapchat,
-  FaLinkedin
-} from 'react-icons/fa';
+import { FaInstagram, FaSnapchat, FaLinkedin } from 'react-icons/fa';
 import Logo from '../../assets/holidaze_logo.svg';
 import { FaX } from 'react-icons/fa6';
 import { CiMail } from 'react-icons/ci';
@@ -17,10 +13,9 @@ function Footer() {
             <img src={Logo} alt="Holidayz Logo" className="h-10 w-auto" />
           </div>
           <div className="text-neutral-50 text-h2-desktop font-heading mt-6">
-            Let´s explore the world 
+            Let´s explore the world
             <span className="text-accent"> together</span>
           </div>
-     
         </div>
 
         {/* Newsletter */}
@@ -78,7 +73,7 @@ function Footer() {
               Conditions
             </a>
           </li>
-          <p className='text-body-large-desktop'>|</p>
+          <p className="text-body-large-desktop">|</p>
           <li>
             <a href="#" className="hover:text-primary transition">
               My Account
@@ -92,47 +87,47 @@ function Footer() {
         </ul>
         <div>
           <p className="flex justify-center md:justify-end items-center mt-4 text-body-medium-desktop font-body">
-          &copy; 2025 HOLIDAZE Ltd. All Rights Reserved.
-        </p>
-          </div>
+            &copy; 2025 HOLIDAZE Ltd. All Rights Reserved.
+          </p>
+        </div>
         <div className="flex gap-4 text-lg my-4 text-white justify-center md:justify-end">
-            <a
-              href="https://www.instagram.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-opacity-60 transition"
-              aria-label="Visit our Instagram page"
-            >
-              <FaInstagram />
-            </a>
-            <a
-              href="https://twitter.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-opacity-60 transition"
-              aria-label="Visit our Twitter page"
-            >
-              <FaX />
-            </a>
-            <a
-              href="https://www.linkedin.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-opacity-60 transition"
-              aria-label="Visit our LinkedIn page"
-            >
-              <FaLinkedin />
-            </a>
-            <a
-              href="https://www.snapchat.com"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-opacity-60 transition"
-              aria-label="Visit our Snapchat page"
-            >
-              <FaSnapchat />
-            </a>
-          </div>
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-opacity-60 transition"
+            aria-label="Visit our Instagram page"
+          >
+            <FaInstagram />
+          </a>
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-opacity-60 transition"
+            aria-label="Visit our Twitter page"
+          >
+            <FaX />
+          </a>
+          <a
+            href="https://www.linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-opacity-60 transition"
+            aria-label="Visit our LinkedIn page"
+          >
+            <FaLinkedin />
+          </a>
+          <a
+            href="https://www.snapchat.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-opacity-60 transition"
+            aria-label="Visit our Snapchat page"
+          >
+            <FaSnapchat />
+          </a>
+        </div>
       </div>
     </footer>
   );
