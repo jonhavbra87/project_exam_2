@@ -4,6 +4,8 @@ import { BASE_API_URL } from '../../api/apiConfig';
 import { VenuePrice } from '../../components/VenuePrice';
 import VenueRating from '../../components/VenueRating';
 import { Venues } from '../../types/Venues';
+import { FaCar, FaCoffee, FaPaw, FaWifi } from 'react-icons/fa';
+import MetaDataVenue from '../../components/MetaDataVenue';
 
 function ProductDetails() {
   // Get `id` from URL parameters
@@ -15,6 +17,9 @@ function ProductDetails() {
     isLoading,
     isError,
   } = useApi<Venues>(`${BASE_API_URL}/venues/${id}`);
+
+
+
 
   // Show loading message if `isLoading` is `true`
   if (isLoading) {
@@ -59,12 +64,7 @@ function ProductDetails() {
           {/* Product Meta */}
           <div className="mb-4 text-lg">
             <h2>Meta</h2>
-            <ul>
-              <li>Wifi: {venues.meta.wifi ? 'Yes' : 'No'}</li>
-              <li>Parking: {venues.meta.parking ? 'Yes' : 'No'}</li>
-              <li>Breakfast: {venues.meta.breakfast ? 'Yes' : 'No'}</li>
-              <li>Pets: {venues.meta.pets ? 'Yes' : 'No'}</li>
-            </ul>
+            <MetaDataVenue meta={venues.meta} />
           </div>
           <div className="mb-4 text-lg">
             <VenuePrice product={venues} />
