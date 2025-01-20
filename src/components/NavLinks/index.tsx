@@ -12,7 +12,15 @@ function NavLinks({ toggleMenu }: { toggleMenu: () => void }) {
           Home
         </NavLink>
       </li>
-
+      <li>
+        <NavLink
+          to="/venues/"
+          className="text-white text-lg hover:text-secondary transition-colors duration-200"
+          onClick={() => toggleMenu()}
+        >
+          Venues
+        </NavLink>
+      </li>
       <li>
         <NavLink
           to="/contact/"
@@ -20,6 +28,15 @@ function NavLinks({ toggleMenu }: { toggleMenu: () => void }) {
           onClick={() => toggleMenu()}
         >
           Contact
+        </NavLink>
+      </li>
+      <li>
+        <NavLink
+          to="/profile/"
+          className="text-white text-lg hover:text-secondary transition-colors duration-200"
+          onClick={() => toggleMenu()}
+        >
+          Profile
         </NavLink>
       </li>
     </ul>

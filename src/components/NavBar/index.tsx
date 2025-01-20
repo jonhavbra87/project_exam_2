@@ -24,7 +24,7 @@ function NavBar() {
         {/* Hamburger/lukk-knapp */}
         <div>
           <button
-            className={`text-hover text-2xl md:hidden transition-transform duration-500 text-neutralSecondary ${
+            className={`text-hover text-2xl md:hidden transition-transform duration-500 text-white ${
               menuOpen ? 'rotate-90' : 'rotate-0'
             }`}
             onClick={toggleMenu}
@@ -41,7 +41,7 @@ function NavBar() {
           tabIndex={-1}
           className={`${
             menuOpen ? 'flex' : 'hidden'
-          } absolute top-16 left-0 right-0 bg-primary p-4 flex-col items-center gap-4 animate-slide-down md:flex md:flex-row md:static md:gap-6 focus:outline-none`}
+          } absolute top-16 left-0 right-0 bg-primary-3 p-4 flex-col items-center gap-4 animate-slide-down md:flex md:flex-row md:static md:gap-6 focus:outline-none`}
           onKeyDown={(e) => e.key === 'Escape' && setMenuOpen(false)}
         >
           <NavLinks toggleMenu={toggleMenu} />
