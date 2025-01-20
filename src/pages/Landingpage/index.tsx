@@ -1,32 +1,36 @@
-import { useEffect, useState } from "react";
-import { Venues } from "../../types/Venues";
-import useApi from "../../hooks/useApi";
-import { BASE_API_URL } from "../../api/apiConfig";
-import VenueCard from "../../components/VenueCard";
+import { useEffect, useState } from 'react';
+import { Venues } from '../../types/Venues';
+import useApi from '../../hooks/useApi';
+import { BASE_API_URL } from '../../api/apiConfig';
+import VenueCard from '../../components/VenueCard';
+import SearchBar from '../../components/SearchBar';
+import GradientHeading from '../../styles/GradientHeading';
 
 function LandingPage() {
   const [showLoader, setShowLoader] = useState(true);
   const {
     data: venues,
     isLoading,
-    isError
+    isError,
   } = useApi<Venues[]>(`${BASE_API_URL}/venues`);
 
-const data = venues || [];
+    //state for search input
+    const [searchTerm, setSearchTerm] = useState<string>('');
+  const data = venues || [];
 
-    // Control Loader display with a timeout
-    useEffect(() => {
-      if (!isLoading) {
-        const timeout = setTimeout(() => {
-          setShowLoader(false);
-        }, 1000); // Minimum 2 seconds
-  
-        return () => clearTimeout(timeout); // Cleanup timeout
-      }
-    }, [isLoading]);
+  // Control Loader display with a timeout
+  useEffect(() => {
+    if (!isLoading) {
+      const timeout = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000); // Minimum 2 seconds
+
+      return () => clearTimeout(timeout); // Cleanup timeout
+    }
+  }, [isLoading]);
 
   // Show loading message if `isLoading` is `true`
-  if (isLoading  || showLoader) {
+  if (isLoading || showLoader) {
     return <div>Loading...</div>;
   }
 
@@ -34,18 +38,42 @@ const data = venues || [];
     return <div>Error loading data.</div>;
   }
 
+//const filteredData = data.filter((venue) => venue.location.continent);
+  // Filter products based on the search term
+  const filteredProducts = data.filter(
+    (product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Event handler for search input change
+  const handleSearch = (query: string) => {
+    setSearchTerm(query);
+  };
 
   return (
-<div>
-      <h1 className="text-h1-desktop">Venues</h1>
+    <div>
+           <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading h-screen">
+            Let’s explore the world
+            <span className="text-primary"> together</span>
+                  {/* SearchBar Component */}
+          </div>
+      <div className="w-full">
+        <SearchBar onSearch={handleSearch} />
+      </div>
+      <div className='mt-16'>
+      <GradientHeading >Venues</GradientHeading>
+
+      </div>
+      {/* <h1 className="text-h1-desktop border-b-2 border-text-primary mb-6">Venues</h1> */}
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ">
-        {data.map((venue) => (
+        {filteredProducts.map((venue) => (
           <div key={venue.id}>
-              <VenueCard key={venue.id} venue={venue} />
+            <VenueCard key={venue.id} venue={venue} />
           </div>
         ))}
       </ul>
-</div>
+    </div>
   );
 }
 

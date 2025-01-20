@@ -1,9 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
 import { Venues } from "../../types/Venues";
-import ProductImage from "../VenueImage";
 import { VenuePrice } from "../VenuePrice";
 import VenueRating from "../VenueRating";
 import { FaUser } from "react-icons/fa";
+import { SlHeart } from "react-icons/sl";
+import VenueImage from "../VenueImage";
 
 export const VenueCard = ({ venue }: { venue: Venues }) => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
      }`}
      >
 
-        <ProductImage
+        <VenueImage
           src={venue.media && venue.media.length > 0 ? venue.media[0].url : ""}
           alt={venue.media && venue.media.length > 0 ? venue.media[0].alt || "Venue image" : "No image"}
         />
@@ -35,10 +36,12 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
 
         <div className="p-4">
           <div className="flex flex-row justify-between items-center">
-          <h2 className="text-lg font-bold mb-2 text-text-primary">{venue.name}</h2>
-          <div className="absolute top-4 right-4">
-          <VenueRating rating={venue.rating} />
-          </div>
+            <h2 className="text-ingress-desktop font-bold mb-2 text-text-primary">{venue.name}</h2>
+            <VenueRating rating={venue.rating} />
+              <div className="absolute top-4 right-4 text-3xl text-white">
+              <SlHeart />
+
+              </div>
           </div>
             <p className="text-body-small-desktop text-text-secondary mb-2 line-clamp-1">{venue.location.continent}</p>
             <p className="text-body-medium-desktop text-text-primary mb-2 line-clamp-1">{venue.description} 

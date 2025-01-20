@@ -21,12 +21,10 @@ function SignUp() {
           <span className="text-primary">together</span>
         </div>
         <div className="mt-20 text-ingress-desktop text-neutral-800 max-md:mt-10">
-          Just curious? Click here for exploring Venues without signing in <CiLogin className="inline-block text-neutral-700" />
+          Just curious? Click here for exploring Venues without signing in{' '}
+          <CiLogin className="inline-block text-neutral-700" />
         </div>
-        <SignUpButton
-          icon={NoroffLogo}
-          text="Sign up with Noroff"
-        />
+        <SignUpButton icon={NoroffLogo} text="Sign up with Noroff" />
       </div>
     </div>
   );

@@ -1,7 +1,7 @@
-import { FaInstagram, FaSnapchat, FaLinkedin } from 'react-icons/fa';
+import { FaInstagram, FaSnapchat, FaFacebookSquare } from 'react-icons/fa';
 import Logo from '../../assets/holidaze_logo.svg';
-import { FaX } from 'react-icons/fa6';
 import { CiMail } from 'react-icons/ci';
+import { BsTwitterX } from 'react-icons/bs';
 
 function Footer() {
   return (
@@ -92,22 +92,13 @@ function Footer() {
         </div>
         <div className="flex gap-4 text-lg my-4 text-white justify-center md:justify-end">
           <a
-            href="https://www.instagram.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-opacity-60 transition"
-            aria-label="Visit our Instagram page"
-          >
-            <FaInstagram />
-          </a>
-          <a
             href="https://twitter.com"
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-opacity-60 transition"
             aria-label="Visit our Twitter page"
           >
-            <FaX />
+            <BsTwitterX />
           </a>
           <a
             href="https://www.linkedin.com"
@@ -116,7 +107,16 @@ function Footer() {
             className="hover:text-opacity-60 transition"
             aria-label="Visit our LinkedIn page"
           >
-            <FaLinkedin />
+            <FaFacebookSquare />
+          </a>
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-opacity-60 transition"
+            aria-label="Visit our Instagram page"
+          >
+            <FaInstagram />
           </a>
           <a
             href="https://www.snapchat.com"

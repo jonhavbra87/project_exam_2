@@ -5,8 +5,6 @@ import { VenuePrice } from '../../components/VenuePrice';
 import VenueRating from '../../components/VenueRating';
 import { Venues } from '../../types/Venues';
 
-
-
 function ProductDetails() {
   // Get `id` from URL parameters
   const { id } = useParams();
@@ -18,7 +16,6 @@ function ProductDetails() {
     isError,
   } = useApi<Venues>(`${BASE_API_URL}/venues/${id}`);
 
-
   // Show loading message if `isLoading` is `true`
   if (isLoading) {
     return <div>Loading...</div>;
@@ -29,13 +26,12 @@ function ProductDetails() {
     return <div>Error loading data.</div>;
   }
 
-
   console.log('data from productdetail', venues);
 
   return (
     <div className="">
       <div className="">
-        <h1 className='text-h1-desktop'>{venues.name}</h1>
+        <h1 className="text-h1-desktop">{venues.name}</h1>
       </div>
 
       <div className="flex flex-col md:flex-row justify-start items-start min-h-screen p-4 gap-8">
@@ -49,13 +45,15 @@ function ProductDetails() {
         </div>
         {/* Calendar/Booking */}
         <div></div>
-                {/* Product Details */}
-                <div className="md:w-1/2 w-full flex flex-col">
+        {/* Product Details */}
+        <div className="md:w-1/2 w-full flex flex-col">
           <p className="text-md text-primary mb-4">{venues.description}</p>
           <p className="text-md text-primary mb-4">{venues.location.address}</p>
           <p className="text-md text-primary mb-4">{venues.location.city}</p>
           <p className="text-md text-primary mb-4">{venues.location.country}</p>
-          <p className="text-md text-primary mb-4">{venues.location.continent}</p>
+          <p className="text-md text-primary mb-4">
+            {venues.location.continent}
+          </p>
           <p className="text-md text-primary mb-4">{venues.location.zip}</p>
 
           {/* Product Meta */}
@@ -76,14 +74,10 @@ function ProductDetails() {
 
           {/* Add to Cart Button */}
           <div className="flex justify-end mb-6">
-            <button>
-              Book
-            </button>
+            <button>Book</button>
           </div>
         </div>
       </div>
-      
-
     </div>
   );
 }
