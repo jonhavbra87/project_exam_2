@@ -6,7 +6,7 @@ import VenueCard from '../../components/VenueCard';
 import SearchBar from '../../components/SearchBar';
 import GradientHeading from '../../styles/GradientHeading';
 
-function LandingPage() {
+function Home() {
   const [showLoader, setShowLoader] = useState(true);
   const {
     data: venues,
@@ -76,4 +76,4 @@ function LandingPage() {
   );
 }
 
-export default LandingPage;
+export default Home;
