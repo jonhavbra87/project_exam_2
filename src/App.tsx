@@ -3,9 +3,9 @@ import Layout from './components/Layout';
 import './index.css';
 
 import NotFound from './pages/NotFound';
-import LandingPage from './pages/LandingPage';
 import SignUp from './pages/SignUp';
 import VenueDetails from './pages/VenueDetails';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   return (
