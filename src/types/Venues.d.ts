@@ -2,7 +2,7 @@ export interface Venues {
   id: string;
   name: string;
   description: string;
-  media:  Array<{ url: string; alt: string }>;
+  media: Array<{ url: string; alt: string }>;
   price: number;
   maxGuests: number;
   rating: number;
@@ -13,7 +13,6 @@ export interface Venues {
   owner: Owner; // Single owner object
   bookings: Bookings[]; // Array of bookings
 }
-
 
 export interface MetaData {
   wifi: boolean;
