@@ -29,7 +29,6 @@ function LandingPage() {
     }
   }, [isLoading]);
 
-  // Show loading message if `isLoading` is `true`
   if (isLoading || showLoader) {
     return <div>Loading...</div>;
   }
