@@ -6,7 +6,7 @@ export const SearchButton = styled.button`
   padding: 12px 24px;
   font-weight: bold;
   border: none;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0 5px 5px 0;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   transition:

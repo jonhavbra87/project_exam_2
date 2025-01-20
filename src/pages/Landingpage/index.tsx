@@ -4,6 +4,7 @@ import useApi from '../../hooks/useApi';
 import { BASE_API_URL } from '../../api/apiConfig';
 import VenueCard from '../../components/VenueCard';
 import SearchBar from '../../components/SearchBar';
+import GradientHeading from '../../styles/GradientHeading';
 
 function LandingPage() {
   const [showLoader, setShowLoader] = useState(true);
@@ -52,15 +53,19 @@ function LandingPage() {
 
   return (
     <div>
-           <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading mt-6">
+           <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading h-screen">
             Let’s explore the world
             <span className="text-primary"> together</span>
+                  {/* SearchBar Component */}
           </div>
-      {/* SearchBar Component */}
-      <div className="my-4">
+      <div className="w-full">
         <SearchBar onSearch={handleSearch} />
       </div>
-      <h1 className="text-h1-desktop">Venues</h1>
+      <div className='mt-16'>
+      <GradientHeading >Venues</GradientHeading>
+
+      </div>
+      {/* <h1 className="text-h1-desktop border-b-2 border-text-primary mb-6">Venues</h1> */}
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ">
         {filteredProducts.map((venue) => (
           <div key={venue.id}>
