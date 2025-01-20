@@ -3,6 +3,7 @@ import { Venues } from '../../types/Venues';
 import useApi from '../../hooks/useApi';
 import { BASE_API_URL } from '../../api/apiConfig';
 import VenueCard from '../../components/VenueCard';
+import SearchBar from '../../components/SearchBar';
 
 function LandingPage() {
   const [showLoader, setShowLoader] = useState(true);
@@ -12,6 +13,8 @@ function LandingPage() {
     isError,
   } = useApi<Venues[]>(`${BASE_API_URL}/venues`);
 
+    //state for search input
+    const [searchTerm, setSearchTerm] = useState<string>('');
   const data = venues || [];
 
   // Control Loader display with a timeout
@@ -34,11 +37,32 @@ function LandingPage() {
     return <div>Error loading data.</div>;
   }
 
+//const filteredData = data.filter((venue) => venue.location.continent);
+  // Filter products based on the search term
+  const filteredProducts = data.filter(
+    (product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      product.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  // Event handler for search input change
+  const handleSearch = (query: string) => {
+    setSearchTerm(query);
+  };
+
   return (
     <div>
+           <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading mt-6">
+            Let’s explore the world
+            <span className="text-primary"> together</span>
+          </div>
+      {/* SearchBar Component */}
+      <div className="my-4">
+        <SearchBar onSearch={handleSearch} />
+      </div>
       <h1 className="text-h1-desktop">Venues</h1>
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ">
-        {data.map((venue) => (
+        {filteredProducts.map((venue) => (
           <div key={venue.id}>
             <VenueCard key={venue.id} venue={venue} />
           </div>
