@@ -1,5 +1,3 @@
-export const API_KEY = 'c7592ae0-3ffc-4c0a-9fbc-43984ef9e0eb';
-
 export const BASE_API_URL = 'https://v2.api.noroff.dev/holidaze';
 
 export const API_AUTH = '/auth';
