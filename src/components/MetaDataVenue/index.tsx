@@ -22,7 +22,7 @@ function MetaDataVenue({
           .map((item) => (
             <li
               key={item.key}
-              className="bg-primary-3 text-white p-3 rounded-md"
+              className="bg-primary-3 text-white p-3 rounded-md text-body-medium-desktop"
             >
               {item.icon}
             </li>
