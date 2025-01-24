@@ -14,13 +14,13 @@ function SearchBar({ onSearch }: SearchBarProps) {
   };
 
   const handleSearch = (event: React.FormEvent) => {
-    event.preventDefault(); 
+    event.preventDefault();
     onSearch(query);
   };
 
   const clearSearch = () => {
-    setQuery(""); // Emty the search input
-    onSearch(""); // Trigger search with empty query
+    setQuery(''); // Emty the search input
+    onSearch(''); // Trigger search with empty query
   };
 
   return (
@@ -30,14 +30,14 @@ function SearchBar({ onSearch }: SearchBarProps) {
       role="search"
       aria-label="Search"
     >
-     {/* Accessible Label (Hidden) */}
-     <label htmlFor="searchInput" className="sr-only">
+      {/* Accessible Label (Hidden) */}
+      <label htmlFor="searchInput" className="sr-only">
         Search for products
       </label>
 
       {/* Search Icon inside input */}
       <div className="absolute left-8 top-1/2 transform -translate-y-1/2 text-text-primary">
-      <BiSearchAlt />
+        <BiSearchAlt />
       </div>
 
       <input
@@ -49,8 +49,8 @@ function SearchBar({ onSearch }: SearchBarProps) {
         onKeyUp={handleSearch}
         className="rounded-md grow border-text-primary border-r border-b text-text-secondary p-4 ps-16 focus:outline-none focus:outline-primary focus:-outline-offset-2"
       />
-            {/* Clear Button (X) - Visible only when query is not empty */}
-            {query && (
+      {/* Clear Button (X) - Visible only when query is not empty */}
+      {query && (
         <button
           type="button"
           onClick={clearSearch}
