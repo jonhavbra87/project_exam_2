@@ -4,8 +4,9 @@ import { BASE_API_URL } from '../../api/apiConfig';
 import { VenuePrice } from '../../components/VenuePrice';
 import VenueRating from '../../components/VenueRating';
 import { Venues } from '../../types/Venues';
-import { FaCar, FaCoffee, FaPaw, FaWifi } from 'react-icons/fa';
 import MetaDataVenue from '../../components/MetaDataVenue';
+import GradientHeading from '../../styles/GradientHeading';
+import { SlHeart } from 'react-icons/sl';
 
 function ProductDetails() {
   // Get `id` from URL parameters
@@ -16,10 +17,9 @@ function ProductDetails() {
     data: venues,
     isLoading,
     isError,
-  } = useApi<Venues>(`${BASE_API_URL}/venues/${id}`);
+  } = useApi<Venues>(`${BASE_API_URL}/venues/${id}?_owner=true`);
 
-
-
+  console.log('API response:', venues);
 
   // Show loading message if `isLoading` is `true`
   if (isLoading) {
@@ -35,48 +35,114 @@ function ProductDetails() {
 
   return (
     <div className="">
-      <div className="">
-        <h1 className="text-h1-desktop">{venues.name}</h1>
+      <div className="flex items-center mb-4">
+        <button className="text-text-secondary  ">&lt; Back</button>
+        <GradientHeading className="text-h1-desktop font-bold mx-auto">
+          Venue Details
+        </GradientHeading>
       </div>
 
-      <div className="flex flex-col md:flex-row justify-start items-start min-h-screen p-4 gap-8">
-        {/* Product Image */}
-        <div className="relative w-full h-64 md:h-96">
+      {/* Product Image */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <img
+          src={venues.media[0].url || 'https://via.placeholder.com/300'}
+          alt={venues.media[0].alt || 'Product Image'}
+          className="col-span-2 rounded-lg object-cover"
+        />
+        <div className="grid grid-cols-2 gap-1">
           <img
             src={venues.media[0].url || 'https://via.placeholder.com/300'}
             alt={venues.media[0].alt || 'Product Image'}
-            className="absolute inset-0 w-full h-full object-cover rounded-lg"
+            className="rounded-lg"
+          />
+          <img
+            src={venues.media[0].url || 'https://via.placeholder.com/300'}
+            alt={venues.media[0].alt || 'Product Image'}
+            className="rounded-lg"
+          />
+          <img
+            src={venues.media[0].url || 'https://via.placeholder.com/300'}
+            alt={venues.media[0].alt || 'Product Image'}
+            className="rounded-lg"
+          />
+          <img
+            src={venues.media[0].url || 'https://via.placeholder.com/300'}
+            alt={venues.media[0].alt || 'Product Image'}
+            className="rounded-lg"
           />
         </div>
-        {/* Calendar/Booking */}
-        <div></div>
-        {/* Product Details */}
-        <div className="md:w-1/2 w-full flex flex-col">
-          <p className="text-md text-primary mb-4">{venues.description}</p>
-          <p className="text-md text-primary mb-4">{venues.location.address}</p>
-          <p className="text-md text-primary mb-4">{venues.location.city}</p>
-          <p className="text-md text-primary mb-4">{venues.location.country}</p>
-          <p className="text-md text-primary mb-4">
-            {venues.location.continent}
-          </p>
-          <p className="text-md text-primary mb-4">{venues.location.zip}</p>
+      </div>
 
-          {/* Product Meta */}
-          <div className="mb-4 text-lg">
-            <h2>Meta</h2>
-            <MetaDataVenue meta={venues.meta} />
-          </div>
-          <div className="mb-4 text-lg">
-            <VenuePrice product={venues} />
-          </div>
+      {/* Venue Info */}
+      <div>
+        <h2 className="text-h2-desktop font-bold flex flex-row">
+          {venues.name}
+          <span>
+            <SlHeart className="text-primary text-lg" />
+          </span>
+        </h2>
+        <p className="text-md text-primary mb-4">{venues.location.country}</p>
+        <VenueRating rating={venues.rating} />
 
-          <VenueRating rating={venues.rating} />
+        {/* Description */}
+        <h3 className="text-ingress-desktop font-semibold">Description</h3>
+        <p className="text-md text-text-primary mb-4">{venues.description}</p>
+      </div>
 
-          {/* Add to Cart Button */}
-          <div className="flex justify-end mb-6">
-            <button>Book</button>
+      {/* Facilities */}
+      <h3 className="text-ingress-desktop font-semibold">Facilities</h3>
+      <div className="mt-6 flex flex-wrap gap-4 bg-dark">
+        <MetaDataVenue meta={venues.meta} />
+
+        {/* Information about who the Venue Manager is */}
+        <div className="mt-6 flex items-center gap-4">
+          <div>
+            <h3 className="text-ingress-desktop font-semibold">
+              Venue Manager
+            </h3>
+            <img
+              src={
+                venues.owner.avatar?.url || 'https://via.placeholder.com/150'
+              }
+              alt="Owner Avatar"
+              className="w-16 h-16 rounded-full"
+            />
+            <div>
+              <h3 className="text-body-large-desktop font-bold">
+                {venues.owner.name || 'No Owner name available'}
+              </h3>
+              <p className="text-body-medium-desktop text-text-secondary line-clamp-1">
+                {venues.owner.bio || 'No bio available'}
+              </p>
+            </div>
           </div>
         </div>
+
+        <div className="mb-4 text-lg">
+          <VenuePrice product={venues} />
+        </div>
+
+        {/* Calendar/Booking */}
+        <div>
+          {/* Add to Cart Button */}
+          <button className="bg-accent px-2 py-1 rounded-md hover:bg-button-hoverSecondary">
+            Book
+          </button>
+        </div>
+      </div>
+      {/* Location */}
+      <div className="mb-4 text-lg">
+        <p className="text-md text-text-primary mb-4">
+          {venues.location.address}
+        </p>
+        <p className="text-md text-text-primary mb-4">{venues.location.city}</p>
+        <p className="text-md text-text-primary mb-4">
+          {venues.location.country}
+        </p>
+        <p className="text-md text-text-primary mb-4">
+          {venues.location.continent}
+        </p>
+        <p className="text-md text-text-primary mb-4">{venues.location.zip}</p>
       </div>
     </div>
   );
