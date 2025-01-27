@@ -54,14 +54,13 @@ function Home() {
       venue.location?.lat !== 0 &&
       venue.location?.lng !== 0
   );
-  
+
   // Filter venues based on the search term
   const filteredProducts = filteredVenues.filter(
     (venue) =>
       venue.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       venue.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
 
   // Event handler for search input change
   const handleSearch = (query: string) => {
@@ -83,7 +82,7 @@ function Home() {
       </div>
       {/* <h1 className="text-h1-desktop border-b-2 border-text-primary mb-6">Venues</h1> */}
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ">
-      {filteredProducts.map((venue) => (
+        {filteredProducts.map((venue) => (
           <div key={venue.id}>
             <VenueCard key={venue.id} venue={venue} />
           </div>
