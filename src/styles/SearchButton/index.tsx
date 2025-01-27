@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 export const SearchButton = styled.button`
-  background: linear-gradient(60deg, #E26EE5, #F4C4F5, #E26EE5);
-  color: #1F1F1F;
+  background: linear-gradient(60deg, #e26ee5, #f4c4f5, #e26ee5);
+  color: #1f1f1f;
   padding: 12px 24px;
   font-weight: bold;
   border: none;
@@ -14,7 +14,7 @@ export const SearchButton = styled.button`
     box-shadow 0.4s ease;
 
   &:hover {
-    background: linear-gradient(-60deg, #F4C4F5, #E26EE5, #F4C4F5);
+    background: linear-gradient(-60deg, #f4c4f5, #e26ee5, #f4c4f5);
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
   }
 

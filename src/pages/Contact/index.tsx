@@ -3,7 +3,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import GradientHeading from '../../styles/GradientHeading';
 
-
 // Validationg schema with yup
 const schema = yup
   .object({
@@ -35,8 +34,6 @@ const schema = yup
 
 // Bruker `yup.InferType` for å automatisk hente ut typene fra schema
 type FormData = yup.InferType<typeof schema>;
-
-
 
 function Contact() {
   const {
@@ -141,7 +138,10 @@ function Contact() {
           )}
         </div>
 
-        <button type="submit" className="mt-6 py-6 w-full self-center px-4 py-2 bg-button-secondary hover:bg-button-hoverSecondary rounded-md ">
+        <button
+          type="submit"
+          className="mt-6 py-6 w-full self-center px-4 py-2 bg-button-secondary hover:bg-button-hoverSecondary rounded-md "
+        >
           Submit
         </button>
       </form>

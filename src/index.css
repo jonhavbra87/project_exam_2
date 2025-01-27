@@ -7,3 +7,8 @@ body {
   background-color: #f9fafb;
   color: #1f1f1f;
 }
+
+.slider-container {
+  overscroll-behavior-y: contain; /* Stops vertical scrolling */
+  touch-action: pan-y; /* Stops horizontal swiping causes vertical swipe */
+}

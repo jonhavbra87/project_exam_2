@@ -14,8 +14,8 @@ function Home() {
     isError,
   } = useApi<Venues[]>(`${BASE_API_URL}/venues`);
 
-    //state for search input
-    const [searchTerm, setSearchTerm] = useState<string>('');
+  //state for search input
+  const [searchTerm, setSearchTerm] = useState<string>('');
   const data = venues || [];
 
   // Control Loader display with a timeout
@@ -37,13 +37,30 @@ function Home() {
     return <div>Error loading data.</div>;
   }
 
-//const filteredData = data.filter((venue) => venue.location.continent);
-  // Filter products based on the search term
-  const filteredProducts = data.filter(
+  //const filteredVenues = data.filter((venue) => venue.location.continent);
+  //Filter products based on the search term
+  const filteredVenues = data.filter(
     (product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       product.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // const filteredVenues = data.filter(
+  //   (venue) =>
+  //     venue.location?.lat !== null &&
+  //     venue.location?.lng !== null &&
+  //     venue.location?.lat !== undefined &&
+  //     venue.location?.lng !== undefined &&
+  //     venue.location?.lat !== 0 &&
+  //     venue.location?.lng !== 0
+  // );
+
+  // // Filter venues based on the search term
+  // const filteredProducts = filteredVenues.filter(
+  //   (venue) =>
+  //     venue.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  //     venue.description.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
 
   // Event handler for search input change
   const handleSearch = (query: string) => {
@@ -52,21 +69,20 @@ function Home() {
 
   return (
     <div>
-           <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading h-screen">
-            Let’s explore the world
-            <span className="text-primary"> together</span>
-                  {/* SearchBar Component */}
-          </div>
+      <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading h-screen">
+        Let’s explore the world
+        <span className="text-primary"> together</span>
+        {/* SearchBar Component */}
+      </div>
       <div className="w-full">
         <SearchBar onSearch={handleSearch} />
       </div>
-      <div className='mt-16'>
-      <GradientHeading >Venues</GradientHeading>
-
+      <div className="mt-16">
+        <GradientHeading>Venues</GradientHeading>
       </div>
       {/* <h1 className="text-h1-desktop border-b-2 border-text-primary mb-6">Venues</h1> */}
       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ">
-        {filteredProducts.map((venue) => (
+        {filteredVenues.map((venue) => (
           <div key={venue.id}>
             <VenueCard key={venue.id} venue={venue} />
           </div>
