@@ -1,7 +1,13 @@
 import { useState } from 'react';
 import { Venues } from '../../types/Venues';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import 'swiper/swiper.css';
+//import 'swiper/css';
+import 'swiper/swiper-bundle.css';
+
+//import 'swiper/components/effect-fade/effect-fade.min.css';
+//import { EffectFade } from 'swiper/modules';
+import { EffectCoverflow } from 'swiper/modules';
+
 //import "swiper/css/navigation";
 //import "swiper/css/pagination";
 
@@ -22,13 +28,30 @@ function MediaGallery({ images }: MediaGalleryProps) {
     <div className="relative w-full h-[500px] md:h-[600px] overflow-hidden">
       {/* Mobil: Bruk Swiper (karusell) */}
       <div className="block md:hidden slider-container">
-        <Swiper spaceBetween={10} slidesPerView={1} loop={true}>
+        <Swiper
+        slidesPerView={1.3}
+        centeredSlides={true}
+        spaceBetween={1}
+        slidesPerGroup={1}
+        touchRatio={0.5}
+        loop={true}
+        effect="coverflow"
+        modules={[EffectCoverflow]}
+        coverflowEffect={{
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: false,
+        }}
+        >
           {images.map((image, index) => (
             <SwiperSlide key={index}>
               <img
                 src={image.url}
                 alt={image.alt || `Slide ${index}`}
                 className="rounded-lg object-cover w-full h-[500px]"
+
               />
             </SwiperSlide>
           ))}
