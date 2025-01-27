@@ -9,6 +9,7 @@ import GradientHeading from '../../styles/GradientHeading';
 import { SlHeart } from 'react-icons/sl';
 import VenueMap from '../../components/VenueMap';
 import MediaGallery from '../../components/MediaGallery';
+import VenueAddress from '../../components/VenueAddress';
 
 function ProductDetails() {
   // Get `id` from URL parameters
@@ -33,6 +34,7 @@ function ProductDetails() {
     return <div>Error loading data.</div>;
   }
 
+
   return (
     <div className="">
       <div className="flex items-center mb-4">
@@ -46,15 +48,6 @@ function ProductDetails() {
       <div>
         <MediaGallery images={venues.media} />
       </div>
-
-      {/*    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <img src={venues.media[0]?.url || 'https://via.placeholder.com/300'} alt={venues.media[0]?.alt || 'Product Image'} className="md:col-span-2 rounded-lg object-cover w-full" />
-          <div className="grid grid-cols-2 gap-1">
-            {[...Array(4)].map((_, index) => (
-              <img key={index} src={venues.media[0]?.url || 'https://placehold.co/600x400'} alt={`Product Image ${index}`} className="rounded-lg w-full" />
-            ))}
-          </div>
-    </div> */}
 
       {/* Main Content Layout */}
       <div className="mt-6 flex flex-col md:flex-row gap-6">
@@ -135,12 +128,8 @@ function ProductDetails() {
       {/* Location */}
       <div className="mt-6">
         <h3 className="text-ingress-desktop font-semibold">Location</h3>
-        <p className="text-md text-text-primary">
-          {venues.location.address}, {venues.location.city},{' '}
-          {venues.location.country}, {venues.location.continent},{' '}
-          {venues.location.zip}
-        </p>
-        <VenueMap />
+<VenueAddress location={venues.location} />
+        <VenueMap venue={venues} />
       </div>
     </div>
   );
