@@ -20,7 +20,9 @@ export async function authFetch<T>(
 
     const response = await fetch(url, options);
     if (!response.ok) {
-      throw new Error(`Request failed with status ${response.status}`);
+        const errorMessage = `API error: ${response.status} ${response.statusText}`;
+        console.error(errorMessage);
+        throw new Error(errorMessage);
     }
     if (response.status === 401) {
         localStorage.removeItem("token");
