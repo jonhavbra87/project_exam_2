@@ -1,95 +1,202 @@
-import { useEffect, useState } from 'react';
-import { Venues } from '../../types/Venues';
-import useApi from '../../hooks/useApi';
-import { BASE_API_URL } from '../../api/apiConfig';
-import VenueCard from '../../components/VenueCard';
-import SearchBar from '../../components/SearchBar';
-import GradientHeading from '../../styles/GradientHeading';
+import { useState, useRef, useCallback, useEffect } from "react";
+import useApi from "../../hooks/useApi";
+import { BASE_API_URL } from "../../api/apiConfig";
+import VenueCard from "../../components/VenueCard";
+import SearchBar from "../../components/SearchBar";
+import GradientHeading from "../../styles/GradientHeading";
 
 function Home() {
-  const [showLoader, setShowLoader] = useState(true);
-  const {
-    data: venues,
-    isLoading,
-    isError,
-  } = useApi<Venues[]>(`${BASE_API_URL}/venues`);
+  const { data: venues, isLoading, isError, hasMore, loadMore } = useApi(`${BASE_API_URL}/venues`);
+  const [searchTerm, setSearchTerm] = useState("");
 
-  //state for search input
-  const [searchTerm, setSearchTerm] = useState<string>('');
-  const data = venues || [];
+  const observer = useRef<IntersectionObserver | null>(null);
 
-  // Control Loader display with a timeout
   useEffect(() => {
-    if (!isLoading) {
-      const timeout = setTimeout(() => {
-        setShowLoader(false);
-      }, 1000); // Minimum 2 seconds
+    loadMore(); 
+  }, []); 
+  
 
-      return () => clearTimeout(timeout); // Cleanup timeout
-    }
-  }, [isLoading]);
+  const lastVenueRef = useCallback(
+    (node: HTMLElement | null) => {
+      if (isLoading || !hasMore) return;
+      if (observer.current) observer.current.disconnect();
+      
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) {
+          loadMore();
+        }
+      });
 
-  if (isLoading || showLoader) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError || !venues) {
-    return <div>Error loading data.</div>;
-  }
-
-  //const filteredVenues = data.filter((venue) => venue.location.continent);
-  //Filter products based on the search term
-  const filteredVenues = data.filter(
-    (product) =>
-      product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchTerm.toLowerCase())
+      if (node) observer.current.observe(node);
+    },
+    [isLoading, hasMore, loadMore]
   );
 
-  // const filteredVenues = data.filter(
-  //   (venue) =>
-  //     venue.location?.lat !== null &&
-  //     venue.location?.lng !== null &&
-  //     venue.location?.lat !== undefined &&
-  //     venue.location?.lng !== undefined &&
-  //     venue.location?.lat !== 0 &&
-  //     venue.location?.lng !== 0
-  // );
+  const filteredVenues = venues.filter(
+    (venue) =>
+      venue.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      venue.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+  
+  if (isLoading && venues.length === 0) {
+    return <div className="text-center text-gray-500">⏳ Laster venues...</div>;
+  }
 
-  // // Filter venues based on the search term
-  // const filteredProducts = filteredVenues.filter(
-  //   (venue) =>
-  //     venue.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-  //     venue.description.toLowerCase().includes(searchTerm.toLowerCase())
-  // );
-
-  // Event handler for search input change
-  const handleSearch = (query: string) => {
-    setSearchTerm(query);
-  };
+  if (isError) {
+    return <div className="text-center text-red-500">❌ Feil ved lasting av data.</div>;
+  }
 
   return (
     <div>
       <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading h-screen">
         Let’s explore the world
         <span className="text-primary"> together</span>
-        {/* SearchBar Component */}
       </div>
+
       <div className="w-full">
-        <SearchBar onSearch={handleSearch} />
+        <SearchBar onSearch={(query) => setSearchTerm(query)} />
       </div>
+
       <div className="mt-16">
         <GradientHeading>Venues</GradientHeading>
       </div>
-      {/* <h1 className="text-h1-desktop border-b-2 border-text-primary mb-6">Venues</h1> */}
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 ">
-        {filteredVenues.map((venue) => (
-          <div key={venue.id}>
-            <VenueCard key={venue.id} venue={venue} />
-          </div>
-        ))}
+
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+        {filteredVenues.map((venue, index) => {
+          if (index === filteredVenues.length - 1) {
+            return (
+              <li key={venue.id} ref={lastVenueRef}>
+                <VenueCard venue={venue} />
+              </li>
+            );
+          } else {
+            return (
+              <li key={venue.id}>
+                <VenueCard venue={venue} />
+              </li>
+            );
+          }
+        })}
       </ul>
+
+
+      {isLoading && <p className="text-center text-gray-500 mt-4">Laster flere venues...</p>}
     </div>
   );
 }
 
 export default Home;
+
+
+
+
+// import { useEffect, useState, useRef, useCallback } from "react";
+// import { Venues } from "../../types/Venues";
+// import useApi from "../../hooks/useApi";
+// import { BASE_API_URL } from "../../api/apiConfig";
+// import VenueCard from "../../components/VenueCard";
+// import SearchBar from "../../components/SearchBar";
+// import GradientHeading from "../../styles/GradientHeading";
+
+// function Home() {
+//   const [venues, setVenues] = useState<Venues[]>([]);
+//   const [page, setPage] = useState(1);
+//   const limit = 12; // 🔹 Laster inn 12 venues per gang
+//   const [isFetching, setIsFetching] = useState(false);
+//   const [hasMore, setHasMore] = useState(true);
+//   const observer = useRef<IntersectionObserver | null>(null);
+//   const [searchTerm, setSearchTerm] = useState<string>("");
+
+//   // 📌 **Hent venues med pagination**
+//   const { data, isLoading, isError } = useApi<Venues[]>(
+//     `${BASE_API_URL}/venues?limit=${limit}&page=${page}&sort=name&sortOrder=asc`
+//   );
+
+//   // 📌 **Legg til nye venues når data oppdateres**
+//   useEffect(() => {
+//     if (data && data.length > 0) {
+//       setVenues((prevVenues) => [...prevVenues, ...data]); // 🔹 Legg til flere venues
+//     } else {
+//       setHasMore(false); // 🔹 Stopp paginering hvis ingen flere venues
+//     }
+//     setIsFetching(false);
+//   }, [data]);
+
+//   // 📌 **Observerer siste venue-kort for å hente mer data**
+//   const lastVenueRef = useCallback(
+//     (node: HTMLDivElement) => {
+//       if (isFetching || !hasMore) return;
+//       if (observer.current) observer.current.disconnect();
+      
+//       observer.current = new IntersectionObserver((entries) => {
+//         if (entries[0].isIntersecting) {
+//           setIsFetching(true);
+//           setPage((prevPage) => prevPage + 1);
+//         }
+//       });
+
+//       if (node) observer.current.observe(node);
+//     },
+//     [isFetching, hasMore]
+//   );
+
+//   if (isLoading && venues.length === 0) {
+//     return <div className="text-center text-gray-500">⏳ Laster venues...</div>;
+//   }
+
+//   if (isError) {
+//     return <div className="text-center text-red-500">❌ Feil ved lasting av data.</div>;
+//   }
+
+  
+//   const filteredVenues = venues.filter(
+//     (venue) =>
+//       venue.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+//       venue.description.toLowerCase().includes(searchTerm.toLowerCase())
+//   );
+//   const handleSearch = (query: string) => {
+//     setSearchTerm(query);
+//   };
+//   return (
+//     <div>
+//       <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading h-screen">
+//         Let’s explore the world
+//         <span className="text-primary"> together</span>
+//       </div>
+
+//       <div className="w-full">
+//         <SearchBar onSearch={handleSearch} />
+//       </div>
+
+//       <div className="mt-16">
+//         <GradientHeading>Venues</GradientHeading>
+//       </div>
+
+//       {/* ✅ **Venues Grid** */}
+//       <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+//         {filteredVenues.map((venue, index) => {
+//           if (index === venues.length - 1) {
+//             return (
+//               <div key={venue.id} ref={lastVenueRef}>
+//                 <VenueCard venue={venue} />
+//               </div>
+//             );
+//           } else {
+//             return (
+//               <div key={venue.id}>
+//                 <VenueCard venue={venue} />
+//               </div>
+//             );
+//           }
+//         })}
+//       </ul>
+
+//       {/* ✅ **Loading-indikator mens nye venues lastes inn** */}
+//       {isFetching && (
+//         <div className="text-center text-gray-500 mt-4">Laster flere venues...</div>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default Home;
