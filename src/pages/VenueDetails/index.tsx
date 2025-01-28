@@ -1,39 +1,35 @@
-import { useParams } from 'react-router-dom';
-import useApi from '../../hooks/useApi';
-import { BASE_API_URL } from '../../api/apiConfig';
-import { VenuePrice } from '../../components/VenuePrice';
-import VenueRating from '../../components/VenueRating';
-import { Venues } from '../../types/Venues';
-import MetaDataVenue from '../../components/MetaDataVenue';
-import GradientHeading from '../../styles/GradientHeading';
-import { SlHeart } from 'react-icons/sl';
-import VenueMap from '../../components/VenueMap';
-import MediaGallery from '../../components/MediaGallery';
-import VenueAddress from '../../components/VenueAddress';
+import { useParams } from "react-router-dom";
+import { API_VENUES, BASE_API_URL } from "../../api/apiConfig";
+import { VenuePrice } from "../../components/VenuePrice";
+import VenueRating from "../../components/VenueRating";
+import MetaDataVenue from "../../components/MetaDataVenue";
+import GradientHeading from "../../styles/GradientHeading";
+import { SlHeart } from "react-icons/sl";
+import VenueMap from "../../components/VenueMap";
+import MediaGallery from "../../components/MediaGallery";
+import VenueAddress from "../../components/VenueAddress";
+import { useEffect } from "react";
+import { useVenueAPI } from "../../hooks/useVenueAPI";
 
-function ProductDetails() {
-  // Get `id` from URL parameters
+function VenueDetails() {
   const { id } = useParams();
+  const { venueDetails, isLoading, isError, fetchVenueDetails } = useVenueAPI();
 
-  // Fetch product details using `useApi`
-  const {
-    data: venues,
-    isLoading,
-    isError,
-  } = useApi<Venues>(`${BASE_API_URL}/venues/${id}?_owner=true`);
+  useEffect(() => {
+    if (id) {
+      fetchVenueDetails(`${BASE_API_URL}${API_VENUES}/${id}?_owner=true`);
+    }
+  }, [id, fetchVenueDetails]);
 
-  console.log('API response:', venues);
+  console.log("API response:", venueDetails);
 
-  // Show loading message if `isLoading` is `true`
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-gray-500">⏳ Loading venue details...</div>;
   }
 
-  //Show error message if `isError` is `true`
-  if (isError || !venues) {
-    return <div>Error loading data.</div>;
+  if (isError || !venueDetails) {
+    return <div className="text-center text-red-500">❌ Error loading venue data.</div>;
   }
-
 
   return (
     <div className="">
@@ -46,7 +42,7 @@ function ProductDetails() {
 
       {/* Image Gallery - needs fixing */}
       <div>
-        <MediaGallery images={venues.media} />
+        <MediaGallery images={venueDetails.media} />
       </div>
 
       {/* Main Content Layout */}
@@ -54,26 +50,26 @@ function ProductDetails() {
         {/* Left Column */}
         <div className="md:w-2/3">
           <h2 className="text-h2-desktop font-bold flex flex-row">
-            {venues.name}
+            {venueDetails.name}
             <span>
               <SlHeart className="text-primary text-lg" />
             </span>
           </h2>
           <p className="text-ingress-desktop text-text-secondary mb-4">
-            {venues.location.country}
+            {venueDetails.location.country}
           </p>
-          <VenueRating rating={venues.rating} />
+          <VenueRating rating={venueDetails.rating} />
 
           <h3 className="text-ingress-desktop font-semibold mt-6">
             Description
           </h3>
-          <p className="text-md text-text-primary mb-4">{venues.description}</p>
+          <p className="text-md text-text-primary mb-4">{venueDetails.description}</p>
 
           <h3 className="text-ingress-desktop font-semibold mt-6">
             Facilities
           </h3>
           <div className="mt-4 flex flex-wrap gap-4">
-            <MetaDataVenue meta={venues.meta} />
+            <MetaDataVenue meta={venueDetails.meta} />
           </div>
 
           <h3 className="text-ingress-desktop font-semibold mt-6">
@@ -82,17 +78,17 @@ function ProductDetails() {
           <div className="mt-4 flex items-center gap-4">
             <img
               src={
-                venues.owner.avatar?.url || 'https://via.placeholder.com/150'
+                venueDetails.owner.avatar?.url || 'https://via.placeholder.com/150'
               }
               alt="Owner Avatar"
               className="w-16 h-16 rounded-full"
             />
             <div>
               <h3 className="text-body-large-desktop font-bold">
-                {venues.owner.name || 'No Owner name available'}
+                {venueDetails.owner.name || 'No Owner name available'}
               </h3>
               <p className="text-body-medium-desktop text-text-secondary line-clamp-1">
-                {venues.owner.bio || 'No bio available'}
+                {venueDetails.owner.bio || 'No bio available'}
               </p>
             </div>
           </div>
@@ -117,7 +113,7 @@ function ProductDetails() {
 
           <div className="mt-4 text-gray-600">
             <p>Price:</p>
-            <VenuePrice product={venues} />
+            <VenuePrice product={venueDetails} />
           </div>
           <button className="mt-4 w-full bg-accent px-4 py-2 rounded-md hover:bg-button-hoverSecondary">
             Book
@@ -128,11 +124,11 @@ function ProductDetails() {
       {/* Location */}
       <div className="mt-6">
         <h3 className="text-ingress-desktop font-semibold">Location</h3>
-<VenueAddress location={venues.location} />
-        <VenueMap venue={venues} />
+<VenueAddress location={venueDetails.location} />
+        <VenueMap venue={venueDetails} />
       </div>
     </div>
   );
 }
 
-export default ProductDetails;
+export default VenueDetails;

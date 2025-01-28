@@ -14,7 +14,7 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
   };
 
   return (
-    <li className="bg-base rounded-lg shadow-lg border border-neutral-950 hover:shadow-xl transition-shadow relative">
+    <div className="bg-base rounded-lg shadow-lg border border-neutral-950 hover:shadow-xl transition-shadow relative">
       {/* Content that wraps product image and text */}
       <div
         className="cursor-pointer block relative group"
@@ -65,7 +65,7 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
           View
         </Link>
       </footer>
-    </li>
+    </div>
   );
 };
 
