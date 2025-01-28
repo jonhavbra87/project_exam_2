@@ -1,12 +1,12 @@
 import { useState, useRef, useCallback, useEffect } from "react";
 import useApi from "../../hooks/useApi";
-import { BASE_API_URL } from "../../api/apiConfig";
+import { API_VENUES, BASE_API_URL } from "../../api/apiConfig";
 import VenueCard from "../../components/VenueCard";
 import SearchBar from "../../components/SearchBar";
 import GradientHeading from "../../styles/GradientHeading";
 
-function Home() {
-  const { data: venues, isLoading, isError, hasMore, loadMore } = useApi(`${BASE_API_URL}/venues`);
+function Venues() {
+  const { data: venues, isLoading, isError, hasMore, loadMore } = useApi(`${BASE_API_URL}${API_VENUES}`);
   const [searchTerm, setSearchTerm] = useState("");
 
   const observer = useRef<IntersectionObserver | null>(null);
@@ -85,7 +85,7 @@ function Home() {
   );
 }
 
-export default Home;
+export default Venues;
 
 
 
@@ -98,7 +98,7 @@ export default Home;
 // import SearchBar from "../../components/SearchBar";
 // import GradientHeading from "../../styles/GradientHeading";
 
-// function Home() {
+// function Venues() {
 //   const [venues, setVenues] = useState<Venues[]>([]);
 //   const [page, setPage] = useState(1);
 //   const limit = 12; // 🔹 Laster inn 12 venues per gang
@@ -199,4 +199,4 @@ export default Home;
 //   );
 // }
 
-// export default Home;
+// export default Venues;

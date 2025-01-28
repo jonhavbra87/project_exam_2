@@ -9,7 +9,7 @@ function NavLinks({ toggleMenu }: { toggleMenu: () => void }) {
           className="text-white text-lg hover:text-secondary transition-colors duration-200"
           onClick={() => toggleMenu()}
         >
-          Home
+          Venues
         </NavLink>
       </li>
       <li>

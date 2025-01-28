@@ -1,5 +1,5 @@
 import { useParams } from "react-router-dom";
-import { BASE_API_URL } from "../../api/apiConfig";
+import { API_VENUES, BASE_API_URL } from "../../api/apiConfig";
 import { VenuePrice } from "../../components/VenuePrice";
 import VenueRating from "../../components/VenueRating";
 import MetaDataVenue from "../../components/MetaDataVenue";
@@ -17,7 +17,7 @@ function VenueDetails() {
 
   useEffect(() => {
     if (id) {
-      fetchVenueDetails(`${BASE_API_URL}/venues/${id}?_owner=true`);
+      fetchVenueDetails(`${BASE_API_URL}${API_VENUES}/${id}?_owner=true`);
     }
   }, [id, fetchVenueDetails]);
 
