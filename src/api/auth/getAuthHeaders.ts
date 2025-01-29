@@ -14,8 +14,10 @@ export async function getAuthHeaders(): Promise<Record<string, string>> {
     "X-Noroff-API-Key": API_KEY,
   };
 
+  const now = Date.now();
+
   // Delete token if it has expired
-  if (!tokenData || !tokenData.accessToken || Date.now() > tokenData.expiresAt) {
+  if (!tokenData || !tokenData.accessToken || now > tokenData.expiresAt) {
     console.warn("Token expired or missing, logging out...");
     remove("token");
     remove("profile"); 
@@ -23,7 +25,7 @@ export async function getAuthHeaders(): Promise<Record<string, string>> {
   }
 
   // Delete profile if it has expired
-  if (!profileData || Date.now() > profileData.expiresAt) {
+  if (!profileData || now > profileData.expiresAt) {
     console.warn("Profile expired, removing profile & token...");
     remove("profile");
     remove("token");
