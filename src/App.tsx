@@ -8,18 +8,27 @@ import Venues from './pages/Venues';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 import Login from './components/Login';
-import SessionChecker from './components/SessionChecker';
+// import SessionChecker from './components/SessionChecker';
+import { useAuthStore } from './store/authStore';
+import { useEffect } from 'react';
+import Register from './components/Register';
 
 function App() {
+  const checkAuth = useAuthStore((state) => state.checkAuth);
+
+  useEffect(() => {
+    checkAuth(); // ✅ Sjekker om token er gyldig ved app-start
+  }, [checkAuth]);
+
   return (
     <div className="text-text-primary">
-      <SessionChecker />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Venues />} />
           <Route path="venue/:id" element={<VenueDetails />} />
-          <Route path="SignUp" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="Profile" element={<Profile />} />
           <Route path="Contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />

@@ -1,58 +1,43 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../api/auth/login";
-import { useAuthStore } from "../../store/authStore";
+import { register } from "../../api/auth/register";
 
-
-function Login() {
-  const { profile, login: loginStore } = useAuthStore(); // 🔹 Hent login-funksjonen fra Zustand
+function Register() {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [venueManager, setVenueManager] = useState(false);
+  const [venueManager, setVenueManager] = useState(false); // ✅ Bruker kan velge Venue Manager
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (profile) {
-      navigate("/profile"); // ✅ Hvis allerede logget inn, send til profil
-    }
-  }, [profile, navigate]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     setError(null);
-  
+
     try {
-      const user = await login(email, password);
-      const expiresIn = 60 * 60 * 1000; // 1 hour
-      const expiryTime = Date.now() + expiresIn;
-  
-      loginStore(
-        {
-          name: user.name,
-          email: user.email,
-          avatar: user.avatar,
-          banner: user.banner,
-          venueManager: venueManager,
-        },
-        user.accessToken,
-        expiryTime
-      );
-  
-      navigate("/profile"); // ✅ Naviger etter login
+      await register(name, email, password, venueManager);
+      navigate("/profile"); // ✅ Naviger til profil etter registrering
     } catch (error) {
-      setError("Invalid email or password. Please try again.");
+      setError("Registration failed. Please try again.");
       console.error(error);
     }
   };
-  
 
   return (
     <div className="flex justify-center items-center h-screen">
       <form onSubmit={handleSubmit} className="p-6 bg-white shadow-md rounded-lg w-96">
-        <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
+        <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
 
         {error && <p className="text-red-500 text-sm text-center mb-3">{error}</p>}
+
+        <input
+          type="text"
+          placeholder="Name"
+          className="w-full p-2 border rounded mb-2"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          required
+        />
 
         <input
           type="email"
@@ -72,10 +57,10 @@ function Login() {
           required
         />
 
-        {/* ✅ Venue Manager Toggle Switch */}
+        {/* ✅ Venue Manager Toggle */}
         <div className="flex items-center justify-between mt-4">
           <label htmlFor="venueManager" className="text-md text-gray-700">
-            Become a Venue Manager?
+            Register as Venue Manager?
           </label>
           <input
             id="venueManager"
@@ -86,13 +71,12 @@ function Login() {
           />
         </div>
 
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-          Login
+        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 mt-4">
+          Register
         </button>
       </form>
     </div>
   );
 }
 
-export default Login;
-
+export default Register;

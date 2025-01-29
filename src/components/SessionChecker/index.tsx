@@ -1,30 +1,20 @@
-import { useEffect } from "react";
-import { remove } from "../../storage/remove";
-import { load } from "../../storage/load";
+// import { useEffect } from "react";
+// import { useAuthStore } from "../../store/authStore";
 
-/**
- * SessionChecker checks if the stored auth token and profile have expired.
- * If expired, it removes them from localStorage to ensure automatic logout.
- */
-function SessionChecker() {
-  useEffect(() => {
-    const now = Date.now();
+// /**
+//  * Automatiserer utlogging hvis token er utløpt.
+//  */
+// function SessionChecker() {
+//   const { expiresAt, logout } = useAuthStore();
 
-    const tokenData = load<{ expiresAt: number }>("token");
-    const profileData = load<{ expiresAt: number }>("profile");
+//   useEffect(() => {
+//     if (expiresAt && Date.now() > expiresAt) {
+//       console.warn("Session expired, logging out...");
+//       logout();
+//     }
+//   }, [expiresAt, logout]);
 
-    if (tokenData && now > tokenData.expiresAt) {
-      console.warn("Session expired, logging out...");
-      remove("token");
-      remove("profile");
-    }
+//   return null;
+// }
 
-    if (profileData && now > profileData.expiresAt) {
-      console.warn("Profile expired, removing...");
-      remove("profile");
-    }
-  }, []); // 🔹 Runs once when the component mounts
-  return null; // This component does not render anything
-}
-
-export default SessionChecker;
+// export default SessionChecker;
