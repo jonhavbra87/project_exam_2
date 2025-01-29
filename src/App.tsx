@@ -8,10 +8,12 @@ import Venues from './pages/Venues';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 import Login from './components/Login';
+import SessionChecker from './components/SessionChecker';
 
 function App() {
   return (
     <div className="text-text-primary">
+      <SessionChecker />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Venues />} />
