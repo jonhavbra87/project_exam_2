@@ -1,5 +1,5 @@
 import { useAuthStore } from "../../store/authStore";
-import { API_AUTH, API_LOGIN, BASE_API_URL } from "../apiConfig";
+import { API_AUTH, API_KEY, API_LOGIN, BASE_API_URL } from "../apiConfig";
 import { authFetch } from "./authFetch";
 
 export async function login(email: string, password: string) {
@@ -7,42 +7,83 @@ export async function login(email: string, password: string) {
     const url = `${BASE_API_URL}${API_AUTH}${API_LOGIN}`;
     const body = { email, password };
 
+    // 📌 **1️⃣ Logg inn brukeren og få `accessToken`**
     const data = await authFetch<{
       data: {
         name: string;
         email: string;
-        avatar: { url: string; alt: string };
-        banner: { url: string; alt: string };
-        accessToken: string;
-        venueManager: boolean;
+        avatar?: { url: string; alt: string };
+        banner?: { url: string; alt: string };
+        venueManager?: boolean;
+        accessToken: string; // ✅ Token kommer her!
       };
     }>(url, "POST", body);
-    
-    console.log("📌 API Response:", data); // 🔍 Se hele responsen
+
+    console.log("📌 API Response fra login:", data);
 
     if (!data?.data?.accessToken) {
-      throw new Error("No access token found in response");
+      console.error("❌ Feil: accessToken er undefined! Sjekk API-responsen.", data);
+      return;
     }
 
-    const expiresIn = 60 * 60 * 1000; // 1 hour
+    const accessToken = data.data.accessToken; // ✅ Hent accessToken
+    console.log("🔹 Token mottatt fra login:", accessToken); // ✅ Verifiserer at vi har token
+
+    const expiresIn = 60 * 60 * 1000; // 1 time
     const expiryTime = Date.now() + expiresIn;
 
-    // ✅ Oppdater Zustand
-    useAuthStore.getState().login(
-      {
+    const username = data.data.name;
+
+    // 📌 **2️⃣ Hent full profil for å få `venueManager`-status**
+    const profileUrl = `${BASE_API_URL}/holidaze/profiles/${username}`;
+    const profileHeaders = {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${accessToken}`, // ✅ Bruker `accessToken` til å hente profil
+      "X-Noroff-API-Key": API_KEY,
+    };
+
+    const profileResponse = await fetch(profileUrl, { headers: profileHeaders });
+
+    if (!profileResponse.ok) {
+      console.error(`❌ Feil: Kunne ikke hente profil. Status: ${profileResponse.status}`);
+      return;
+    }
+
+    const profileData = await profileResponse.json();
+
+    console.log("📌 Full profil hentet fra API:", profileData);
+
+    // const venueManager = profileData?.data?.venueManager ?? false; // Hvis mangler, default `false`
+    
+    console.log("📌 Sender til Zustand login:", {
+      profile: {
         name: data.data.name,
         email: data.data.email,
         avatar: data.data.avatar,
         banner: data.data.banner,
-        venueManager: data.data.venueManager,
+        venueManager: profileData?.data?.venueManager ?? false,
       },
-      data.data.accessToken,
-      expiryTime
-    );
+      accessToken: accessToken,
+      expiresAt: expiryTime
+    });
 
-    console.log("✅ Login successful, Zustand state updated!");
-    
-    return data.data;
+    // 📌 **3️⃣ Oppdater Zustand med riktig token fra login-responsen**
+useAuthStore.getState().login(
+  {
+    name: data.data.name,
+    email: data.data.email,
+    avatar: data.data.avatar,
+    banner: data.data.banner,
+    venueManager: profileData?.data?.venueManager ?? false,
+  },
+  data.data.accessToken, // ✅ Bruker accessToken fra login-responsen
+  expiryTime
+);
+
+
+    //console.log("✅ Zustand state etter login:", useAuthStore.getState());
+
+    return profileData.data;
   } catch (error) {
     console.error("❌ Login error:", error);
     throw error;
@@ -59,118 +100,82 @@ export async function login(email: string, password: string) {
 //     const url = `${BASE_API_URL}${API_AUTH}${API_LOGIN}`;
 //     const body = { email, password };
 
-//     const data = await authFetch<{ data: { accessToken: string; name: string; email: string; venueManager?: boolean } }>(
-//       url,
-//       "POST",
-//       body
-//     );
+//     // 📌 **1️⃣ Logg inn brukeren**
+//     const data = await authFetch<{
+//       data: {
+//         name: string;
+//         email: string;
+//         avatar?: { url: string; alt: string };
+//         banner?: { url: string; alt: string };
+//         accessToken: string; // ✅ Token kommer her!
+//       };
+//     }>(url, "POST", body);
+
+//     console.log("📌 API Response fra login:", data);
 
 //     if (!data?.data?.accessToken) {
-//       throw new Error("No access token found in response");
+//       console.error("❌ Feil: Token er undefined! Sjekk API-responsen.", data);
+//       return;
 //     }
 
-//     const expiresIn = 60 * 60 * 1000; // 1 hour
+//     const token = data.data.accessToken; // ✅ Bruker riktig token!
+
+//     console.log("🔹 Token mottatt fra login:", token); // ✅ Verifiserer at vi har token
+
+//     const expiresIn = 60 * 60 * 1000; // 1 time
 //     const expiryTime = Date.now() + expiresIn;
 
-//     // ✅ Sikrer at `venueManager` alltid er en boolean
-//     const profile = {
-//       name: data.data.name,
-//       email: data.data.email,
-//       venueManager: data.data.venueManager ?? false, // Default til `false` hvis API ikke sender verdi
+//     const username = data.data.name;
+
+//     // 📌 **2️⃣ Hent full profil for å få `venueManager`-status**
+//     const profileUrl = `${BASE_API_URL}/holidaze/profiles/${username}`;
+//     const profileHeaders = {
+//       "Content-Type": "application/json",
+//       Authorization: `Bearer ${token}`, // ✅ Bruker login-token til å hente profil
+//       "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
 //     };
 
-//     // ✅ Lagrer til Zustand state
-//     useAuthStore.getState().login(profile, data.data.accessToken, expiryTime);
+//     const profileResponse = await fetch(profileUrl, { headers: profileHeaders });
 
-//     // ✅ Lagrer også token i `localStorage`
-//     localStorage.setItem("token", JSON.stringify({ accessToken: data.data.accessToken, expiresAt: expiryTime }));
-
-//     console.log("✅ Login successful, Zustand state & localStorage updated!");
-    
-//     return data.data;
-//   } catch (error) {
-//     console.error("❌ Login error:", error);
-
-//     // ✅ Bedre feilhåndtering
-//     throw new Error(error instanceof Error ? error.message : "Unexpected error occurred.");
-//   }
-// }
-
-
-// import { useAuthStore } from "../../store/authStore";
-// import { API_AUTH, API_LOGIN, BASE_API_URL } from "../apiConfig";
-// import { authFetch } from "./authFetch";
-
-// export async function login(email: string, password: string) {
-//   try {
-//     const url = `${BASE_API_URL}${API_AUTH}${API_LOGIN}`;
-//     const body = { email, password };
-
-//     const data = await authFetch<{ data: { accessToken: string; name: string; email: string; venueManager: boolean } }>(
-//       url,
-//       "POST",
-//       body
-//     );
-
-//     if (!data?.data?.accessToken) {
-//       throw new Error("No access token found in response");
+//     if (!profileResponse.ok) {
+//       console.error(`❌ Feil: Kunne ikke hente profil. Status: ${profileResponse.status}`);
+//       return;
 //     }
 
-//     const expiresIn = 60 * 60 * 1000; // 1 hour
-//     const expiryTime = Date.now() + expiresIn;
+//     const profileData = await profileResponse.json();
+//     console.log("📌 Full profil hentet fra API:", profileData);
 
-//     // ✅ Lagrer i Zustand og ikke i `localStorage` manuelt
+//     const venueManager = profileData?.data?.venueManager ?? false; // Hvis mangler, default `false`
+//     console.log("📌 Sender til Zustand login:", {
+//       profile: {
+//         name: profileData.data.name,
+//         email: profileData.data.email,
+//         avatar: profileData.data.avatar,
+//         banner: profileData.data.banner,
+//         venueManager: venueManager,
+//       },
+//       token: token,
+//       expiresAt: expiryTime
+//     });
+    
+//     // 📌 **3️⃣ Oppdater Zustand KORREKT med login-funksjonen**
 //     useAuthStore.getState().login(
-//       { name: data.data.name, email: data.data.email, venueManager: data.data.venueManager },
-//       data.data.accessToken,
+//       {
+//         name: profileData.data.name,
+//         email: profileData.data.email,
+//         avatar: profileData.data.avatar,
+//         banner: profileData.data.banner,
+//         venueManager: venueManager, // ✅ Nå får vi riktig `venueManager`
+//       },
+//       token,  // ✅ Token fra login-responsen
 //       expiryTime
 //     );
 
-//     console.log("✅ Login successful, Zustand state updated!");
-    
-//     return data.data;
+//     console.log("✅ Zustand state etter login:", useAuthStore.getState());
+
+//     return profileData.data;
 //   } catch (error) {
 //     console.error("❌ Login error:", error);
-//     throw error;
-//   }
-// }
-
-
-
-// import { save } from "../../storage/save";
-// import { API_AUTH, API_LOGIN, BASE_API_URL } from "../apiConfig";
-// import { authFetch } from "./authFetch";
-
-// export type LoginResponse = {
-//   data: {
-//     accessToken: string;
-//     name: string;
-//     email: string;
-//   };
-// };
-
-// export async function login(email: string, password: string) {
-//   try {
-//     const url = `${BASE_API_URL}${API_AUTH}${API_LOGIN}`;
-//     const body = { email, password };
-
-//     const data = await authFetch<LoginResponse>(url, "POST", body);
-
-//     if (!data?.data?.accessToken) {
-//       throw new Error("No access token found in response");
-//     }
-
-//     const expiresIn = 60 * 60 * 1000; // 1 hour
-//     const expiryTime = Date.now() + expiresIn;
-
-//     save("token", { accessToken: data.data.accessToken, expiresAt: expiryTime });
-//     save("profile", { name: data.data.name, email: email, expiresAt: expiryTime });
-
-//     console.log("Login successful, token and profile saved!");
-    
-//     return data.data;
-//   } catch (error) {
-//     console.error("Login error:", error);
 //     throw error;
 //   }
 // }

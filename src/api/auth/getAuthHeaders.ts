@@ -2,7 +2,7 @@ import { API_KEY } from "../apiConfig";
 import { useAuthStore } from "../../store/authStore";
 
 export async function getAuthHeaders(): Promise<Record<string, string>> {
-  const { token, expiresAt, logout } = useAuthStore.getState();
+  const { accessToken, expiresAt, logout } = useAuthStore.getState();
   const now = Date.now();
 
   const headers: Record<string, string> = {
@@ -10,14 +10,14 @@ export async function getAuthHeaders(): Promise<Record<string, string>> {
     "X-Noroff-API-Key": API_KEY,
   };
 
-  // Sjekk om token har utløpt
-  if (!token || !expiresAt || now > expiresAt) {
-    console.warn("Token expired or missing, logging out...");
+  // Sjekk om accessToken har utløpt
+  if (!accessToken || !expiresAt || now > expiresAt) {
+    console.warn("accessToken expired or missing, logging out...");
     logout();
     return headers;
   }
 
-  headers["Authorization"] = `Bearer ${token}`;
+  headers["Authorization"] = `Bearer ${accessToken}`;
   return headers;
 }
 

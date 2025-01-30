@@ -14,11 +14,30 @@ import { useEffect } from 'react';
 import Register from './components/Register';
 
 function App() {
-  const checkAuth = useAuthStore((state) => state.checkAuth);
+  const { checkAuth, rehydrated } = useAuthStore();
 
-  useEffect(() => {
-    checkAuth(); // ✅ Sjekker om token er gyldig ved app-start
-  }, [checkAuth]);
+useEffect(() => {
+  const checkStorage = () => {
+    const stored = localStorage.getItem("auth-store");
+    const state = useAuthStore.getState();
+    console.log("App Debug:", {
+      localStorage: stored ? JSON.parse(stored) : null,
+      zustandState: {
+        hasToken: !!state.accessToken,
+        isAuthenticated: state.isAuthenticated
+      }
+    });
+  };
+
+  if (rehydrated) {
+    checkStorage();
+    checkAuth();
+  }
+}, [rehydrated, checkAuth]);
+
+  if (!rehydrated) {
+    return <p>Loading...</p>; // ⏳ Viser en loading-tekst mens Zustand laster
+  }
 
   return (
     <div className="text-text-primary">

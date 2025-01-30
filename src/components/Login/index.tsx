@@ -8,7 +8,6 @@ function Login() {
   const { profile, login: loginStore } = useAuthStore(); // 🔹 Hent login-funksjonen fra Zustand
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [venueManager, setVenueManager] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
@@ -33,7 +32,7 @@ function Login() {
           email: user.email,
           avatar: user.avatar,
           banner: user.banner,
-          venueManager: venueManager,
+          venueManager: user.venueManager,
         },
         user.accessToken,
         expiryTime
@@ -71,20 +70,6 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-
-        {/* ✅ Venue Manager Toggle Switch */}
-        <div className="flex items-center justify-between mt-4">
-          <label htmlFor="venueManager" className="text-md text-gray-700">
-            Become a Venue Manager?
-          </label>
-          <input
-            id="venueManager"
-            type="checkbox"
-            className="w-5 h-5 ml-2 cursor-pointer"
-            checked={venueManager}
-            onChange={() => setVenueManager(!venueManager)}
-          />
-        </div>
 
         <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
           Login

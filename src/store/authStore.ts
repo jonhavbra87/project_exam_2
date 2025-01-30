@@ -1,206 +1,134 @@
 import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { createJSONStorage, persist } from "zustand/middleware";
 
 type Profile = {
   name: string;
   email: string;
-  avatar: { url: string; alt: string };
-  banner: { url: string; alt: string };
+  avatar?: { url: string; alt: string };
+  banner?: { url: string; alt: string };
   venueManager: boolean;
 };
 
 type AuthState = {
   profile: Profile | null;
-  token: string | null;
+  accessToken: string | null;
   expiresAt: number | null;
   isAuthenticated: boolean;
-  login: (profile: Profile, token: string, expiresAt: number) => void;
-  registerUser: (profile: Profile, token: string, expiresAt: number) => void;
+  rehydrated: boolean;
+  login: (profile: Profile, accessToken: string, expiresAt: number) => void;
   logout: () => void;
-  checkAuth: () => void; // ✅ Funksjon for å sjekke om brukeren er fortsatt innlogget
-  updateVenueManager: (status: boolean) => void; 
+  checkAuth: () => void;
+  updateVenueManager: (status: boolean) => void;
 };
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set, get) => ({
       profile: null,
-      token: null,
+      accessToken: null,
       expiresAt: null,
       isAuthenticated: false,
+      rehydrated: false,
 
-      login: (profile, token, expiresAt) => {
-        set({
-          profile: { ...profile }, // Sikrer at venueManager blir lagret
-          token,
-          expiresAt,
-          isAuthenticated: true,
-        });
-        console.log("🟢 Login: VenueManager status lagret:", profile.venueManager);
-      },
-      
-      registerUser: (profile, token, expiresAt) => {
-        set({
-          profile: { ...profile }, // 🔹 Sikrer at venueManager blir lagret
-          token,
-          expiresAt,
-          isAuthenticated: true,
-        });
-        console.log("🟢 Register: VenueManager status lagret:", profile.venueManager);
-      },
-
-      logout: () => {
-        set({ profile: null, token: null, expiresAt: null, isAuthenticated: false });
-        localStorage.removeItem("auth-store"); // Fjerner brukerdata, men vil gjenopprette venueManager senere
-        console.log("🔴 User logged out. auth-store deleted.");
-      },
-      
-
-
-      checkAuth: () => {
-        const { token, expiresAt, logout, profile } = get();
-        const now = Date.now();
-      
-        if (!token || !expiresAt || now > expiresAt) {
-          console.warn("🔴 Token expired or missing, logging out...");
-          logout();
-        } else {
-          console.log("🟢 Token is still valid.");
-          if (profile) {
-            set({ profile: { ...profile, venueManager: profile.venueManager } });
-            console.log("🟢 checkAuth: VenueManager status gjenopprettet:", profile.venueManager);
-          }
-        }
-      },      
-      
-      /** ✅ **Oppdaterer VenueManager-status for brukeren** */
+      /**
+       * ✅ **Oppdaterer VenueManager-status i Zustand**
+       */
       updateVenueManager: (status) => {
         const { profile } = get();
         if (profile) {
           set({ profile: { ...profile, venueManager: status } });
-          console.log("🟢 VenueManager status oppdatert til:", status);
+          console.log("🟢 VenueManager oppdatert i Zustand:", status);
+        } else {
+          console.warn("⚠️ Kan ikke oppdatere VenueManager, ingen profil funnet.");
         }
+      },
+
+      /**
+       * ✅ **Lagrer brukerdata etter innlogging**
+       */
+      login: (profile, accessToken, expiresAt) => {
+        if (!accessToken) {
+          console.error("❌ Feil: accessToken er undefined i Zustand login!");
+          return;
+        }
+        console.log("🔹 Setter accessToken i Zustand:", accessToken);
+
+        set({
+          profile,
+          accessToken,
+          expiresAt,
+          isAuthenticated: true,
+          rehydrated: true, // ✅ Sikrer at Zustand blir "ferdig lastet" ved login
+        });
+
+        console.log("📦 Zustand state etter login:", get());
+        console.log("📦 Data i localStorage etter login:", localStorage.getItem("auth-store"));
+      },
+
+      /**
+       * ✅ **Sjekker om brukeren fortsatt er innlogget ved startup**
+       */
+      checkAuth: () => {
+        const { accessToken, expiresAt, profile, logout } = get();
+        console.log("🔍 Sjekker auth-state ved startup:", { accessToken, expiresAt, profile });
+
+        if (!accessToken || !expiresAt) {
+          console.warn("🔴 Ingen token funnet ved checkAuth, bruker må logge inn på nytt.");
+          return;
+        }
+
+        if (Date.now() > expiresAt) {
+          console.warn("🔴 Token er utløpt, logger ut...");
+          logout();
+        } else {
+          console.log("🟢 Token er fortsatt gyldig.");
+        }
+      },
+
+      /**
+       * ✅ **Logger ut brukeren og tømmer Zustand-state**
+       */
+      logout: () => {
+        console.log("🔴 User logged out. Fjerner data fra Zustand og localStorage.");
+        set({ profile: null, accessToken: null, expiresAt: null, isAuthenticated: false });
+        localStorage.removeItem("auth-store"); // ✅ Fjerner data manuelt for sikkerhets skyld
       },
     }),
     {
       name: "auth-store",
+      storage: createJSONStorage(() => localStorage),
+
+      /**
+       * ✅ **Løser problemet med tidlig referanse til `useAuthStore`**
+       */
+      onRehydrateStorage: () => (state, error) => {
+        if (error) {
+          console.error("❌ Error during Zustand rehydration:", error);
+          return;
+        }
+      
+        console.log("🔄 Zustand rehydrated fra localStorage:", state);
+      
+        if (!state) {
+          console.warn("⚠️ Ingen tidligere Zustand-state funnet i localStorage.");
+          return;
+        }
+      
+        setTimeout(() => {
+          useAuthStore.setState({ rehydrated: true }); // ✅ Ensures Zustand is marked as hydrated
+          console.log("✅ Zustand er nå ferdig rehydrert!");
+        }, 500);
+      },
+
+      /**
+       * ✅ **Lagrer kun nødvendige data i localStorage**
+       */
+      partialize: (state) => ({
+        profile: state.profile,
+        accessToken: state.accessToken,
+        expiresAt: state.expiresAt,
+        isAuthenticated: state.isAuthenticated,
+      }),
     }
   )
 );
-
-
-// import { create } from "zustand";
-// import { persist } from "zustand/middleware";
-
-// type AuthState = {
-//   profile: { name: string; email: string; venueManager: boolean } | null;
-//   token: string | null;
-//   expiresAt: number | null;
-//   isAuthenticated: boolean;
-//   login: (profile: { name: string; email: string; venueManager: boolean }, token: string, expiresAt: number) => void;
-//   logout: () => void;
-//   checkAuth: () => void; // ✅ Sjekk om token er utløpt
-// };
-
-// export const useAuthStore = create<AuthState>()(
-//   persist(
-//     (set, get) => ({
-//       profile: null,
-//       token: null,
-//       expiresAt: null,
-//       isAuthenticated: false,
-
-//       login: (profile, token, expiresAt) => {
-//         set({ profile, token, expiresAt, isAuthenticated: true });
-//       },
-
-//       logout: () => {
-//         set({ profile: null, token: null, expiresAt: null, isAuthenticated: false });
-//       },
-
-//       checkAuth: () => {
-//         const { token, expiresAt, logout } = get();
-
-//         if (!token || !expiresAt || Date.now() > expiresAt) {
-//           console.warn("Token expired or missing, logging out...");
-//           logout();
-//         }
-//       },
-//     }),
-//     {
-//       name: "auth-store",
-//     }
-//   )
-// );
-
-
-// import { create } from "zustand";
-// import { persist } from "zustand/middleware";
-
-// type AuthState = {
-//   profile: { name: string; email: string; venueManager: boolean } | null;
-//   token: string | null;
-//   expiresAt: number | null;
-//   isAuthenticated: boolean; // ✅ Sjekker om brukeren er logget inn
-//   login: (profile: { name: string; email: string; venueManager: boolean }, token: string, expiresAt: number) => void;
-//   logout: () => void;
-//   checkAuth: () => void; // ✅ Kjør denne ved oppstart for å sjekke om token er utløpt
-// };
-
-// export const useAuthStore = create<AuthState>()(
-//   persist(
-//     (set, get) => ({
-//       profile: null,
-//       token: null,
-//       expiresAt: null,
-//       isAuthenticated: false,
-
-//       login: (profile, token, expiresAt) => {
-//         set({ profile, token, expiresAt, isAuthenticated: true });
-//       },
-
-//       logout: () => {
-//         set({ profile: null, token: null, expiresAt: null, isAuthenticated: false });
-//       },
-
-//       checkAuth: () => {
-//         const { token, expiresAt, logout } = get();
-
-//         if (!token || !expiresAt || Date.now() > expiresAt) {
-//           console.warn("Token expired or missing, logging out...");
-//           logout();
-//         }
-//       },
-//     }),
-//     {
-//       name: "auth-store", // Lokal lagring i localStorage
-//     }
-//   )
-// );
-
-
-
-// import { create } from "zustand";
-// import { persist } from "zustand/middleware";
-
-// type AuthState = {
-//   profile: { name: string; email: string; venueManager: boolean } | null;
-//   token: string | null;
-//   expiresAt: number | null;
-//   login: (profile: { name: string; email: string; venueManager: boolean }, token: string, expiresAt: number) => void;
-//   logout: () => void;
-// };
-
-// export const useAuthStore = create<AuthState>()(
-//   persist(
-//     (set) => ({
-//       profile: null,
-//       token: null,
-//       expiresAt: null,
-//       login: (profile, token, expiresAt) =>
-//         set({ profile, token, expiresAt }),
-//       logout: () => set({ profile: null, token: null, expiresAt: null }), // Fjerner ALLE brukerdata
-//     }),
-//     { name: "auth-store" }
-//   )
-// );
