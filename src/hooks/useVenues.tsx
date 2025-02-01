@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { Venues } from "../types/Venues";
-import { BASE_API_URL } from "../api/apiConfig";
+import { useEffect, useState } from 'react';
+import { Venues } from '../types/Venues';
+import { BASE_API_URL } from '../api/apiConfig';
 
 /**
  * Custom React Hook for fetching paginated venues.
@@ -20,7 +20,8 @@ export function useVenues(limit = 12) {
       try {
         const url = `${BASE_API_URL}/venues?limit=${limit}&page=${page}&sort=name&sortOrder=asc`;
         const response = await fetch(url);
-        if (!response.ok) throw new Error(`Error fetching venues: ${response.statusText}`);
+        if (!response.ok)
+          throw new Error(`Error fetching venues: ${response.statusText}`);
 
         const data = await response.json();
         if (data.length === 0) {
@@ -30,7 +31,7 @@ export function useVenues(limit = 12) {
           setPage((prevPage) => prevPage + 1);
         }
       } catch (error) {
-        console.error("Error fetching venues:", error);
+        console.error('Error fetching venues:', error);
         setHasMore(false);
       } finally {
         setIsFetching(false);
@@ -40,5 +41,10 @@ export function useVenues(limit = 12) {
     fetchVenues();
   }, [page]);
 
-  return { venues, isFetching, hasMore, loadMore: () => setPage((prev) => prev + 1) };
+  return {
+    venues,
+    isFetching,
+    hasMore,
+    loadMore: () => setPage((prev) => prev + 1),
+  };
 }

@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { Venues } from "../types/Venues";
+import { create } from 'zustand';
+import { Venues } from '../types/Venues';
 
 interface VenueState {
   venues: Venues[];
@@ -21,7 +21,7 @@ export const useVenueAPI = create<VenueState>((set) => ({
     set({ isLoading: true, isError: false });
     try {
       const response = await fetch(url);
-      if (!response.ok) throw new Error("Network response was not ok");
+      if (!response.ok) throw new Error('Network response was not ok');
 
       const json = await response.json();
       set((state) => ({
@@ -29,7 +29,7 @@ export const useVenueAPI = create<VenueState>((set) => ({
         isLoading: false,
       }));
     } catch (error) {
-      console.error("Fetching error:", error);
+      console.error('Fetching error:', error);
       set({ isError: true, isLoading: false });
     }
   },
@@ -39,12 +39,12 @@ export const useVenueAPI = create<VenueState>((set) => ({
     set({ isLoading: true, isError: false });
     try {
       const response = await fetch(url);
-      if (!response.ok) throw new Error("Network response was not ok");
+      if (!response.ok) throw new Error('Network response was not ok');
 
       const json = await response.json();
       set({ venueDetails: json.data, isLoading: false });
     } catch (error) {
-      console.error("Fetching error:", error);
+      console.error('Fetching error:', error);
       set({ isError: true, isLoading: false });
     }
   },

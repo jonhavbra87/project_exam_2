@@ -1,15 +1,15 @@
-import { useParams } from "react-router-dom";
-import { API_VENUES, BASE_API_URL } from "../../api/apiConfig";
-import { VenuePrice } from "../../components/VenuePrice";
-import VenueRating from "../../components/VenueRating";
-import MetaDataVenue from "../../components/MetaDataVenue";
-import GradientHeading from "../../styles/GradientHeading";
-import { SlHeart } from "react-icons/sl";
-import VenueMap from "../../components/VenueMap";
-import MediaGallery from "../../components/MediaGallery";
-import VenueAddress from "../../components/VenueAddress";
-import { useEffect } from "react";
-import { useVenueAPI } from "../../hooks/useVenueAPI";
+import { useParams } from 'react-router-dom';
+import { API_VENUES, BASE_API_URL } from '../../api/apiConfig';
+import { VenuePrice } from '../../components/VenuePrice';
+import VenueRating from '../../components/VenueRating';
+import MetaDataVenue from '../../components/MetaDataVenue';
+import GradientHeading from '../../styles/GradientHeading';
+import { SlHeart } from 'react-icons/sl';
+import VenueMap from '../../components/VenueMap';
+import MediaGallery from '../../components/MediaGallery';
+import VenueAddress from '../../components/VenueAddress';
+import { useEffect } from 'react';
+import { useVenueAPI } from '../../hooks/useVenueAPI';
 
 function VenueDetails() {
   const { id } = useParams();
@@ -21,14 +21,22 @@ function VenueDetails() {
     }
   }, [id, fetchVenueDetails]);
 
-  console.log("API response:", venueDetails);
+  console.log('API response:', venueDetails);
 
   if (isLoading) {
-    return <div className="text-center text-gray-500">⏳ Loading venue details...</div>;
+    return (
+      <div className="text-center text-gray-500">
+        ⏳ Loading venue details...
+      </div>
+    );
   }
 
   if (isError || !venueDetails) {
-    return <div className="text-center text-red-500">❌ Error loading venue data.</div>;
+    return (
+      <div className="text-center text-red-500">
+        ❌ Error loading venue data.
+      </div>
+    );
   }
 
   return (
@@ -63,7 +71,9 @@ function VenueDetails() {
           <h3 className="text-ingress-desktop font-semibold mt-6">
             Description
           </h3>
-          <p className="text-md text-text-primary mb-4">{venueDetails.description}</p>
+          <p className="text-md text-text-primary mb-4">
+            {venueDetails.description}
+          </p>
 
           <h3 className="text-ingress-desktop font-semibold mt-6">
             Facilities
@@ -78,7 +88,8 @@ function VenueDetails() {
           <div className="mt-4 flex items-center gap-4">
             <img
               src={
-                venueDetails.owner.avatar?.url || 'https://via.placeholder.com/150'
+                venueDetails.owner.avatar?.url ||
+                'https://via.placeholder.com/150'
               }
               alt="Owner Avatar"
               className="w-16 h-16 rounded-full"
@@ -124,7 +135,7 @@ function VenueDetails() {
       {/* Location */}
       <div className="mt-6">
         <h3 className="text-ingress-desktop font-semibold">Location</h3>
-<VenueAddress location={venueDetails.location} />
+        <VenueAddress location={venueDetails.location} />
         <VenueMap venue={venueDetails} />
       </div>
     </div>

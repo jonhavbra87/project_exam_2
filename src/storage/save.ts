@@ -14,21 +14,20 @@
  */
 
 export function save<T>(key: string, value: T): void {
-    try {
-      if (!key) {
-        console.warn("Save failed: Key is empty.");
-        return;
-      }
-  
-      if (value === undefined || value === null) {
-        console.warn(`Save failed: Invalid value for key "${key}".`);
-        return;
-      }
-  
-      localStorage.setItem(key, JSON.stringify(value));
-      console.log(`✅ Saved "${key}" to localStorage:`, value);
-    } catch (error) {
-      console.error(`Error saving "${key}" to localStorage:`, error);
+  try {
+    if (!key) {
+      console.warn('Save failed: Key is empty.');
+      return;
     }
+
+    if (value === undefined || value === null) {
+      console.warn(`Save failed: Invalid value for key "${key}".`);
+      return;
+    }
+
+    localStorage.setItem(key, JSON.stringify(value));
+    console.log(`✅ Saved "${key}" to localStorage:`, value);
+  } catch (error) {
+    console.error(`Error saving "${key}" to localStorage:`, error);
   }
-  
+}

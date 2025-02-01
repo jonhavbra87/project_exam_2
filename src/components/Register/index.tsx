@@ -1,11 +1,11 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { register } from "../../api/auth/register";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { register } from '../../api/auth/register';
 
 function Register() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [venueManager, setVenueManager] = useState(false); // ✅ Bruker kan velge Venue Manager
   const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
@@ -16,19 +16,24 @@ function Register() {
 
     try {
       await register(name, email, password, venueManager);
-      navigate("/profile"); // ✅ Naviger til profil etter registrering
+      navigate('/profile'); // ✅ Naviger til profil etter registrering
     } catch (error) {
-      setError("Registration failed. Please try again.");
+      setError('Registration failed. Please try again.');
       console.error(error);
     }
   };
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <form onSubmit={handleSubmit} className="p-6 bg-white shadow-md rounded-lg w-96">
+      <form
+        onSubmit={handleSubmit}
+        className="p-6 bg-white shadow-md rounded-lg w-96"
+      >
         <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
 
-        {error && <p className="text-red-500 text-sm text-center mb-3">{error}</p>}
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-3">{error}</p>
+        )}
 
         <input
           type="text"
@@ -71,7 +76,10 @@ function Register() {
           />
         </div>
 
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 mt-4">
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 mt-4"
+        >
           Register
         </button>
       </form>

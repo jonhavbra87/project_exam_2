@@ -1,47 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../../api/auth/login";
+import useLogin from "../../api/auth/login";
 import { useAuthStore } from "../../store/authStore";
 
 
-function Login() {
-  const { profile, login: loginStore } = useAuthStore(); // 🔹 Hent login-funksjonen fra Zustand
+
+function LoginComponent() {
+  // const { profile, login: loginStore } = useAuthStore(); // 🔹 Hent login-funksjonen fra Zustand
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
+  const [login] = useAuthStore((state) => [state.login]);
 
-  useEffect(() => {
-    if (profile) {
-      navigate("/profile"); // ✅ Hvis allerede logget inn, send til profil
-    }
-  }, [profile, navigate]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    setError(null);
-  
+
+
     try {
-      const user = await login(email, password);
-      const expiresIn = 60 * 60 * 1000; // 1 hour
-      const expiryTime = Date.now() + expiresIn;
-  
-      loginStore(
-        {
-          name: user.name,
-          email: user.email,
-          avatar: user.avatar,
-          banner: user.banner,
-          venueManager: user.venueManager,
-        },
-        user.accessToken,
-        expiryTime
-      );
-  
+      const {name, emailAddress, avatar, banner, token, venueManager} = await useLogin(email, password); // ✅ Logg inn
+      login( {profile: {name, email: emailAddress, avatar, banner, venueManager}, token} ); // 🔹 Oppdater Zustand
+      
       navigate("/profile"); // ✅ Naviger etter login
     } catch (error) {
-      setError("Invalid email or password. Please try again.");
-      console.error(error);
+      console.log("❌ Error in login:", error);
+      
     }
   };
   
@@ -79,5 +62,5 @@ function Login() {
   );
 }
 
-export default Login;
+export default LoginComponent;
 

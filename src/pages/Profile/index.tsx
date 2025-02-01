@@ -1,76 +1,54 @@
-// import { useEffect, useState } from "react";
-// import { useAuthStore } from "../../store/authStore";
-// import Logout from "../../components/Logout";
-// import { updateVenueManagerStatus } from "../../api/profile/Update";
+import { useEffect, useState } from 'react';
+import { updateVenueManagerStatus } from '../../api/profile/Update';
+import Logout from '../../components/Logout';
+import { useAuthStore } from '../../store/authStore';
 
-import { useEffect, useState } from "react";
-import { updateVenueManagerStatus } from "../../api/profile/Update";
-import Logout from "../../components/Logout";
-import { useAuthStore } from "../../store/authStore";
-
-
-// function Profile() {
-//   const { profile, updateVenueManager } = useAuthStore();
-//   const [venueManager, setVenueManager] = useState(profile?.venueManager ?? false);
-
-//   // ✅ Oppdater `venueManager` når `profile` lastes inn
-//   useEffect(() => {
-//     if (profile?.venueManager !== undefined) {
-//       setVenueManager(profile.venueManager);
-//     }
-//   }, [profile]);
-
-//   if (!profile) {
-//     return <p>⚠️ You must be logged in to view this page.</p>;
-//   }
-
-//   const handleVenueManagerToggle = async () => {
-//     const newStatus = !venueManager;
-//     setVenueManager(newStatus); // ✅ Oppdater lokal state umiddelbart
-//     await updateVenueManagerStatus(newStatus); // ✅ Oppdater API-et
-//     updateVenueManager(newStatus); // ✅ Oppdater Zustand
-//   };
 function Profile() {
   const { profile, updateVenueManager } = useAuthStore();
-  const [venueManager, setVenueManager] = useState(profile?.venueManager ?? false);
+  const [venueManager, setVenueManager] = useState(
+    profile?.venueManager ?? false
+  );
 
   // Add debugging useEffect
   useEffect(() => {
     const state = useAuthStore.getState();
-    console.log("Profile Component - Current Auth State:", {
+    console.log('Profile Component - Current Auth State:', {
       hasProfile: !!state.profile,
       hasToken: !!state.accessToken,
       isAuthenticated: state.isAuthenticated,
-      expiresAt: state.expiresAt
+      expiresAt: state.expiresAt,
     });
   }, []);
 
   useEffect(() => {
     if (profile?.venueManager !== undefined) {
       setVenueManager(profile.venueManager);
-      console.log("Profile venueManager updated:", profile.venueManager);
+      console.log('Profile venueManager updated:', profile.venueManager);
     }
   }, [profile]);
 
   // Add logging to the toggle handler
   const handleVenueManagerToggle = async () => {
     const newStatus = !venueManager;
-    console.log("Starting venue manager toggle. Current token:", useAuthStore.getState().accessToken);
-    
+    console.log(
+      'Starting venue manager toggle. Current token:',
+      useAuthStore.getState().accessToken
+    );
+
     setVenueManager(newStatus);
-    
+
     try {
       await updateVenueManagerStatus(newStatus);
       updateVenueManager(newStatus);
-      console.log("Venue manager toggle completed successfully");
+      console.log('Venue manager toggle completed successfully');
     } catch (error) {
-      console.error("Error in venue manager toggle:", error);
+      console.error('Error in venue manager toggle:', error);
       setVenueManager(!newStatus); // Revert on error
     }
   };
 
   if (!profile) {
-    console.log("No profile found in Profile component");
+    console.log('No profile found in Profile component');
     return <p>⚠️ You must be logged in to view this page.</p>;
   }
 
@@ -98,3 +76,30 @@ function Profile() {
 }
 
 export default Profile;
+
+// import { useEffect, useState } from "react";
+// import { useAuthStore } from "../../store/authStore";
+// import Logout from "../../components/Logout";
+// import { updateVenueManagerStatus } from "../../api/profile/Update";
+
+// function Profile() {
+//   const { profile, updateVenueManager } = useAuthStore();
+//   const [venueManager, setVenueManager] = useState(profile?.venueManager ?? false);
+
+//   // ✅ Oppdater `venueManager` når `profile` lastes inn
+//   useEffect(() => {
+//     if (profile?.venueManager !== undefined) {
+//       setVenueManager(profile.venueManager);
+//     }
+//   }, [profile]);
+
+//   if (!profile) {
+//     return <p>⚠️ You must be logged in to view this page.</p>;
+//   }
+
+//   const handleVenueManagerToggle = async () => {
+//     const newStatus = !venueManager;
+//     setVenueManager(newStatus); // ✅ Oppdater lokal state umiddelbart
+//     await updateVenueManagerStatus(newStatus); // ✅ Oppdater API-et
+//     updateVenueManager(newStatus); // ✅ Oppdater Zustand
+//   };

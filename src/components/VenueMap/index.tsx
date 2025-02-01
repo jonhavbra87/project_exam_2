@@ -6,7 +6,8 @@ import L from 'leaflet';
 
 // 📌 **Custom Leaflet Marker**
 const customIcon = new L.Icon({
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+  iconUrl:
+    'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
   iconSize: [25, 41],
   iconAnchor: [12, 41],
   popupAnchor: [1, -34],
@@ -34,16 +35,24 @@ function VenueMap({ venue }: { venue: Venues }) {
     if (venue?.location) {
       const { lat, lng, address, city, country } = venue.location;
 
-      if (typeof lat === 'number' && typeof lng === 'number' && !isNaN(lat) && !isNaN(lng) && lat !== 0 && lng !== 0) {
+      if (
+        typeof lat === 'number' &&
+        typeof lng === 'number' &&
+        !isNaN(lat) &&
+        !isNaN(lng) &&
+        lat !== 0 &&
+        lng !== 0
+      ) {
         setCoordinates([lat, lng]);
         setAddressAvailable(true);
         setLocationText(`${address || city || country || 'Ukjent lokasjon'}`);
       } else if (address || city || country) {
-        setLocationText(`${address ? `${address}, ` : ''}${city ? `${city}, ` : ''}${country || ''}`);
+        setLocationText(
+          `${address ? `${address}, ` : ''}${city ? `${city}, ` : ''}${country || ''}`
+        );
         setCoordinates([59.9139, 10.7522]); // Fallback to Oslo
         setAddressAvailable(true);
-      }
-      else {
+      } else {
         setLocationText('Ingen spesifisert lokasjon');
         setCoordinates([59.9139, 10.7522]); // 🔹 Fallback to Oslo
         setAddressAvailable(false);
@@ -57,7 +66,11 @@ function VenueMap({ venue }: { venue: Venues }) {
   }
 
   if (!coordinates) {
-    return <p className="text-red-500">⚠️ {locationText || 'Lokasjon ikke tilgjengelig.'}</p>;
+    return (
+      <p className="text-red-500">
+        ⚠️ {locationText || 'Lokasjon ikke tilgjengelig.'}
+      </p>
+    );
   }
 
   return (
@@ -82,7 +95,6 @@ function VenueMap({ venue }: { venue: Venues }) {
               <p>
                 <strong>Address:</strong> {locationText}
               </p>
-
             </div>
           </Popup>
         </Marker>
