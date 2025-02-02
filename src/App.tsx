@@ -8,7 +8,7 @@ import Venues from './pages/Venues';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 import Login from './components/Login';
-import Register from './components/Register';
+// import Register from './components/Register';
 
 function App() {
   return (
@@ -19,7 +19,7 @@ function App() {
           <Route path="venue/:id" element={<VenueDetails />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
+          {/* <Route path="/register" element={<Register />} /> */}
           <Route path="Profile" element={<Profile />} />
           <Route path="Contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />

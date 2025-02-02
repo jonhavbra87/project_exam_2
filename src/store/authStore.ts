@@ -1,13 +1,8 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { Profile } from "../types/Profile";
 
-type Profile = {
-  name: string;
-  email: string;
-  avatar?: { url: string; alt: string };
-  banner?: { url: string; alt: string };
-  venueManager: boolean;
-};
+
 
 type AuthState = {
   profile: Profile | null;
