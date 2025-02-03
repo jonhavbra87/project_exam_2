@@ -1,8 +1,9 @@
-import { FaUser, FaEnvelope, FaCalendarAlt, FaPlus, FaBuilding, FaFileAlt, FaLock, FaSignOutAlt } from "react-icons/fa";
+import { FaEnvelope, FaCalendarAlt, FaPlus, FaBuilding, FaFileAlt, FaLock, FaSignOutAlt } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import useFetchVenueManager from "../../hooks/useFetchVenueManager";
 import UpdateProfile from "../../components/UpdateProfile";
+import { FiSettings } from "react-icons/fi";
 
 const ProfilePage = () => {
   const { profile, logout } = useAuthStore();
@@ -15,25 +16,24 @@ const ProfilePage = () => {
 
   const sections = [
     {
-      title: "Preferences",
       items: [
-        { icon: <FaUser />, text: "Personal Information", link: "/profile/edit" },
-        { icon: <FaEnvelope />, text: "Messages", link: "/messages" },
-        { icon: <FaCalendarAlt />, text: "My Bookings", link: "/profile/bookings" },
+        { icon: <FaEnvelope />, text: "Messages", description: "Check your inbox for new messages and communicate with hosts or guests.", link: "/messages" },
+        { icon: <FaCalendarAlt />, text: "My Bookings", description: "View and manage your past and upcoming bookings in one place.", link: "/profile/bookings" },
+        { icon: <FiSettings />, text: "Edit Profile", description: "Customize your profile by updating your profile picture and banner image.", link: "/profile/edit" },
+        //edit user profile
+
       ],
     },
     venueManager && {
-      title: "Venue Manager",
       items: [
-        { icon: <FaBuilding />, text: "My Venues", link: "/venues" },
-        { icon: <FaPlus />, text: "Add a Venue", link: "/venues/add" },
+        { icon: <FaBuilding />, text: "My Venues", description: "Manage your listed venues. Edit details or delete venue.", link: "/venues" },
+        { icon: <FaPlus />, text: "Add a Venue",  description: "Create and list a new venue. Add details, upload images +++.", link: "/venues/add" },
       ],
     },
     {
-      title: "Legal",
       items: [
-        { icon: <FaFileAlt />, text: "Terms of Service", link: "/terms" },
-        { icon: <FaLock />, text: "Guidelines for Privacy", link: "/privacy" },
+        { icon: <FaFileAlt />, text: "Terms of Service",  description: "Review our terms to understand your rights and responsibilities.", link: "/terms" },
+        { icon: <FaLock />, text: "Guidelines for Privacy", description: "Learn how we handle your data and keep your information secure.", link: "/privacy" },
       ],
     },
   ].filter(Boolean);
@@ -57,8 +57,8 @@ const ProfilePage = () => {
             alt={profile?.avatar?.alt || "User avatar"}
             className="w-24 h-24 md:w-32 md:h-32 rounded-full border"
           />
-          <h2 className="text-2xl font-bold mt-2">{profile?.name}</h2>
-          <p className="text-gray-600">{profile?.email}</p>
+          <h2 className="text-body-large-desktop text-text-primary font-bold mt-2">{profile?.name}</h2>
+          <p className="text-body-medium-desktop text-text-secondary font-normal">{profile?.bio}</p>
 
           {/* 📌 Venue Manager Status & Toggle */}
           <p className="mt-2 px-4 py-1 bg-primary text-white rounded">
@@ -79,16 +79,20 @@ const ProfilePage = () => {
             <div key={index}>
               {section && (
                 <>
-                  <h3 className="text-lg font-bold mb-3">{section.title}</h3>
+                  {/* <h3 className="text-lg font-bold mb-3">{section.title}</h3> */}
                   <div className="grid gap-3">
                     {section.items.map((item, i) => (
                       <Link
                         key={i}
                         to={item.link}
-                        className="flex items-center gap-3 p-4 bg-white shadow-md rounded-lg hover:bg-gray-100"
+                        className="flex items-center gap-3 p-4 bg-white shadow-lg rounded-lg hover:bg-gray-100"
                       >
                         <div className="text-text-primary text-xl">{item.icon}</div>
-                        <span className="text-text-secondary font-medium">{item.text}</span>
+                        <div>
+                        <h3 className="text-body-large-mobile md:text-body-large-desktop text-text-primary font-medium">{item.text}</h3>
+                        <p className="text-body-medium-mobile md:text-body-medium-desktop-desktop text-text-secondary text-sm">{item.description}</p>
+
+                        </div>
                       </Link>
                     ))}
                   </div>

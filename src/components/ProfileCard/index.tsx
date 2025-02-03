@@ -16,7 +16,7 @@ const ProfileCard = ({ icon, title, description, link, onClick }: ProfileCardPro
     <Component
       to={link || ""}
       onClick={onClick}
-      className="flex flex-grow items-center gap-4 p-4 bg-white shadow-md rounded-lg hover:bg-gray-100 cursor-pointer max-w-md w-full"
+      className="flex flex-grow-start md:max-w-[276] items-center gap-4 p-8 bg-white shadow-md rounded-lg hover:bg-gray-100 cursor-pointer w-full"
     >
       <div className="text-text-secondary text-xl">{icon}</div>
       <div className="flex-grow">
