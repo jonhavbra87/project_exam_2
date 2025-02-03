@@ -61,7 +61,7 @@ const ProfilePage = () => {
           <p className="text-gray-600">{profile?.email}</p>
 
           {/* 📌 Venue Manager Status & Toggle */}
-          <p className="mt-2 px-4 py-1 bg-blue-100 text-blue-700 rounded">
+          <p className="mt-2 px-4 py-1 bg-primary text-white rounded">
             {venueManager ? "You are a Venue Manager" : "Not a Venue Manager"}
           </p>
 
@@ -87,8 +87,8 @@ const ProfilePage = () => {
                         to={item.link}
                         className="flex items-center gap-3 p-4 bg-white shadow-md rounded-lg hover:bg-gray-100"
                       >
-                        <div className="text-blue-500 text-xl">{item.icon}</div>
-                        <span className="text-gray-700 font-medium">{item.text}</span>
+                        <div className="text-text-primary text-xl">{item.icon}</div>
+                        <span className="text-text-secondary font-medium">{item.text}</span>
                       </Link>
                     ))}
                   </div>

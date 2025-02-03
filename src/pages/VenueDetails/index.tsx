@@ -10,6 +10,7 @@ import MediaGallery from '../../components/MediaGallery';
 import VenueAddress from '../../components/VenueAddress';
 import { useEffect } from 'react';
 import { useVenueAPI } from '../../hooks/useVenueAPI';
+import VenueCalendar from '../../components/VenueCalendar';
 
 function VenueDetails() {
   const { id } = useParams();
@@ -108,19 +109,7 @@ function VenueDetails() {
         {/* Right Column */}
         <div className="md:w-1/3 p-6 bg-gray-50 rounded-lg shadow-lg">
           <h3 className="text-lg font-semibold mb-4">Book your stay</h3>
-          <label className="block mb-2">Check-in</label>
-          <input type="date" className="w-full p-2 border rounded" />
-
-          <label className="block mt-4 mb-2">Check-out</label>
-          <input type="date" className="w-full p-2 border rounded" />
-
-          <label className="block mt-4 mb-2">Guests</label>
-          <input
-            type="number"
-            min="1"
-            max="10"
-            className="w-full p-2 border rounded"
-          />
+          <VenueCalendar />
 
           <div className="mt-4 text-gray-600">
             <p>Price:</p>
