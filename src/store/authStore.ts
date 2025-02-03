@@ -1,56 +1,74 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { Profile } from "../types/Profile";
-
-
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { Profile } from '../types/Profile';
 
 type AuthState = {
   profile: Profile | null;
   accessToken: string | null;
   isAuthenticated: boolean;
+  expiresAt: number | null;
   login: (profile: Profile, accessToken: string, expiresAt: number) => void;
   logout: () => void;
-
+  updateVenueManager: (venueManager: boolean) => void;
 };
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       profile: null,
       accessToken: null,
       isAuthenticated: false,
-      isVenueManager: false,
+      expiresAt: null,
 
-
-      login: (profile: Profile, accessToken: string) => {
+      /**
+       * ✅ **Logg inn og lagre brukerinfo i Zustand + Local Storage**
+       */
+      login: (profile: Profile, accessToken: string, expiresAt: number) => {
         set({
           profile,
           accessToken,
           isAuthenticated: true,
-
+          expiresAt, // ✅ Lagre utløpstiden
         });
-        console.log("📦 Data in localStorage after login:", localStorage.getItem("auth-store"));
+        console.log('📦 Zustand state after login:', {
+          profile,
+          accessToken,
+          expiresAt,
+        });
+        console.log(
+          '📦 Data in localStorage after login:',
+          localStorage.getItem('auth-store')
+        );
       },
+      /**
+       * ✅ **Oppdater kun `venueManager` i profilen og lagre i Zustand + Local Storage**
+       */
+      updateVenueManager: (venueManager: boolean) => {
+        const currentProfile = get().profile;
+        if (!currentProfile) return;
 
+        const updatedProfile = { ...currentProfile, venueManager };
+
+        set({ profile: updatedProfile });
+
+        console.log("✅ Updated Venue Manager in Zustand:", updatedProfile);
+        console.log("📦 Data in localStorage after update:", localStorage.getItem("auth-store"));
+      },
+      /**
+       * ✅ **Sjekk om brukeren er innlogget ved oppstart**
+       */
       logout: () => {
-        console.log("🔴 User logged out. Fjerner data fra Zustand og localStorage.");
+        console.log(
+          '🔴 User logged out. Fjerner data fra Zustand og localStorage.'
+        );
         set({ profile: null, accessToken: null, isAuthenticated: false });
       },
     }),
     {
-      name: "auth-store"
+      name: 'auth-store',
     }
   )
 );
-
-
-
-
-
-
-
-
-
 
 // import { create } from "zustand";
 // import { persist } from "zustand/middleware";
@@ -82,7 +100,6 @@ export const useAuthStore = create<AuthState>()(
 //       expiresAt: null,
 //       isAuthenticated: false,
 
-      
 //       /**
 //        * ✅ **Lagrer brukerdata etter innlogging**
 //        */
@@ -104,19 +121,19 @@ export const useAuthStore = create<AuthState>()(
 //         console.log("📦 Zustand state after login:", get());
 //         console.log("📦 Data in localStorage after login:", localStorage.getItem("auth-store"));
 //       },
-      
-//       /**
-//        * ✅ **Oppdaterer VenueManager-status i Zustand**
-//        */
-//       updateVenueManager: (status) => {
-//         const { profile } = get();
-//         if (profile) {
-//           set({ profile: { ...profile, venueManager: status } });
-//           console.log("🟢 VenueManager updated in Zustand:", status);
-//         } else {
-//           console.warn("⚠️ Can not update VenueManager, no profile found.");
-//         }
-//       },
+
+// /**
+//  * ✅ **Oppdaterer VenueManager-status i Zustand**
+//  */
+// updateVenueManager: (status) => {
+//   const { profile } = get();
+//   if (profile) {
+//     set({ profile: { ...profile, venueManager: status } });
+//     console.log("🟢 VenueManager updated in Zustand:", status);
+//   } else {
+//     console.warn("⚠️ Can not update VenueManager, no profile found.");
+//   }
+// },
 
 //       /**
 //        * ✅ **Sjekker om brukeren fortsatt er innlogget ved startup**
@@ -159,14 +176,14 @@ export const useAuthStore = create<AuthState>()(
 //       //     console.error("❌ Error during Zustand rehydration:", error);
 //       //     return;
 //       //   }
-      
+
 //       //   console.log("🔄 Zustand rehydrated from localStorage:", state);
-      
+
 //       //   if (!state) {
 //       //     console.warn("⚠️ No early Zustand-state forund in localStorage.");
 //       //     return;
 //       //   }
-      
+
 //       //   setTimeout(() => {
 //       //     useAuthStore.setState({ rehydrated: true }); // ✅ Ensures Zustand is marked as hydrated
 //       //     console.log("✅ Zustand is finished rehydrated!");

@@ -1,128 +1,59 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { BASE_API_URL, API_KEY } from "../api/apiConfig";
 import { useAuthStore } from "../store/authStore";
-import { BASE_API_URL } from "../api/apiConfig";
 
 const useFetchVenueManager = () => {
-  const { profile, accessToken } = useAuthStore();
+  const { profile, accessToken, updateVenueManager } = useAuthStore(); // ✅ Hent login-funksjonen for å oppdatere Zustand
   const [venueManager, setVenueManager] = useState<boolean | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [isError, setIsError] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
-  const [updateError, setUpdateError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // 📌 Hent Venue Manager status fra API
-  useEffect(() => {
+  const fetchVenueManager = async () => {
     if (!profile || !accessToken) {
-      setIsLoading(false);
+      setError("No profile or token found.");
       return;
     }
 
-    const fetchVenueManagerStatus = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(`${BASE_API_URL}/holidaze/profiles/${profile.name}`, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
-          },
-        });
-
-        if (!response.ok) throw new Error("Failed to fetch venueManager status.");
-        const json = await response.json();
-        setVenueManager(json.data.venueManager);
-      } catch (error) {
-        console.error("❌ Error fetching venueManager:", error);
-        setIsError(true);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchVenueManagerStatus();
-  }, [profile, accessToken]);
-
-  // 📌 Oppdater Venue Manager status i API
-  const updateVenueManagerStatus = async (newStatus: boolean) => {
-    if (!profile || !accessToken) {
-      console.error("❌ No profile or token found when updating Venue Manager.");
-      setUpdateError("No profile or token found.");
-      return;
-    }
-
-    setIsUpdating(true);
-    setUpdateError(null);
+    setLoading(true);
+    setError(null);
 
     try {
       const response = await fetch(`${BASE_API_URL}/holidaze/profiles/${profile.name}`, {
-        method: "PUT",
+        method: "GET",
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${accessToken}`,
-          "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
+          "X-Noroff-API-Key": API_KEY,
         },
-        body: JSON.stringify({ venueManager: newStatus }),
       });
 
-      if (!response.ok) throw new Error(`Failed to update venueManager: ${response.statusText}`);
+      const result = await response.json();
+      console.log("🟢 VenueManager API Response:", result);
 
-      console.log("✅ Venue Manager status updated:", newStatus);
-      setVenueManager(newStatus);
+      if (!response.ok) {
+        throw new Error(result.message || "Failed to fetch venueManager");
+      }
+
+      setVenueManager(result.data.venueManager);
+      updateVenueManager(result.data.venueManager); // ✅ Oppdaterer VenueManager-status i Zustand
+   // 📌 **Oppdater Zustand `profile` med venueManager**
+//    login(
+//     { ...profile, venueManager: result.data.venueManager }, // ✅ Oppdatert profil
+//     accessToken,
+//     expiresAt ?? Date.now() + 1000 * 60 * 60 // ✅ Send utløpstid eller sett den til 1 time
+//   );
+// Save venueManager result to local storage
+// localStorage.setItem("venueManager", JSON.stringify(result.data.venueManager));
+
+      console.log("📦 Updated Zustand profile:", useAuthStore.getState().profile);
     } catch (error) {
-      console.error("❌ Error updating Venue Manager:", error);
-      setUpdateError(error instanceof Error ? error.message : "Failed to update venueManager.");
+      setError(error instanceof Error ? error.message : "Unknown error");
+      console.error("❌ Error fetching Venue Manager:", error);
     } finally {
-      setIsUpdating(false);
+      setLoading(false);
     }
   };
 
-  return { venueManager, isLoading, isError, isUpdating, updateVenueManagerStatus, updateError };
+  return { venueManager, fetchVenueManager, loading, error };
 };
 
 export default useFetchVenueManager;
-
-
-// import { useState, useEffect } from "react";
-// import { useAuthStore } from "../store/authStore";
-// import { BASE_API_URL } from "../api/apiConfig";
-
-// const useFetchVenueManager = () => {
-//   const { profile, accessToken } = useAuthStore();
-//   const [venueManager, setVenueManager] = useState<boolean | null>(null);
-//   const [isLoading, setIsLoading] = useState(true);
-//   const [isError, setIsError] = useState(false);
-
-//   useEffect(() => {
-//     if (!profile || !accessToken) {
-//       setIsLoading(false);
-//       return;
-//     }
-
-//     const fetchVenueManagerStatus = async () => {
-//       setIsLoading(true);
-//       try {
-//         const response = await fetch(`${BASE_API_URL}/holidaze/profiles/${profile.name}`, {
-//           headers: {
-//             Authorization: `Bearer ${accessToken}`,
-//             "X-Noroff-API-Key": import.meta.env.VITE_API_KEY,
-//           },
-//         });
-
-//         if (!response.ok) throw new Error("Failed to fetch venueManager status.");
-//         const json = await response.json();
-
-//         setVenueManager(json.data.venueManager);
-//       } catch (error) {
-//         console.error("❌ Error fetching venueManager:", error);
-//         setIsError(true);
-//       } finally {
-//         setIsLoading(false);
-//       }
-//     };
-
-//     fetchVenueManagerStatus();
-//   }, [profile, accessToken]);
-
-//   return { venueManager, isLoading, isError };
-// };
-
-// export default useFetchVenueManager;

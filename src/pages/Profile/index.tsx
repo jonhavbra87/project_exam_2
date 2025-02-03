@@ -1,16 +1,16 @@
-import useFetchVenueManager from "../../hooks/useFetchVenueManager";
-import { useAuthStore } from "../../store/authStore";
 import { useNavigate } from "react-router-dom";
+import { useAuthStore } from "../../store/authStore";
+import useFetchVenueManager from "../../hooks/useFetchVenueManager";
 import GradientHeading from "../../styles/GradientHeading";
+import UpdateProfile from "../../components/UpdateProfile";
 
 function ProfilePage() {
   const { profile, logout } = useAuthStore();
-  const { venueManager, isLoading, isError, isUpdating, updateVenueManagerStatus, updateError } =
-    useFetchVenueManager();
+  const { venueManager, fetchVenueManager, loading, error } = useFetchVenueManager();
   const navigate = useNavigate();
 
   if (!profile) {
-    return <div className="text-center text-gray-500">Loading profile...</div>;
+return <div className="text-center text-gray-500">Loading...</div>
   }
 
   return (
@@ -22,35 +22,29 @@ function ProfilePage() {
       <div className="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto">
         <div className="flex flex-col items-center">
           <img
-            src={profile.avatar?.url || "https://via.placeholder.com/150"}
-            alt={profile.avatar?.alt || "User avatar"}
+            src={profile?.avatar?.url || "https://via.placeholder.com/150"}
+            alt={profile?.avatar?.alt || "User avatar"}
             className="w-24 h-24 rounded-full border"
           />
-          <h2 className="text-2xl font-bold mt-4">{profile.name}</h2>
-          <p className="text-gray-600">{profile.email}</p>
+          <h2 className="text-2xl font-bold mt-4">{profile?.name}</h2>
+          <p className="text-gray-600">{profile?.email}</p>
         </div>
 
         {/* 🔹 Viser Venue Manager-status */}
-        {isLoading ? (
+        {loading ? (
           <p className="text-gray-500">Checking venue status...</p>
-        ) : isError ? (
-          <p className="text-red-500">Error loading venue status</p>
+        ) : error ? (
+          <p className="text-red-500">{error}</p>
         ) : (
-          <div className="mt-4">
-            <label className="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                checked={venueManager || false}
-                onChange={() => updateVenueManagerStatus(!venueManager)}
-                disabled={isUpdating}
-                className="w-5 h-5"
-              />
-              <span>{venueManager ? "You are a Venue Manager" : "Become a Venue Manager"}</span>
-            </label>
-
-            {updateError && <p className="text-red-500 text-sm mt-2">{updateError}</p>}
-          </div>
+          <p className="mt-2 px-4 py-1 bg-blue-100 text-blue-700 rounded">
+            {venueManager ? "You are a Venue Manager" : "Not a Venue Manager"}
+          </p>
         )}
+
+        {/* 🔹 Knapp for å oppdatere profil */}
+        <div onClick={fetchVenueManager}>
+          <UpdateProfile />
+          </div>
 
         {/* 🔹 Logout-knapp */}
         <button

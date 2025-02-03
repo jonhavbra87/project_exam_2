@@ -1,19 +1,19 @@
 import { useState } from 'react';
 import { API_AUTH, API_KEY, API_LOGIN, BASE_API_URL } from '../api/apiConfig';
 import { Profile } from '../types/Profile';
+import { useAuthStore } from '../store/authStore';
 
 //API hook for login
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [data, setData] = useState<Profile | null>(null); 
+  // const [data, setData] = useState<Profile | null>(null);
+  const authLogin = useAuthStore((state) => state.login); 
 
-
-  
   const login = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
-    
+
     const emailValue = email; // Declare the 'email' variable before using it
 
     try {
@@ -27,31 +27,28 @@ const useLogin = () => {
       });
       const result = await response.json();
       console.log(result);
-      
-      if (response.ok) {
-        setData(data);
-      } else {
+
+      if (!response.ok) {
         setError('Login failed');
       }
 
-      const {
-        name,
-        email,
-        avatar,
-        banner,
-        accessToken,
-        venueManager,
-      } = result.data;
-
+      // const { name, email, avatar, banner, accessToken, venueManager } =
+      //   result.data;
       const profile: Profile = {
-        name,
-        email,
-        avatar,
-        banner,
-        accessToken,
-        venueManager,
+        ...result.data,
+        venueManager: result.data.venueManager ?? false, // 📌 Sørger for at venueManager aldri er `undefined`
       };
-      setData(profile); // ✅ Type-safe state update
+      // const profile: Profile = {
+      //   name,
+      //   email,
+      //   avatar,
+      //   banner,
+      //   accessToken,
+      //   venueManager,
+      // };
+      authLogin(profile, profile.accessToken, Date.now() + 1000 * 60 * 60); // ✅ Oppdater Zustand
+
+      // setData(profile); // ✅ Type-safe state update
       return profile;
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Unknown error');
@@ -60,7 +57,7 @@ const useLogin = () => {
       setLoading(false);
     }
   };
-  return { login, loading, error, data };
+  return { login, loading, error };
 };
 
 export default useLogin;
