@@ -19,7 +19,7 @@ const ProfilePage = () => {
       items: [
         { icon: <FaUser />, text: "Personal Information", link: "/profile/edit" },
         { icon: <FaEnvelope />, text: "Messages", link: "/messages" },
-        { icon: <FaCalendarAlt />, text: "My Bookings", link: "/bookings" },
+        { icon: <FaCalendarAlt />, text: "My Bookings", link: "/profile/bookings" },
       ],
     },
     venueManager && {

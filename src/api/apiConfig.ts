@@ -6,3 +6,4 @@ export const API_AUTH = '/auth';
 export const API_LOGIN = '/login';
 export const API_REGISTER = '/register';
 export const API_VENUES = '/holidaze/venues';
+export const API_BOOKINGS = '/holidaze/bookings';

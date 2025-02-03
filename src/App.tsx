@@ -8,6 +8,7 @@ import Venues from './pages/Venues';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 import Login from './components/Login';
+import Bookings from './pages/Profile/Bookings';
 // import Register from './components/Register';
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           {/* <Route path="/register" element={<Register />} /> */}
           <Route path="Profile" element={<Profile />} />
+          <Route path="Profile/bookings" element={<Bookings />} />
           <Route path="Contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Route>
