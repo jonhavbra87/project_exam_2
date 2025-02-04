@@ -32,7 +32,6 @@ const ProfilePage = () => {
           icon: <FaSignOutAlt />,
           text: "Logout",
           description: "Securely log out from your account and return to the homepage.",
-          link: "",
           onClick: () => {
             logout();
             navigate("/");
@@ -100,7 +99,7 @@ const ProfilePage = () => {
                           <h3 className="text-body-large-mobile md:text-body-large-desktop font-medium">
                             {item.text}
                           </h3>
-                          <p className="text-body-medium-mobile md:text-body-medium-desktop text-text-secondary text-sm">
+                          <p className="text-body-medium-mobile md:text-body-medium-desktop text-text-secondary text-sm hidden md:block">
                             {item.description}
                           </p>
                         </div>
