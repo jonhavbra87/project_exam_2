@@ -1,4 +1,4 @@
-import { FaEnvelope, FaCalendarAlt, FaPlus, FaBuilding, FaFileAlt, FaLock, FaSignOutAlt } from "react-icons/fa";
+import { FaEnvelope, FaCalendarAlt, FaPlus, FaBuilding, FaFileAlt, FaLock, FaSignOutAlt, FaChevronRight } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
 import useFetchVenueManager from "../../hooks/useFetchVenueManager";
@@ -17,20 +17,20 @@ const ProfilePage = () => {
   const sections = [
     venueManager && {
       items: [
-        { icon: <FaPlus />, text: "Add a Venue",  description: "Create and list a new venue. Add details, upload images +++.", link: "/venues/add" },
-        { icon: <FaBuilding />, text: "My Venues", description: "Manage your listed venues. Edit details or delete venue.", link: "/venues" },
+        { icon: <FaPlus />, title: "Add a Venue",  description: "Create and list a new venue. Add details, upload images +++.", link: "/venues/add" },
+        { icon: <FaBuilding />, title: "My Venues", description: "Manage your listed venues. Edit details or delete venue.", link: "/venues" },
       ],
     },
     {
       items: [
-        { icon: <FaEnvelope />, text: "Messages", description: "Check your inbox for new messages and communicate with hosts or guests.", link: "/messages" },
-        { icon: <FaCalendarAlt />, text: "My Bookings", description: "View and manage your past and upcoming bookings in one place.", link: "/profile/bookings" },
-        { icon: <FiSettings />, text: "Edit Profile", description: "Customize your profile by updating your profile picture and banner image.", link: "/profile/edit" },
-        { icon: <FaFileAlt />, text: "Terms of Service",  description: "Review our terms to understand your rights and responsibilities.", link: "/terms" },
-        { icon: <FaLock />, text: "Guidelines for Privacy", description: "Learn how we handle your data and keep your information secure.", link: "/privacy" },
+        { icon: <FaEnvelope />, title: "Messages", description: "Check your inbox for new messages and communicate with hosts or guests.", link: "/messages" },
+        { icon: <FaCalendarAlt />, title: "My Bookings", description: "View and manage your past and upcoming bookings in one place.", link: "/profile/bookings" },
+        { icon: <FiSettings />, title: "Edit Profile", description: "Customize your profile by updating your profile picture and banner image.", link: "/profile/edit" },
+        { icon: <FaFileAlt />, title: "Terms of Service",  description: "Review our terms to understand your rights and responsibilities.", link: "/terms" },
+        { icon: <FaLock />, title: "Guidelines for Privacy", description: "Learn how we handle your data and keep your information secure.", link: "/privacy" },
         {
           icon: <FaSignOutAlt />,
-          text: "Logout",
+          title: "Logout",
           description: "Securely log out from your account and return to the homepage.",
           onClick: () => {
             logout();
@@ -62,6 +62,7 @@ const ProfilePage = () => {
           />
           <h2 className="text-body-large-desktop text-text-primaryfont-bold mt-2">{profile?.name}</h2>
           <p className="text-body-medium-desktop text-text-secondary font-normal">{profile?.bio}</p>
+          
 
           {/* 📌 Venue Manager Status & Toggle */}
           <p className="mt-2 px-4 py-1 bg-primary text-white rounded">
@@ -82,7 +83,7 @@ const ProfilePage = () => {
           <div key={index}>
             {section && (
               <>
-                <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-auto-fit">
+                <div className="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-auto-fit">
                   {section.items.map((item, i) => {
                     const Component = item.link ? Link : "button"; // 🔥 Dynamically decide tag
                     return (
@@ -90,19 +91,25 @@ const ProfilePage = () => {
                         key={i}
                         to={item.link || "#"}
                         onClick={item.onClick}
-                        className={`flex items-center gap-3 p-4 bg-white shadow-lg rounded-lg hover:bg-gray-100 transition-all ${
+                        className={`flex items-center justify-between gap-4 p-4 bg-white rounded-lg shadow-[2px_3px_4.5px_rgba(0,0,0,0.25)]  hover:bg-gray-100 transition-all ${
                           item.link ? "" : "text-red-600"
                         }`}
                       >
-                        <div className="text-xl">{item.icon}</div>
-                        <div className="text-left">
-                          <h3 className="text-body-large-mobile md:text-body-large-desktop font-medium">
-                            {item.text}
-                          </h3>
-                          <p className="text-body-medium-mobile md:text-body-medium-desktop text-text-secondary text-sm hidden md:block">
-                            {item.description}
-                          </p>
+                        {/* Ikon + Tekst */}
+                        <div className="flex items-center gap-4">
+                          <div className="text-xl">{item.icon}</div>
+                          <div className="text-left">
+                            <h3 className="text-body-large-mobile md:text-body-large-desktop font-medium mb-2">
+                              {item.title}
+                            </h3>
+                            <p className="text-body-medium-mobile md:text-body-medium-desktop text-text-secondary text-sm hidden sm:block">
+                              {item.description}
+                            </p>
+                          </div>
                         </div>
+
+                        {/* Pil som ligger helt til høyre og kun vises på mobil */}
+                        <FaChevronRight className="text-gray-400 sm:hidden" />
                       </Component>
                     );
                   })}

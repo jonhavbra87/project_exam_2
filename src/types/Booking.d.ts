@@ -1,3 +1,5 @@
+import { Venues } from "./Venues";
+
 export interface Booking {
     id: string;
     dateFrom: string;
@@ -5,7 +7,7 @@ export interface Booking {
     guests: number;
     created: string;
     updated: string;
-    venue?: Venue; // 📌 Venue er valgfri fordi den kanskje ikke returneres av API
+    venue?: Venues; // 📌 Venue er valgfri fordi den kanskje ikke returneres av API
     customer?: Customer;
   }
   
@@ -33,10 +35,10 @@ export interface Booking {
   }
   
   // 📌 Venue-informasjon (forenklet)
-  export interface Venue {
-    id: string;
-    name: string;
-  }
+  // export interface Venue {
+  //   id: string;
+  //   name: string;
+  // }
 
   
 // export interface Booking {

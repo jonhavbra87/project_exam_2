@@ -16,10 +16,10 @@ const ProfileCard = ({ icon, title, description, link, onClick }: ProfileCardPro
     <Component
       to={link || ""}
       onClick={onClick}
-      className="flex flex-col items-start gap-4 p-6 bg-white shadow-md rounded-lg hover:bg-gray-100 cursor-pointer w-full max-w-[276px] max-h-[126]"
+      className="flex flex-col items-start gap-4 p-6 bg-white shadow-md rounded-lg hover:bg-gray-100 "
     >
-      <div className="text-text-secondary text-xl">{icon}</div>
       <div>
+      <div className="text-text-secondary text-xl">{icon}</div>
         <h4 className="text-text-primary font-semibold">{title}</h4>
         <p className="text-text-muted text-sm">{description}</p>
       </div>

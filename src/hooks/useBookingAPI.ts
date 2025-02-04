@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { API_BOOKINGS, BASE_API_URL, API_KEY } from "../api/apiConfig";
+import { API_BOOKINGS, BASE_API_URL, API_KEY, API_PROFILE } from "../api/apiConfig";
 import { useAuthStore } from "../store/authStore";
 import { Booking } from "../types/Booking";
 
@@ -159,12 +159,12 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
   },
 
     // 📌 Hent bookinger for den innloggede brukeren
-    fetchBookingsByUser: async (userEmail: string) => {
+    fetchBookingsByUser: async (name) => {
       const { accessToken } = useAuthStore.getState();
       set({ isLoading: true, isError: false });
   
       try {
-        const response = await fetch(`${BASE_API_URL}${API_BOOKINGS}?_customer=true`, { 
+        const response = await fetch(`${BASE_API_URL}${API_PROFILE}/${name}/bookings?_customer=true&_venue=true`, { 
           method: "GET",
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -175,10 +175,13 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
   
         if (!response.ok) throw new Error("Kunne ikke hente brukerens bookinger");
   
-        const data = await response.json();
-  
+        const resault = await response.json();
+
+        
         // 📌 Filtrer kun bookinger tilhørende den innloggede brukeren
-        const userBookings = data.data.filter((booking: Booking) => booking.customer?.email === userEmail);
+        const userBookings = resault.data;
+
+        
   
         set({ bookings: userBookings, isLoading: false });
       } catch (error) {
