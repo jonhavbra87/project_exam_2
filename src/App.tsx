@@ -8,19 +8,21 @@ import Venues from './pages/Venues';
 import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 import Login from './components/Login';
-import SessionChecker from './components/SessionChecker';
+import Bookings from './pages/Profile/Bookings';
+// import Register from './components/Register';
 
 function App() {
   return (
     <div className="text-text-primary">
-      <SessionChecker />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Venues />} />
           <Route path="venue/:id" element={<VenueDetails />} />
-          <Route path="SignUp" element={<SignUp />} />
+          <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          {/* <Route path="/register" element={<Register />} /> */}
           <Route path="Profile" element={<Profile />} />
+          <Route path="Profile/bookings" element={<Bookings />} />
           <Route path="Contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Route>

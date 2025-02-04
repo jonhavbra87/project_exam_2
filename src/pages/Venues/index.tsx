@@ -1,26 +1,31 @@
-import { useState, useRef, useCallback, useEffect } from "react";
-import useApi from "../../hooks/useApi";
-import { API_VENUES, BASE_API_URL } from "../../api/apiConfig";
-import VenueCard from "../../components/VenueCard";
-import SearchBar from "../../components/SearchBar";
-import GradientHeading from "../../styles/GradientHeading";
+import { useState, useRef, useCallback, useEffect } from 'react';
+import useApi from '../../hooks/useApi';
+import { API_VENUES, BASE_API_URL } from '../../api/apiConfig';
+import VenueCard from '../../components/VenueCard';
+import SearchBar from '../../components/SearchBar';
+import GradientHeading from '../../styles/GradientHeading';
 
 function Venues() {
-  const { data: venues, isLoading, isError, hasMore, loadMore } = useApi(`${BASE_API_URL}${API_VENUES}`);
-  const [searchTerm, setSearchTerm] = useState("");
+  const {
+    data: venues,
+    isLoading,
+    isError,
+    hasMore,
+    loadMore,
+  } = useApi(`${BASE_API_URL}${API_VENUES}`);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const observer = useRef<IntersectionObserver | null>(null);
 
   useEffect(() => {
-    loadMore(); 
-  }, []); 
-  
+    loadMore();
+  }, []);
 
   const lastVenueRef = useCallback(
     (node: HTMLElement | null) => {
       if (isLoading || !hasMore) return;
       if (observer.current) observer.current.disconnect();
-      
+
       observer.current = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting) {
           loadMore();
@@ -37,13 +42,17 @@ function Venues() {
       venue.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       venue.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
-  
+
   if (isLoading && venues.length === 0) {
     return <div className="text-center text-gray-500">⏳ Laster venues...</div>;
   }
 
   if (isError) {
-    return <div className="text-center text-red-500">❌ Feil ved lasting av data.</div>;
+    return (
+      <div className="text-center text-red-500">
+        ❌ Feil ved lasting av data.
+      </div>
+    );
   }
 
   return (
@@ -79,16 +88,14 @@ function Venues() {
         })}
       </ul>
 
-
-      {isLoading && <p className="text-center text-gray-500 mt-4">Laster flere venues...</p>}
+      {isLoading && (
+        <p className="text-center text-gray-500 mt-4">Laster flere venues...</p>
+      )}
     </div>
   );
 }
 
 export default Venues;
-
-
-
 
 // import { useEffect, useState, useRef, useCallback } from "react";
 // import { Venues } from "../../types/Venues";
@@ -127,7 +134,7 @@ export default Venues;
 //     (node: HTMLDivElement) => {
 //       if (isFetching || !hasMore) return;
 //       if (observer.current) observer.current.disconnect();
-      
+
 //       observer.current = new IntersectionObserver((entries) => {
 //         if (entries[0].isIntersecting) {
 //           setIsFetching(true);
@@ -148,7 +155,6 @@ export default Venues;
 //     return <div className="text-center text-red-500">❌ Feil ved lasting av data.</div>;
 //   }
 
-  
 //   const filteredVenues = venues.filter(
 //     (venue) =>
 //       venue.name.toLowerCase().includes(searchTerm.toLowerCase()) ||

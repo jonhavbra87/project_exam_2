@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
-import { Venues } from "../types/Venues";
+import { useState, useCallback } from 'react';
+import { Venues } from '../types/Venues';
 
 const useApi = (url: string, limit = 12) => {
   const [data, setData] = useState<Venues[]>([]);
@@ -10,16 +10,18 @@ const useApi = (url: string, limit = 12) => {
 
   const fetchData = useCallback(async () => {
     if (!hasMore || isLoading) return;
-    
+
     setIsLoading(true);
     setIsError(false);
 
     try {
-      const response = await fetch(`${url}?limit=${limit}&page=${page}&sort=name&sortOrder=asc`);
+      const response = await fetch(
+        `${url}?limit=${limit}&page=${page}&sort=name&sortOrder=asc`
+      );
       if (!response.ok) throw new Error(`Network error: ${response.status}`);
 
       const json = await response.json();
-      console.log("API Response:", json);
+      console.log('API Response:', json);
 
       const newData = Array.isArray(json.data) ? json.data : [];
 
@@ -27,13 +29,15 @@ const useApi = (url: string, limit = 12) => {
         setHasMore(false);
       } else {
         setData((prevData) => {
-          const uniqueData = Array.from(new Map([...prevData, ...newData].map(v => [v.id, v])).values());
+          const uniqueData = Array.from(
+            new Map([...prevData, ...newData].map((v) => [v.id, v])).values()
+          );
           return uniqueData;
         });
         setPage((prevPage) => prevPage + 1);
       }
     } catch (error) {
-      console.error("Fetching error:", error);
+      console.error('Fetching error:', error);
       setIsError(true);
     } finally {
       setIsLoading(false);
@@ -44,8 +48,6 @@ const useApi = (url: string, limit = 12) => {
 };
 
 export default useApi;
-
-
 
 // import { useState, useEffect } from 'react';
 

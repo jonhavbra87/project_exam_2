@@ -1,7 +1,6 @@
 // import { useState, useEffect } from "react";
 // import { getProfile, logoutUser } from "../utilities/auth";
 
-
 // type UserProfile = {
 //   name: string;
 //   email: string;
