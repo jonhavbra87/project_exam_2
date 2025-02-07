@@ -4,6 +4,7 @@ import { API_VENUES, BASE_API_URL } from '../../api/apiConfig';
 import VenueCard from '../../components/VenueCard';
 import SearchBar from '../../components/SearchBar';
 import GradientHeading from '../../styles/GradientHeading';
+import BouncingArrow from '../../components/BouncingArrow';
 
 function Venues() {
   const {
@@ -54,12 +55,17 @@ function Venues() {
       </div>
     );
   }
+  
 
   return (
     <div>
       <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading h-screen">
         Let’s explore the world
         <span className="text-primary"> together</span>
+        <div className='mt-20'
+        onClick={() => window.scrollTo({ top: 950, behavior: 'smooth' })}>
+        <BouncingArrow />
+        </div>
       </div>
 
       <div className="w-full">
@@ -70,7 +76,7 @@ function Venues() {
         <GradientHeading>Venues</GradientHeading>
       </div>
 
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid">
         {filteredVenues.map((venue, index) => {
           if (index === filteredVenues.length - 1) {
             return (

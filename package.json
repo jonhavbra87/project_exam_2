@@ -1,7 +1,7 @@
 {
   "name": "project_exam_2",
   "private": true,
-  "version": "0.1.1",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -15,6 +15,7 @@
     "dayjs": "^1.11.13",
     "framer-motion": "^11.18.1",
     "leaflet": "^1.9.4",
+    "lucide-react": "^0.474.0",
     "react": "^18.3.1",
     "react-datepicker": "^8.0.0",
     "react-dom": "^18.3.1",

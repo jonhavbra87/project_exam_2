@@ -9,6 +9,7 @@ import Profile from './pages/Profile';
 import Contact from './pages/Contact';
 import Login from './components/Login';
 import Bookings from './pages/Profile/Bookings';
+import EditProfile from './pages/Profile/Edit';
 // import Register from './components/Register';
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           {/* <Route path="/register" element={<Register />} /> */}
           <Route path="Profile" element={<Profile />} />
           <Route path="Profile/bookings" element={<Bookings />} />
+          <Route path="Profile/editprofile" element={<EditProfile />} />
           <Route path="Contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Route>
