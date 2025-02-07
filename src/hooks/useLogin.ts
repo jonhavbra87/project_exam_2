@@ -3,18 +3,17 @@ import { API_AUTH, API_KEY, API_LOGIN, BASE_API_URL } from '../api/apiConfig';
 import { Profile } from '../types/Profile';
 import { useAuthStore } from '../store/authStore';
 
+
 //API hook for login
 const useLogin = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // const [data, setData] = useState<Profile | null>(null);
-  const authLogin = useAuthStore((state) => state.login); 
+  const { login: loginAuth } = useAuthStore();
+  
 
   const login = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
-
-    const emailValue = email; // Declare the 'email' variable before using it
 
     try {
       const response = await fetch(`${BASE_API_URL}${API_AUTH}${API_LOGIN}`, {
@@ -23,8 +22,9 @@ const useLogin = () => {
           'Content-Type': 'application/json',
           'X-Noroff-API-Key': API_KEY,
         },
-        body: JSON.stringify({ email: emailValue, password }),
+        body: JSON.stringify({ email, password }),
       });
+      
       const result = await response.json();
       console.log(result);
 
@@ -32,23 +32,21 @@ const useLogin = () => {
         setError('Login failed');
       }
 
-      // const { name, email, avatar, banner, accessToken, venueManager } =
-      //   result.data;
-      const profile: Profile = {
-        ...result.data,
-        venueManager: result.data.venueManager ?? false, // 📌 Sørger for at venueManager aldri er `undefined`
-      };
-      // const profile: Profile = {
-      //   name,
-      //   email,
-      //   avatar,
-      //   banner,
-      //   accessToken,
-      //   venueManager,
-      // };
-      authLogin(profile, profile.accessToken, Date.now() + 1000 * 60 * 60); // ✅ Oppdater Zustand
 
-      // setData(profile); // ✅ Type-safe state update
+      const profile: Profile = { 
+          name: result.data.name,
+          email: result.data.email,
+          avatar: { url: result.data.avatar.url, alt: result.data.avatar.alt },
+          banner: { url: result.data.banner.url, alt: result.data.banner.alt },
+      };
+      
+      const accessToken = result.data.accessToken;
+      console.log("token from useLogin:", accessToken);
+      
+      const venueManager = Boolean(result.data.venueManager);
+
+      loginAuth(profile, accessToken, venueManager);
+
       return profile;
     } catch (error) {
       setError(error instanceof Error ? error.message : 'Unknown error');

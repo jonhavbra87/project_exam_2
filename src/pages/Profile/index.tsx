@@ -1,13 +1,11 @@
 import { FaEnvelope, FaCalendarAlt, FaPlus, FaBuilding, FaFileAlt, FaLock, FaSignOutAlt, FaChevronRight } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
-import useFetchVenueManager from "../../hooks/useFetchVenueManager";
 import UpdateProfile from "../../components/UpdateProfile";
 import { FiSettings } from "react-icons/fi";
 
 const ProfilePage = () => {
-  const { profile, logout } = useAuthStore();
-  const { venueManager, fetchVenueManager } = useFetchVenueManager();
+  const { profile, venueManager, logout } = useAuthStore();
   const navigate = useNavigate();
 
   if (!profile) {
@@ -25,7 +23,7 @@ const ProfilePage = () => {
       items: [
         { icon: <FaEnvelope />, title: "Messages", description: "Check your inbox for new messages and communicate with hosts or guests.", link: "/messages" },
         { icon: <FaCalendarAlt />, title: "My Bookings", description: "View and manage your past and upcoming bookings in one place.", link: "/profile/bookings" },
-        { icon: <FiSettings />, title: "Edit Profile", description: "Customize your profile by updating your profile picture and banner image.", link: "/profile/edit" },
+        { icon: <FiSettings />, title: "Edit Profile", description: "Customize your profile by updating your profile picture and banner image.", link: "/profile/editprofile" },
         { icon: <FaFileAlt />, title: "Terms of Service",  description: "Review our terms to understand your rights and responsibilities.", link: "/terms" },
         { icon: <FaLock />, title: "Guidelines for Privacy", description: "Learn how we handle your data and keep your information secure.", link: "/privacy" },
         {
@@ -69,10 +67,8 @@ const ProfilePage = () => {
             {venueManager ? "You are a Venue Manager" : "Not a Venue Manager"}
           </p>
 
-        {/* 📌 Update Profile Button */}
-          <div className="mt-4 flex justify-center"  onClick={fetchVenueManager}>
           <UpdateProfile />
-          </div>
+
         </div>
       </div>
 
