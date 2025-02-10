@@ -16,7 +16,7 @@ const useApi = (url: string, limit = 12) => {
 
     try {
       const response = await fetch(
-        `${url}?limit=${limit}&page=${page}&sort=name&sortOrder=asc`
+        `${url}?limit=${limit}&page=${page}&sort=rating`
       );
       if (!response.ok) throw new Error(`Network error: ${response.status}`);
 

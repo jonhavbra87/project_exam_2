@@ -4,6 +4,7 @@ import { useAuthStore } from "../../../store/authStore";
 import useUpdateProfile from "../../../hooks/useUpdateProfile";
 import { useNavigate } from "react-router-dom";
 import UpdateProfile from "../../../components/UpdateProfile";
+
 interface ProfileFormValues {
   avatar: string;
   banner: string;
