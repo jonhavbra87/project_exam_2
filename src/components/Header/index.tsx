@@ -4,7 +4,7 @@ import NavBar from '../NavBar';
 
 function Header() {
   return (
-    <header className="bg-primary-3 w-full flex items-center fixed h-20 z-50">
+    <header className="bg-header w-full flex items-center fixed h-20 z-50">
       <div className="w-11/12 lg:w-10/12  mx-auto flex justify-between items-center h-full">
         <div className="flex items-center">
           <Link to="/">

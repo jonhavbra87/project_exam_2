@@ -1,7 +1,6 @@
 import { FaEnvelope, FaCalendarAlt, FaPlus, FaBuilding, FaFileAlt, FaLock, FaSignOutAlt, FaChevronRight } from "react-icons/fa";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/authStore";
-import UpdateProfile from "../../components/UpdateProfile";
 import { FiSettings } from "react-icons/fi";
 
 const ProfilePage = () => {
@@ -46,7 +45,7 @@ const ProfilePage = () => {
         <img
           src={profile?.banner?.url || "https://via.placeholder.com/1200x300"}
           alt={profile?.banner?.alt || "Banner"}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-cover ogject-center aspect-video overflow-hidden"
         />
       </div>
 
@@ -56,18 +55,21 @@ const ProfilePage = () => {
           <img
             src={profile?.avatar?.url || "https://via.placeholder.com/150"}
             alt={profile?.avatar?.alt || "User avatar"}
-            className="w-24 h-24 md:w-32 md:h-32 rounded-full border"
+            className="w-24 h-24 md:w-32 md:h-32 rounded-full border border-header object-cover object-center aspect-square"
           />
           <h2 className="text-body-large-desktop text-text-primaryfont-bold mt-2">{profile?.name}</h2>
           <p className="text-body-medium-desktop text-text-secondary font-normal">{profile?.bio}</p>
           
 
           {/* 📌 Venue Manager Status & Toggle */}
-          <p className="mt-2 px-4 py-1 bg-primary text-white rounded">
-            {venueManager ? "You are a Venue Manager" : "Not a Venue Manager"}
-          </p>
+          <p 
+  className={`mt-2 p-4 text-white rounded ${
+    venueManager ? "bg-secondary" : "bg-header"
+  }`}
+>
+  {venueManager ? "You are a Venue Manager" : "Not a Venue Manager"}
+</p>
 
-          <UpdateProfile />
 
         </div>
       </div>
