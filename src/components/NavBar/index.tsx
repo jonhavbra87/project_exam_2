@@ -41,7 +41,7 @@ function NavBar() {
           tabIndex={-1}
           className={`${
             menuOpen ? 'flex' : 'hidden'
-          } absolute top-16 left-0 right-0 bg-primary-3 p-4 flex-col items-center gap-4 animate-slide-down md:flex md:flex-row md:static md:gap-6 focus:outline-none`}
+          } absolute top-16 left-0 right-0 bg-header p-4 flex-col items-center gap-4 animate-slide-down md:flex md:flex-row md:static md:gap-6 focus:outline-none`}
           onKeyDown={(e) => e.key === 'Escape' && setMenuOpen(false)}
         >
           <NavLinks toggleMenu={toggleMenu} />

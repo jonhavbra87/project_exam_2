@@ -18,7 +18,7 @@ export function useVenues(limit = 12) {
       setIsFetching(true);
 
       try {
-        const url = `${BASE_API_URL}/venues?limit=${limit}&page=${page}&sort=name&sortOrder=asc`;
+        const url = `${BASE_API_URL}/venues?limit=${limit}&page=${page}&sort=rating`;
         const response = await fetch(url);
         if (!response.ok)
           throw new Error(`Error fetching venues: ${response.statusText}`);

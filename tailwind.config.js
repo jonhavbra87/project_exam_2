@@ -158,6 +158,7 @@ export default {
           muted: '#8A8A8A',
           contrast: '#FFFFFF',
         },
+        header: '#222222',
       },
       keyframes: {
         'slide-down': {

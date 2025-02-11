@@ -16,7 +16,7 @@ const useLogin = () => {
     setError(null);
 
     try {
-      const response = await fetch(`${BASE_API_URL}${API_AUTH}${API_LOGIN}`, {
+      const response = await fetch(`${BASE_API_URL}${API_AUTH}${API_LOGIN}?_holidaze=true`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
