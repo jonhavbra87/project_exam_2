@@ -9,21 +9,24 @@ import {
   type VenueFormData,
 } from '../../../../components/VenueFormSchema';
 import { useVenueAPI } from '../../../../hooks/useVenueAPI';
+import { useAuthStore } from '../../../../store/authStore';
 
 const VenueForm = () => {
   const navigate = useNavigate();
-  const { useCreateVenue } = useVenueAPI();
+  // const { useCreateVenue } = useVenueAPI();
+  const createVenue = useVenueAPI((state) => state.createVenue);
+  const { profile } = useAuthStore((state) => state);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<VenueFormData>({
-    resolver: yupResolver(venueSchema),
+    // resolver: yupResolver(venueSchema),
     defaultValues: {
       name: '',
       description: '',
-      media: [{ url: '', alt: '' }],
+      media: [{ url: '', alt: 'Venue Image' }],
       price: 0,
       maxGuests: 1,
       rating: 0,
@@ -47,17 +50,56 @@ const VenueForm = () => {
 
   const onSubmit = async (data: VenueFormData) => {
     try {
+      console.log('Form date before formatting:', data);
+
+      if (!profile) {
+        toast.error('You need to be logged in to create a venue.');
+        return;
+      }
+      console.log('Profile:', profile);
+
       const loadingToast = toast.loading('Oppretter venue...');
+
+      console.log('Toast loading created:', loadingToast);
+
+      const validMedia = Array.isArray(data.media)
+        ? data.media.filter(
+            (item): item is { url: string; alt: string } =>
+              typeof item.url === 'string' && item.url !== ''
+          )
+        : [];
+      const mediaToSubmit =
+        validMedia.length > 0
+          ? validMedia
+          : [
+              {
+                url: 'https://placeholder.com/image.jpg',
+                alt: 'Default venue image',
+              },
+            ];
 
       const formattedData = {
         ...data,
-        media: Array.isArray(data.media)
-          ? data.media
-          : [{ url: data.media, alt: 'Venue image' }],
+        media: mediaToSubmit,
+        owner: profile.email, // ✅ Sørger for at eieren er en string
+        price: Number(data.price), // 🔥 Konverterer til number
+        maxGuests: Number(data.maxGuests), // 🔥 Konverterer til number
+        rating: Number(data.rating), // 🔥 Konverterer til number
+        meta: {
+          wifi: Boolean(data.meta.wifi),
+          parking: Boolean(data.meta.parking),
+          breakfast: Boolean(data.meta.breakfast),
+          pets: Boolean(data.meta.pets),
+        },
+        zip: Number(data.location.zip),
+        lat: Number(data.location.lat),
+        lng: Number(data.location.lng),
       };
-
-      const success = await useCreateVenues(formattedData);
-
+      console.log('Formatted data:', formattedData);
+      
+      const success = await createVenue(formattedData);
+      console.log('Success:', success);
+      
       if (success) {
         toast.success('Venue opprettet!', {
           id: loadingToast,
@@ -179,19 +221,30 @@ const VenueForm = () => {
           <span className="text-red-500 text-sm">{errors.rating.message}</span>
         )}
 
-        {/* Amenities */}
+        {/* Facilietes */}
         <label className="block mt-3 text-sm font-semibold text-text-secondary">
-          Amenities
+          Facilities
         </label>
         <div className="grid grid-cols-2 gap-3">
-          {['wifi', 'parking', 'breakfast', 'pets'].map((amenity) => (
-            <label key={amenity} className="flex items-center space-x-2">
-              <input type="checkbox" {...register(`meta.${amenity}`)} />
-              <span className="text-sm">
-                {amenity.charAt(0).toUpperCase() + amenity.slice(1)}
-              </span>
-            </label>
-          ))}
+          <label className="flex items-center space-x-2">
+            <input type="checkbox" {...register('meta.wifi')} />
+            <span className="text-sm">WiFi</span>
+          </label>
+
+          <label className="flex items-center space-x-2">
+            <input type="checkbox" {...register('meta.parking')} />
+            <span className="text-sm">Parking</span>
+          </label>
+
+          <label className="flex items-center space-x-2">
+            <input type="checkbox" {...register('meta.breakfast')} />
+            <span className="text-sm">Breakfast</span>
+          </label>
+
+          <label className="flex items-center space-x-2">
+            <input type="checkbox" {...register('meta.pets')} />
+            <span className="text-sm">Pets</span>
+          </label>
         </div>
 
         {/* Location */}

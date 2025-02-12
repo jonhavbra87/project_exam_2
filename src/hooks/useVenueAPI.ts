@@ -10,7 +10,7 @@ interface VenueState {
   isError: boolean;
   fetchVenues: (url: string) => Promise<void>;
   fetchVenueDetails: (url: string) => Promise<void>;
-  useCreateVenue: (
+  createVenue: (
     venueData: Omit<Venues, 'id' | 'created' | 'updated'>
   ) => Promise<boolean>;
   useUpdateVenue: (
@@ -58,14 +58,14 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
     }
   },
 
-  useCreateVenue: async (
+  createVenue: async (
     venueData: Omit<Venues, 'id' | 'created' | 'updated'>
   ) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
 
     try {
-      const response = await fetch(`${BASE_API_URL}${API_VENUES}`, {
+      const response = await fetch(`${BASE_API_URL}${API_VENUES}?_owner=true`, {
         method: 'POST',
         headers: {
           Authorization: `Bearer ${accessToken}`,
@@ -74,6 +74,9 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         },
         body: JSON.stringify(venueData),
       });
+
+      console.log('response crateVenue', response);
+      
 
       if (!response.ok) throw new Error('Could not create venue');
       await get().fetchVenues(`${BASE_API_URL}${API_VENUES}`);

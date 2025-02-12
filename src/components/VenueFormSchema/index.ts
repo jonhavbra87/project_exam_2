@@ -1,5 +1,6 @@
 import * as yup from 'yup';
 
+
 export const venueSchema = yup
   .object({
     name: yup.string().required('Navn er påkrevd'),
@@ -55,6 +56,7 @@ export const venueSchema = yup
         .min(-180, 'Lengdegrad må være mellom -180 og 180')
         .max(180, 'Lengdegrad må være mellom -180 og 180'),
     }),
+    owner: yup.string().required('Eier er påkrevd'),
   })
   .required();
 
