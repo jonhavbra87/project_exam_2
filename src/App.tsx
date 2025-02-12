@@ -10,6 +10,7 @@ import Contact from './pages/Contact';
 import Login from './components/Login';
 import Bookings from './pages/Profile/Bookings';
 import EditProfile from './pages/Profile/Edit';
+import ProfileVenueCreate from './pages/Profile/Venues/Create';
 // import Register from './components/Register';
 
 function App() {
@@ -24,7 +25,11 @@ function App() {
           {/* <Route path="/register" element={<Register />} /> */}
           <Route path="Profile" element={<Profile />} />
           <Route path="Profile/bookings" element={<Bookings />} />
-          <Route path="Profile/editprofile" element={<EditProfile />} />
+          <Route path="profile/editprofile" element={<EditProfile />} />
+          <Route
+            path="profile/venues/create"
+            element={<ProfileVenueCreate />}
+          />
           <Route path="Contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Route>

@@ -1,7 +1,7 @@
-import { Booking } from "./Booking";
-import { Location } from "./Location";
-import { MetaData } from "./metaData";
-import { Owner } from "./Owner";
+import { Booking } from './Booking';
+import { Location } from './Location';
+import { MetaData } from './metaData';
+import { Owner } from './Owner';
 
 export interface Venues {
   id: string;
@@ -18,6 +18,3 @@ export interface Venues {
   owner: Owner; // Single owner object
   bookings?: Booking[]; // Array of bookings
 }
-
-
-

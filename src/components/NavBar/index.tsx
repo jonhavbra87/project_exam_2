@@ -11,7 +11,6 @@ function NavBar() {
     setMenuOpen(!menuOpen);
   }
 
-  // Fokusstyring og Escape-tast for å lukke menyen
   useEffect(() => {
     if (menuOpen) {
       menuRef.current?.focus();

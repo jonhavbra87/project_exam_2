@@ -1,64 +1,63 @@
-import { useState } from "react";
-import { useAuthStore } from "../store/authStore";
-import { API_KEY, BASE_API_URL } from "../api/apiConfig";
-
+import { useState } from 'react';
+import { useAuthStore } from '../store/authStore';
+import { API_KEY, BASE_API_URL } from '../api/apiConfig';
 
 const useUpdateProfile = () => {
   const { profile, accessToken, login, setVenueManager } = useAuthStore();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-
   const updateProfile = async (user: { venueManager: boolean }) => {
     if (!user) {
-      console.error("🔴 No user data provided.");
+      console.error('🔴 No user data provided.');
       return;
     }
 
-
     setLoading(true);
     setError(null);
-    
-    
+
     try {
-      const response = await fetch(`${BASE_API_URL}/holidaze/profiles/${profile?.name}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-          "X-Noroff-API-Key": API_KEY,
-        },
-        body: JSON.stringify(user),
-      });
-      
+      const response = await fetch(
+        `${BASE_API_URL}/holidaze/profiles/${profile?.name}`,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+            'X-Noroff-API-Key': API_KEY,
+          },
+          body: JSON.stringify(user),
+        }
+      );
+
       if (!response.ok) {
-        throw new Error(response.statusText || "Failed to update profile");
+        throw new Error(response.statusText || 'Failed to update profile');
       }
       const result = await response.json();
       // console.log("🟢 Profile Update API Response:", result);
-      
+
       const { name, email, bio, avatar, banner, venueManager } = result.data;
-      
+
       // 📌 Oppdater VenueManager-status i Zustan
       setVenueManager(venueManager);
-      
+
       // 📌 Oppdater Zustand med ny profilinfo
       login(
         {
           name,
           email,
-          bio, 
-          avatar, 
+          bio,
+          avatar,
           banner,
         },
         accessToken as string,
-        venueManager,
+        venueManager
       );
-      
+
       return result.data;
     } catch (error) {
-      setError(error instanceof Error ? error.message : "Unknown error");
-      console.error("❌ Error updating profile:", error);
+      setError(error instanceof Error ? error.message : 'Unknown error');
+      console.error('❌ Error updating profile:', error);
     } finally {
       setLoading(false);
     }

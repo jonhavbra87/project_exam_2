@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import dayjs from "dayjs";
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
+import dayjs from 'dayjs';
 
-import { useAuthStore } from "../../store/authStore";
-import { useBookingAPI } from "../../hooks/useBookingAPI";
-import { BookingCreateRequest } from "../../types/Booking";
+import { useAuthStore } from '../../store/authStore';
+import { useBookingAPI } from '../../hooks/useBookingAPI';
+import { BookingCreateRequest } from '../../types/Booking';
 
 const VenueCalendar: React.FC = () => {
   const { id } = useParams(); // 📌 Henter venue-ID fra URL
@@ -24,7 +24,9 @@ const VenueCalendar: React.FC = () => {
 
   useEffect(() => {
     // 📌 Filtrer bookinger for denne spesifikke venue
-    const venueBookings = bookings.filter((booking) => booking.venue?.id === id);
+    const venueBookings = bookings.filter(
+      (booking) => booking.venue?.id === id
+    );
 
     // 📌 Konverter bookede datoer til en liste av `Date`-objekter
     const booked: Date[] = venueBookings.flatMap((booking) => {
@@ -32,7 +34,11 @@ const VenueCalendar: React.FC = () => {
       const end = dayjs(booking.dateTo);
       const dates: Date[] = [];
 
-      for (let d = start; d.isBefore(end) || d.isSame(end, "day"); d = d.add(1, "day")) {
+      for (
+        let d = start;
+        d.isBefore(end) || d.isSame(end, 'day');
+        d = d.add(1, 'day')
+      ) {
         dates.push(d.toDate());
       }
       return dates;
@@ -43,12 +49,12 @@ const VenueCalendar: React.FC = () => {
 
   const handleBooking = async () => {
     if (!accessToken) {
-      alert("Du må være innlogget for å booke!");
+      alert('Du må være innlogget for å booke!');
       return;
     }
 
     if (!startDate || !endDate) {
-      alert("Velg både start- og sluttdato!");
+      alert('Velg både start- og sluttdato!');
       return;
     }
 
@@ -62,10 +68,10 @@ const VenueCalendar: React.FC = () => {
     const success = await createBooking(newBooking);
 
     if (success) {
-      alert("Booking vellykket!");
+      alert('Booking vellykket!');
       fetchBookings(); // 📌 Oppdater bookinger etter ny booking
     } else {
-      alert("Booking feilet. Prøv igjen!");
+      alert('Booking feilet. Prøv igjen!');
     }
   };
 
@@ -101,7 +107,6 @@ const VenueCalendar: React.FC = () => {
 
 export default VenueCalendar;
 
-
 // import { useEffect, useState } from "react";
 // import { useParams } from "react-router-dom";
 // import DatePicker from "react-datepicker";
@@ -130,7 +135,6 @@ export default VenueCalendar;
 //     // Sjekk at `venue` finnes før du prøver å bruke `booking.venue.id`
 // const venueBookings = bookings.filter((booking) => booking.venue && booking.venue.id === id);
 
-
 //     // 📌 Konverter bookede datoer til en liste av `Date`-objekter
 //     let booked: Date[] = [];
 //     venueBookings.forEach((booking) => {
@@ -150,7 +154,7 @@ export default VenueCalendar;
 //             alert("Du må være innlogget for å booke!");
 //             return;
 //             }
-        
+
 //             if (!startDate || !endDate) {
 //             alert("Velg både start- og sluttdato!");
 //             return;
@@ -178,7 +182,6 @@ export default VenueCalendar;
 //     //     guests: 1,
 //     //     venueId: id as string, // 📌 Venue-ID må sendes som string
 //     //   });
-      
 
 //     // if (success) {
 //     //   alert("Booking vellykket!");
@@ -187,8 +190,6 @@ export default VenueCalendar;
 //     //   alert("Booking feilet. Prøv igjen!");
 //     // }
 //     // };
-
-
 
 //   return (
 //     <div>

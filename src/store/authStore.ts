@@ -6,7 +6,6 @@ type AuthState = {
   profile: Profile | null;
   accessToken: string | null;
   isAuthenticated: boolean;
-
   venueManager: boolean;
   login: (profile: Profile, accessToken: string, venueManager: boolean) => void;
   logout: () => void;
@@ -28,12 +27,11 @@ export const useAuthStore = create<AuthState>()(
           isAuthenticated: true,
           venueManager: !!venueManager,
         });
-        },
-
-      setVenueManager: (venueManager: boolean) => {
-        set({venueManager: !!venueManager});
       },
 
+      setVenueManager: (venueManager: boolean) => {
+        set({ venueManager: !!venueManager });
+      },
 
       logout: () => {
         // console.log(
