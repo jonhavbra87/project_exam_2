@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { Venues } from '../types/Venues';
-import { API_KEY, API_VENUES, BASE_API_URL } from '../api/apiConfig';
+import { API_KEY, API_PROFILE, API_VENUES, BASE_API_URL } from '../api/apiConfig';
 import { useAuthStore } from '../store/authStore';
 
 interface VenueState {
@@ -76,7 +76,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       });
 
       console.log('response crateVenue', response);
-      
 
       if (!response.ok) throw new Error('Could not create venue');
       await get().fetchVenues(`${BASE_API_URL}${API_VENUES}`);
@@ -151,11 +150,18 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
     }
   },
 
-  fetchVenuesByUser: async (userEmail: string) => {
+  fetchVenuesByUser: async (name: string) => {
+    const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
     try {
       const response = await fetch(
-        `${BASE_API_URL}${API_VENUES}?_owner.email=${userEmail}`
+        `${BASE_API_URL}${API_PROFILE}/${name}/venues?_owner=true&_bookings=true`, {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            'X-Noroff-API-Key': API_KEY,
+          },
+        }
       );
       if (!response.ok) throw new Error('Could not fetch user venues');
 

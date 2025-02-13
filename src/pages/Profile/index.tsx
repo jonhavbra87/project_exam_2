@@ -35,7 +35,7 @@ const ProfilePage = () => {
           title: 'My Venues',
           description:
             'Manage your listed venues. Edit details or delete venue.',
-          link: '/venues',
+          link: '/profile/venues',
         },
       ],
     },

@@ -96,10 +96,10 @@ const VenueForm = () => {
         lng: Number(data.location.lng),
       };
       console.log('Formatted data:', formattedData);
-      
+
       const success = await createVenue(formattedData);
       console.log('Success:', success);
-      
+
       if (success) {
         toast.success('Venue opprettet!', {
           id: loadingToast,

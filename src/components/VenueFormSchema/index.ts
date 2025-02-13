@@ -1,6 +1,5 @@
 import * as yup from 'yup';
 
-
 export const venueSchema = yup
   .object({
     name: yup.string().required('Navn er påkrevd'),
