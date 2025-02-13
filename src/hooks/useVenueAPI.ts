@@ -13,11 +13,11 @@ interface VenueState {
   createVenue: (
     venueData: Omit<Venues, 'id' | 'created' | 'updated'>
   ) => Promise<boolean>;
-  useUpdateVenue: (
+  updateVenue: (
     id: string,
     updatedData: Partial<Omit<Venues, 'id' | 'created' | 'updated'>>
   ) => Promise<boolean>;
-  useDeleteVenue: (id: string) => Promise<boolean>;
+  deleteVenue: (id: string) => Promise<boolean>;
   fetchVenuesByUser: (userEmail: string) => Promise<void>;
 }
 
@@ -88,7 +88,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
     }
   },
 
-  useUpdateVenue: async (
+  updateVenue: async (
     id: string,
     updatedData: Partial<Omit<Venues, 'id' | 'created' | 'updated'>>
   ) => {
@@ -123,7 +123,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
     }
   },
 
-  useDeleteVenue: async (id: string) => {
+  deleteVenue: async (id: string) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
 
