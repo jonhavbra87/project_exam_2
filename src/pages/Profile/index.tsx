@@ -67,14 +67,14 @@ const ProfilePage = () => {
           title: 'Terms of Service',
           description:
             'Review our terms to understand your rights and responsibilities.',
-          link: '/terms',
+          link: '/profile/termsofservice',
         },
         {
           icon: <FaLock />,
           title: 'Guidelines for Privacy',
           description:
             'Learn how we handle your data and keep your information secure.',
-          link: '/privacy',
+          link: '/profile/privacyguidelines',
         },
         {
           icon: <FaSignOutAlt />,

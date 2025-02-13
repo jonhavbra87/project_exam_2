@@ -2,20 +2,15 @@ import { useVenueAPI } from "../../../hooks/useVenueAPI";
 import { useAuthStore } from "../../../store/authStore";
 import { useEffect } from "react";
 import { Venues } from "../../../types/Venues";
+import { FaPeopleRoof } from "react-icons/fa6";
 
 
-const VenuesByUser = ({
-    venuesUser,
-}: {
-    venuesUser: Venues[];
-}) => {
-// const { venue } = venues;
+const VenuesByUser = () => {
 
-const { profile } = useAuthStore();
+  const { profile } = useAuthStore();
 const { fetchVenuesByUser, isLoading, isError, venues } = useVenueAPI();
-  
-
 const profileName = profile?.name;
+const venuesArray: Venues[] = Array.isArray(venues) ? venues : [];
 
 useEffect(() => {
   if (profileName) {
@@ -23,12 +18,10 @@ useEffect(() => {
   }
 }, [profileName, fetchVenuesByUser]);
 
-// const venuesArray = venues || [];
-const venuesArray: Venues[] = Array.isArray(venues) ? venues : [];
+
 
 
 console.log("Venues from API:", venues);
-console.log("venuesUser prop:", venuesUser);
 
 if (isLoading)
     return <p className="text-center text-gray-500">Laster bookinger...</p>;
@@ -58,6 +51,7 @@ if (isLoading)
             </h2>
             <p className="text-text-secondary">{venue.description}</p>
             <p className="text-text-secondary font-semibold mt-2">${venue.price} per night</p>
+            <p className="text-text-secondary font-semibold mt-2 flex gap-2"><FaPeopleRoof /> <span>{venue.maxGuests}</span></p>
           </div>
         ))}
         </div>

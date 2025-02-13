@@ -12,6 +12,8 @@ import Bookings from './pages/Profile/Bookings';
 import EditProfile from './pages/Profile/Edit';
 import ProfileVenueCreate from './pages/Profile/Venues/Create';
 import VenuesByUser from './pages/Profile/Venues';
+import TermsOfService from './components/TermsOfService';
+import PrivacyGuidelines from './components/PrivacyGuidelines';
 // import Register from './components/Register';
 
 function App() {
@@ -29,12 +31,14 @@ function App() {
           <Route path="profile/editprofile" element={<EditProfile />} />
           <Route
             path="profile/venues"
-            element={<VenuesByUser venuesUser={[]} />}
+            element={<VenuesByUser />}
           />
           <Route
             path="profile/venues/create"
             element={<ProfileVenueCreate />}
           />
+          <Route path='profile/termsofservice' element={<TermsOfService />} />
+          <Route path="profile/privacyguidelines" element={<PrivacyGuidelines />} />
           <Route path="Contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Route>
