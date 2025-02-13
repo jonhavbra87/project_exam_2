@@ -13,11 +13,11 @@ interface VenueState {
   createVenue: (
     venueData: Omit<Venues, 'id' | 'created' | 'updated'>
   ) => Promise<boolean>;
-  useUpdateVenue: (
+  updateVenue: (
     id: string,
     updatedData: Partial<Omit<Venues, 'id' | 'created' | 'updated'>>
   ) => Promise<boolean>;
-  useDeleteVenue: (id: string) => Promise<boolean>;
+  deleteVenue: (id: string) => Promise<boolean>;
   fetchVenuesByUser: (userEmail: string) => Promise<void>;
 }
 
@@ -88,10 +88,15 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
     }
   },
 
-  useUpdateVenue: async (
+  updateVenue: async (
     id: string,
     updatedData: Partial<Omit<Venues, 'id' | 'created' | 'updated'>>
   ) => {
+    if (!id) {
+      console.error('Error: Venue ID is required for updating.');
+      return false;
+    }
+    
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
 
@@ -109,6 +114,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       if (!response.ok) throw new Error('Could not update venue');
 
       const updatedVenue = await response.json();
+
       set((state) => ({
         venues: state.venues.map((venue) =>
           venue.id === id ? updatedVenue.data : venue
@@ -123,7 +129,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
     }
   },
 
-  useDeleteVenue: async (id: string) => {
+  deleteVenue: async (id: string) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
 

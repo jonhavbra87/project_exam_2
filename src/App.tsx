@@ -14,6 +14,7 @@ import ProfileVenueCreate from './pages/Profile/Venues/Create';
 import VenuesByUser from './pages/Profile/Venues';
 import TermsOfService from './components/TermsOfService';
 import PrivacyGuidelines from './components/PrivacyGuidelines';
+import ProfileVenueUpdate from './pages/Profile/Venues/Update';
 // import Register from './components/Register';
 
 function App() {
@@ -37,6 +38,7 @@ function App() {
             path="profile/venues/create"
             element={<ProfileVenueCreate />}
           />
+          <Route path='profile/venues/:id/update' element={<ProfileVenueUpdate />} />
           <Route path='profile/termsofservice' element={<TermsOfService />} />
           <Route path="profile/privacyguidelines" element={<PrivacyGuidelines />} />
           <Route path="Contact" element={<Contact />} />

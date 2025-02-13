@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 // import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-hot-toast';
@@ -9,11 +9,13 @@ import {
 } from '../../../../components/VenueFormSchema';
 import { useVenueAPI } from '../../../../hooks/useVenueAPI';
 import { useAuthStore } from '../../../../store/authStore';
+import { useEffect } from 'react';
+import { API_VENUES, BASE_API_URL } from '../../../../api/apiConfig';
 
-const ProfileVenueCreate = () => {
+const ProfileVenueUpdate = () => {
   const navigate = useNavigate();
-  // const { useCreateVenue } = useVenueAPI();
-  const createVenue = useVenueAPI((state) => state.createVenue);
+const { id } = useParams();
+  const { updateVenue, fetchVenueDetails } = useVenueAPI();
   const { profile } = useAuthStore((state) => state);
 
   const {
@@ -47,7 +49,14 @@ const ProfileVenueCreate = () => {
     },
   });
 
+  useEffect(() => {
+    if (id) {
+      fetchVenueDetails(`${BASE_API_URL}${API_VENUES}/${id}`);
+    }
+  }, [id, fetchVenueDetails]);
+
   const onSubmit = async (data: VenueFormData) => {
+
     try {
       console.log('Form date before formatting:', data);
 
@@ -55,11 +64,16 @@ const ProfileVenueCreate = () => {
         toast.error('You need to be logged in to create a venue.');
         return;
       }
+      if (!id) {
+        toast.error('Venue ID is missing.');
+        return;
+      }
+
       console.log('Profile:', profile);
 
-      const loadingToast = toast.loading('Oppretter venue...');
+      const loadingToast = toast.loading('Change venue...');
 
-      console.log('Toast loading created:', loadingToast);
+      console.log('Toast loading updating:', loadingToast);
 
       const validMedia = Array.isArray(data.media)
         ? data.media.filter(
@@ -93,9 +107,9 @@ const ProfileVenueCreate = () => {
             alt: profile.banner?.alt || 'User banner',
           },
         },
-        price: Number(data.price), // 🔥 Konverterer til number
-        maxGuests: Number(data.maxGuests), // 🔥 Konverterer til number
-        rating: Number(data.rating), // 🔥 Konverterer til number
+        price: Number(data.price),
+        maxGuests: Number(data.maxGuests), 
+        rating: Number(data.rating),
         meta: {
           wifi: Boolean(data.meta.wifi),
           parking: Boolean(data.meta.parking),
@@ -108,28 +122,24 @@ const ProfileVenueCreate = () => {
       };
       console.log('Formatted data:', formattedData);
       
-      const success = await createVenue(formattedData);
+      const success = await updateVenue(id, formattedData);
       console.log('Success:', success);
       
       if (success) {
-        toast.success('Venue opprettet!', {
-          id: loadingToast,
-        });
+        toast.success('Venue updated!', { id: loadingToast });
         navigate('/profile');
       } else {
-        toast.error('Kunne ikke opprette venue. Prøv igjen.', {
-          id: loadingToast,
-        });
+        toast.error('Could not update venue. Try again.', { id: loadingToast });
       }
     } catch (error) {
       console.error('Error submitting form:', error);
-      toast.error('Noe gikk galt. Prøv igjen senere.');
+      toast.error('Something went wrong. Try again later.');
     }
   };
 
   return (
     <div>
-      <GradientHeading>Create Venue</GradientHeading>
+      <GradientHeading>Update Venue</GradientHeading>
       <form
         onSubmit={handleSubmit(onSubmit)}
         className="w-full max-w-md mx-auto p-4 bg-white shadow-lg rounded-lg"
@@ -340,4 +350,4 @@ const ProfileVenueCreate = () => {
   );
 };
 
-export default ProfileVenueCreate;
+export default ProfileVenueUpdate;

@@ -18,3 +18,4 @@ export interface Venues {
   owner: Owner; // Owner ID
   bookings?: Booking[]; // Array of bookings
 }
+
