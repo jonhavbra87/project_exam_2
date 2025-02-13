@@ -80,7 +80,19 @@ const VenueForm = () => {
       const formattedData = {
         ...data,
         media: mediaToSubmit,
-        owner: profile.email, // ✅ Sørger for at eieren er en string
+        owner: {
+          name: profile.name || 'Unknown',
+          email: profile.email,
+          bio: profile.bio || '',
+          avatar: {
+            url: profile.avatar?.url || 'https://placeholder.com/avatar.jpg',
+            alt: profile.avatar?.alt || 'User avatar',
+          },
+          banner: {
+            url: profile.banner?.url || 'https://placeholder.com/banner.jpg',
+            alt: profile.banner?.alt || 'User banner',
+          },
+        },
         price: Number(data.price), // 🔥 Konverterer til number
         maxGuests: Number(data.maxGuests), // 🔥 Konverterer til number
         rating: Number(data.rating), // 🔥 Konverterer til number
