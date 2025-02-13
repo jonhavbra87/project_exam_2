@@ -92,6 +92,11 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
     id: string,
     updatedData: Partial<Omit<Venues, 'id' | 'created' | 'updated'>>
   ) => {
+    if (!id) {
+      console.error('Error: Venue ID is required for updating.');
+      return false;
+    }
+    
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
 
@@ -109,6 +114,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       if (!response.ok) throw new Error('Could not update venue');
 
       const updatedVenue = await response.json();
+
       set((state) => ({
         venues: state.venues.map((venue) =>
           venue.id === id ? updatedVenue.data : venue
