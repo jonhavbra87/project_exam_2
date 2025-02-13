@@ -55,16 +55,17 @@ function Venues() {
       </div>
     );
   }
-  
 
   return (
     <div>
       <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading h-screen">
         Let’s explore the world
         <span className="text-primary"> together</span>
-        <div className='mt-20'
-        onClick={() => window.scrollTo({ top: 950, behavior: 'smooth' })}>
-        <BouncingArrow />
+        <div
+          className="mt-20"
+          onClick={() => window.scrollTo({ top: 950, behavior: 'smooth' })}
+        >
+          <BouncingArrow />
         </div>
       </div>
 

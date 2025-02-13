@@ -1,3 +1,3 @@
 export type VenueManager = {
-    venueManager: boolean;
+  venueManager: boolean;
 };

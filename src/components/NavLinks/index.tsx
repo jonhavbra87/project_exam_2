@@ -5,8 +5,6 @@ function NavLinks({ toggleMenu }: { toggleMenu: () => void }) {
   const { profile } = useAuthStore();
   return (
     <ul className="flex flex-col mt-7 md:mt-0 md:flex-row gap-4 md:gap-6 md:items-center">
-      // If user is logged in, show profile, venue and logout links. if not show login and register links
-
       {profile ? (
         <>
           <li>

@@ -12,9 +12,8 @@ function Login() {
     event.preventDefault();
 
     try {
-
-    await login(email, password); 
-      navigate('/profile'); 
+      await login(email, password);
+      navigate('/profile');
     } catch (error) {
       console.error('❌ Error in login:', error);
     }
@@ -29,10 +28,8 @@ function Login() {
         <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
 
         {/* Feilmelding */}
-        {(error) && (
-          <p className="text-red-500 text-sm text-center mb-3">
-            {error}
-          </p>
+        {error && (
+          <p className="text-red-500 text-sm text-center mb-3">{error}</p>
         )}
 
         <input
