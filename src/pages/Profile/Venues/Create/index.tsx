@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
+// import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-hot-toast';
 import { FaImage, FaMoneyBill, FaUsers, FaStar, FaHome } from 'react-icons/fa';
 import GradientHeading from '../../../../styles/GradientHeading';
 import {
-  venueSchema,
   type VenueFormData,
 } from '../../../../components/VenueFormSchema';
 import { useVenueAPI } from '../../../../hooks/useVenueAPI';
@@ -81,7 +80,19 @@ const VenueForm = () => {
       const formattedData = {
         ...data,
         media: mediaToSubmit,
-        owner: profile.email, // ✅ Sørger for at eieren er en string
+        owner: {
+          name: profile.name || 'Unknown',
+          email: profile.email,
+          bio: profile.bio || '',
+          avatar: {
+            url: profile.avatar?.url || 'https://placeholder.com/avatar.jpg',
+            alt: profile.avatar?.alt || 'User avatar',
+          },
+          banner: {
+            url: profile.banner?.url || 'https://placeholder.com/banner.jpg',
+            alt: profile.banner?.alt || 'User banner',
+          },
+        },
         price: Number(data.price), // 🔥 Konverterer til number
         maxGuests: Number(data.maxGuests), // 🔥 Konverterer til number
         rating: Number(data.rating), // 🔥 Konverterer til number
@@ -96,10 +107,10 @@ const VenueForm = () => {
         lng: Number(data.location.lng),
       };
       console.log('Formatted data:', formattedData);
-
+      
       const success = await createVenue(formattedData);
       console.log('Success:', success);
-
+      
       if (success) {
         toast.success('Venue opprettet!', {
           id: loadingToast,

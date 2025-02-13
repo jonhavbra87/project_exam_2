@@ -1,6 +1,7 @@
 import { Booking } from './Booking';
 import { Location } from './Location';
 import { MetaData } from './metaData';
+import { Owner } from './Owner';
 
 export interface Venues {
   id: string;
@@ -14,6 +15,6 @@ export interface Venues {
   updated: string;
   meta: MetaData; // Single meta data object
   location: Location; // Single location object
-  owner: string; // Owner ID
+  owner: Owner; // Owner ID
   bookings?: Booking[]; // Array of bookings
 }
