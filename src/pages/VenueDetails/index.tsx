@@ -89,7 +89,7 @@ function VenueDetails() {
           <div className="mt-4 flex items-center gap-4">
             <img
               src={
-                venueDetails.owner.avatar?.url ||
+                venueDetails.owner?.avatar?.url ||
                 'https://via.placeholder.com/150'
               }
               alt="Owner Avatar"
@@ -97,10 +97,10 @@ function VenueDetails() {
             />
             <div>
               <h3 className="text-body-large-desktop font-bold">
-                {venueDetails.owner.name || 'No Owner name available'}
+                {venueDetails.owner?.name || 'No Owner name available'}
               </h3>
               <p className="text-body-medium-desktop text-text-secondary line-clamp-1">
-                {venueDetails.owner.bio || 'No bio available'}
+                {venueDetails.owner?.bio || 'No bio available'}
               </p>
             </div>
           </div>
