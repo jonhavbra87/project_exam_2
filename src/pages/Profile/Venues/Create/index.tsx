@@ -77,35 +77,41 @@ const ProfileVenueCreate = () => {
               },
             ];
 
-      const formattedData = {
-        ...data,
-        media: mediaToSubmit,
-        owner: {
-          name: profile.name || 'Unknown',
-          email: profile.email,
-          bio: profile.bio || '',
-          avatar: {
-            url: profile.avatar?.url || 'https://placeholder.com/avatar.jpg',
-            alt: profile.avatar?.alt || 'User avatar',
-          },
-          banner: {
-            url: profile.banner?.url || 'https://placeholder.com/banner.jpg',
-            alt: profile.banner?.alt || 'User banner',
-          },
-        },
-        price: Number(data.price), // 🔥 Konverterer til number
-        maxGuests: Number(data.maxGuests), // 🔥 Konverterer til number
-        rating: Number(data.rating), // 🔥 Konverterer til number
-        meta: {
-          wifi: Boolean(data.meta.wifi),
-          parking: Boolean(data.meta.parking),
-          breakfast: Boolean(data.meta.breakfast),
-          pets: Boolean(data.meta.pets),
-        },
-        zip: Number(data.location.zip),
-        lat: Number(data.location.lat),
-        lng: Number(data.location.lng),
-      };
+            const formattedData = {
+              ...data,
+              media: mediaToSubmit,
+              owner: {
+                name: profile.name || "Unknown",
+                email: profile.email,
+                bio: profile.bio || "",
+                avatar: {
+                  url: profile.avatar?.url || "https://placeholder.com/avatar.jpg",
+                  alt: profile.avatar?.alt || "User avatar",
+                },
+                banner: {
+                  url: profile.banner?.url || "https://placeholder.com/banner.jpg",
+                  alt: profile.banner?.alt || "User banner",
+                },
+              },
+              price: Number(data.price), // 🔥 Konverterer til number
+              maxGuests: Number(data.maxGuests), // 🔥 Konverterer til number
+              rating: Number(data.rating), // 🔥 Konverterer til number
+              meta: {
+                wifi: Boolean(data.meta.wifi),
+                parking: Boolean(data.meta.parking),
+                breakfast: Boolean(data.meta.breakfast),
+                pets: Boolean(data.meta.pets),
+              },
+              location: {
+                address: data.location.address,
+                city: data.location.city,
+                zip: data.location.zip,
+                country: data.location.country,
+                continent: data.location.continent,
+                lat: Number(data.location.lat), // 🔥 Sørger for at det er et tall
+                lng: Number(data.location.lng), // 🔥 Sørger for at det er et tall
+              },
+            };
       console.log('Formatted data:', formattedData);
       
       const success = await createVenue(formattedData);

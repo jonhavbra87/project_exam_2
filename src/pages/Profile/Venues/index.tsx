@@ -6,7 +6,7 @@ import { FaPeopleRoof } from "react-icons/fa6";
 import { IoSettings } from "react-icons/io5";
 import { FaTrash } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
-import { toast } from "react-toastify"; // Import toast
+import useToastNotification from "../../../hooks/useToastNotification"; // ✅ Import custom toast hook
 
 const VenuesByUser = () => {
   const { profile } = useAuthStore();
@@ -14,6 +14,7 @@ const VenuesByUser = () => {
   const profileName = profile?.name;
   const venuesArray: Venues[] = Array.isArray(venues) ? venues : [];
   const navigate = useNavigate();
+  const toast = useToastNotification(); // ✅ Bruk custom toast hook
 
   useEffect(() => {
     if (profileName) {
@@ -32,8 +33,8 @@ const VenuesByUser = () => {
 
     try {
       await deleteVenue(venueId);
-      toast.success("Venue deleted successfully!"); // Success toast
-      fetchVenuesByUser(profileName); // Refresh list
+      toast.success("Venue deleted successfully!"); // ✅ Bruker custom toast hook
+      fetchVenuesByUser(profileName);
     } catch (error) {
       console.error("Failed to delete venue", error);
       toast.error("Error: Could not delete the venue. Please try again.");

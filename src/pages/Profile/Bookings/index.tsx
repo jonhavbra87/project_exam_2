@@ -5,9 +5,8 @@ import BookingCard from '../../../components/BookingCard';
 
 function Bookings() {
   const { fetchBookingsByUser, bookings, isLoading, isError } = useBookingAPI();
-  const { profile } = useAuthStore(); // Henter innlogget bruker
+  const { profile } = useAuthStore(); 
 
-  // 🔹 Filtrering av bookinger
   const currentDate = new Date();
   const activeBookings = bookings.filter(
     (booking) => new Date(booking.dateTo) > currentDate
@@ -37,8 +36,6 @@ function Bookings() {
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-3xl font-bold text-center mb-6">Mine bookinger</h1>
-
-      {/* 🔹 Aktive bookinger */}
       {activeBookings.length > 0 && (
         <div>
           <h2 className="text-2xl font-semibold mb-4">Active Bookings</h2>
@@ -53,8 +50,6 @@ function Bookings() {
           </div>
         </div>
       )}
-
-      {/* 🔹 Utløpte bookinger */}
       {expiredBookings.length > 0 && (
         <div className="mt-10">
           <h2 className="text-2xl font-semibold mb-4 text-gray-600">

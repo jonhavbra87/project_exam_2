@@ -20,7 +20,7 @@ function SearchBar({ onSearch }: SearchBarProps) {
 
   const clearSearch = () => {
     setQuery(''); // Emty the search input
-    onSearch(''); // Trigger search with empty query
+    onSearch(''); // Clear the search results
   };
 
   return (
