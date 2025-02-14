@@ -8,8 +8,11 @@ interface VenueState {
   venueDetails: Venues | null;
   isLoading: boolean;
   isError: boolean;
+  hasMore: boolean;
   fetchVenues: (url: string) => Promise<void>;
   fetchVenueDetails: (url: string) => Promise<void>;
+  fetchLimitVenues: () => Promise<void>;
+  fetchMoreVenues: (page: number) => Promise<void>;
   createVenue: (
     venueData: Omit<Venues, 'id' | 'created' | 'updated'>
   ) => Promise<boolean>;
@@ -19,6 +22,7 @@ interface VenueState {
   ) => Promise<boolean>;
   deleteVenue: (id: string) => Promise<boolean>;
   fetchVenuesByUser: (userEmail: string) => Promise<void>;
+  fetchVenuesBySearch: (query: string) => Promise<void>;
 }
 
 export const useVenueAPI = create<VenueState>((set, get) => ({
@@ -26,30 +30,98 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
   venueDetails: null,
   isLoading: false,
   isError: false,
+  hasMore: false,
 
   fetchVenues: async (url: string) => {
     set({ isLoading: true, isError: false });
     try {
-      const response = await fetch(url);
-      if (!response.ok) throw new Error('Network response was not ok');
-
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'X-Noroff-API-Key': API_KEY,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Could not fetch venues: ${response.status} ${response.statusText}`);
+      }
       const json = await response.json();
-      set((state) => ({
-        venues: [...state.venues, ...json.data],
+      set(() => ({
+        venues: json.data || [],
+        hasMore: json.data.length > 0,
         isLoading: false,
       }));
+      console.log('Venues successfully fetched:', json.data.length, 'items.');
     } catch (error) {
-      console.error('Fetching error:', error);
+      console.error("Error fetching venues:", error);
+      set({ isError: true, isLoading: false });
+    }
+  },
+  fetchLimitVenues: async () => {
+    set({ isLoading: true, isError: false });
+    try {
+      const url = `${BASE_API_URL}${API_VENUES}?limit=24&page=1&sort=name&sortOrder=asc`;
+      console.log('Fetching initial venues from:', url);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'X-Noroff-API-Key': API_KEY,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Could not fetch venues: ${response.status} ${response.statusText}`);
+      }
+      const json = await response.json();
+      const newVenues = json.data || [];
+      set({
+        venues: newVenues,
+        hasMore: newVenues.length > 0,
+        isLoading: false,
+      });
+      console.log('Fetched first 24 venues.');
+    } catch (error) {
+      console.error("Error fetching initial venues:", error);
       set({ isError: true, isLoading: false });
     }
   },
 
+  fetchMoreVenues: async (page: number) => {
+    set({ isLoading: true, isError: false });
+    try {
+      const url = `${BASE_API_URL}${API_VENUES}?limit=24&page=${page}&sort=name&sortOrder=asc`;
+      console.log('Fetching more venues from:', url);
+      const response = await fetch(url, {
+        method: 'GET',
+        headers: {
+          'X-Noroff-API-Key': API_KEY,
+          'Content-Type': 'application/json',
+        },
+      });
+      if (!response.ok) {
+        throw new Error(`Could not fetch more venues: ${response.status} ${response.statusText}`);
+      }
+      const json = await response.json();
+      const newVenues = json.data || [];
+      set((state) => ({
+        venues: [...state.venues, ...newVenues], // 🔄 Legger til flere venues
+        hasMore: newVenues.length > 0,
+        isLoading: false,
+      }));
+      console.log(`Fetched ${newVenues.length} more venues.`);
+    } catch (error) {
+      console.error("Error fetching more venues:", error);
+      set({ isError: true, isLoading: false });
+    }
+  },
+  
   fetchVenueDetails: async (url: string) => {
     set({ isLoading: true, isError: false });
     try {
-      const response = await fetch(url);
+      const response = await fetch(url,{
+        headers: { "X-Noroff-API-Key": API_KEY },
+      });
       if (!response.ok) throw new Error('Network response was not ok');
-
       const json = await response.json();
       set({ venueDetails: json.data, isLoading: false });
     } catch (error) {
@@ -63,7 +135,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
   ) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
-
     try {
       const response = await fetch(`${BASE_API_URL}${API_VENUES}?_owner=true`, {
         method: 'POST',
@@ -74,9 +145,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         },
         body: JSON.stringify(venueData),
       });
-
       console.log('response crateVenue', response);
-
       if (!response.ok) throw new Error('Could not create venue');
       await get().fetchVenues(`${BASE_API_URL}${API_VENUES}`);
       set({ isLoading: false });
@@ -96,10 +165,8 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       console.error('Error: Venue ID is required for updating.');
       return false;
     }
-    
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
-
     try {
       const response = await fetch(`${BASE_API_URL}${API_VENUES}/${id}`, {
         method: 'PUT',
@@ -110,11 +177,8 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         },
         body: JSON.stringify(updatedData),
       });
-
       if (!response.ok) throw new Error('Could not update venue');
-
       const updatedVenue = await response.json();
-
       set((state) => ({
         venues: state.venues.map((venue) =>
           venue.id === id ? updatedVenue.data : venue
@@ -132,7 +196,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
   deleteVenue: async (id: string) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
-
     try {
       const response = await fetch(`${BASE_API_URL}${API_VENUES}/${id}`, {
         method: 'DELETE',
@@ -141,9 +204,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
           'X-Noroff-API-Key': API_KEY,
         },
       });
-
       if (!response.ok) throw new Error('Could not delete venue');
-
       set((state) => ({
         venues: state.venues.filter((venue) => venue.id !== id),
         isLoading: false,
@@ -157,6 +218,10 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
   },
 
   fetchVenuesByUser: async (name: string) => {
+    if (!name) {
+      console.error("fetchVenuesByUser: User name is required.");
+      return;
+    }
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
     try {
@@ -170,7 +235,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         }
       );
       if (!response.ok) throw new Error('Could not fetch user venues');
-
       const json = await response.json();
       set({
         venues: json.data,
@@ -178,6 +242,24 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       });
     } catch (error) {
       console.error('Error fetching user venues:', error);
+      set({ isError: true, isLoading: false });
+    }
+  },
+
+  fetchVenuesBySearch: async (query: string) => {
+    set({ isLoading: true, isError: false });
+    try {
+      const response = await fetch(`${BASE_API_URL}${API_VENUES}/search?q=${query}`, {
+        headers: { "X-Noroff-API-Key": API_KEY },
+      });
+      if (!response.ok) throw new Error("Could not search venues");
+      const json = await response.json();
+      set({
+        venues: json.data || [],
+        isLoading: false,
+      });
+    } catch (error) {
+      console.error("Error searching venues:", error);
       set({ isError: true, isLoading: false });
     }
   },
