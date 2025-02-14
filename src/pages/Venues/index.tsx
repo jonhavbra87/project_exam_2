@@ -4,18 +4,29 @@ import SearchBar from '../../components/SearchBar';
 import VenueCard from '../../components/VenueCard';
 import GradientHeading from '../../styles/GradientHeading';
 import BouncingArrow from '../../components/BouncingArrow';
+import StyledLoader from '../../styles/StyledLoader';
 
 function Venues() {
   const { venues, isLoading, isError, hasMore, fetchLimitVenues, fetchMoreVenues, fetchVenuesBySearch } = useVenueAPI();
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(2); 
+  const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
     if (!searchTerm) {
       fetchLimitVenues();
     }
   }, [fetchLimitVenues, searchTerm]);
+  // Control Loader display with a timeout
+  useEffect(() => {
+    if (!isLoading) {
+      const timeout = setTimeout(() => {
+        setShowLoader(false);
+      }, 1000); // Minimum 2 seconds
 
+      return () => clearTimeout(timeout); // Cleanup timeout
+    }
+  }, [isLoading]);
   // 🔍 **Håndterer søk**
   const handleSearch = (query: string) => {
     setSearchTerm(query);
@@ -48,8 +59,8 @@ function Venues() {
   );
 
 
-  if (isLoading && venues.length === 0) {
-    return <div className="text-center text-gray-500">⏳ Laster venues...</div>;
+  if (isLoading && venues.length === 0 || showLoader) {
+    return <StyledLoader />;
   }
 
   if (isError) {
@@ -100,7 +111,7 @@ function Venues() {
       </ul>
 
       {isLoading && (
-        <p className="text-center text-gray-500 mt-4">Laster flere venues...</p>
+        <StyledLoader />
       )}
     </div>
   );
