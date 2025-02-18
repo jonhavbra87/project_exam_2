@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 
-import { menu } from 'framer-motion/client';
+import { button, menu } from 'framer-motion/client';
 
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -13,6 +13,7 @@ export default {
         ingress: ['Crete Round', 'serif'],
         menu: ['Rubik', 'sans-serif'],
         label: ['Crete Round', 'serif'],
+        button: ['Rubik', 'sans-serif'],
       },
       fontSize: {
         // Splash

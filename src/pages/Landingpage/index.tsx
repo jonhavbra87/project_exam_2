@@ -23,25 +23,29 @@ function Landingpage() {
 
         <div className="text-ingress-mobile md:text-ingress-desktop text-text-secondary">Welcome to Holidaze</div>
         <div className="self-stretch mt-6 text-primary max-w-full text-splash-mobile md:text-splash-desktop font-splash text-center">
-  <span className="text-text-primary">Let's explore the world</span>{' '}
-  <span className="text-primary block">together</span>
-</div>
-<div className="group w-fit cursor-pointer relative">
-  <p onClick={() => navigation('/venues')} className="mt-20 text-ingress-mobile md:text-ingress-desktop max-md:mt-10 
-    transition-all duration-500 ease-in-out 
-    text-text-primary bg-gradient-to-r from-text-primary to-accent bg-clip-text 
-    group-hover:text-transparent">
-    
-    Just curious? Click here for exploring Venues without signing in{' '}
-    <CiLogin className="inline-block text-accent hover:cursor-pointer" />
-  </p>
-</div>
+          <span className="text-text-primary">Let's explore the world</span>{' '}
+          <span className="text-primary block">together</span>
+      </div>
+        <div className="group cursor-pointer relative">
+          <p onClick={() => navigation('/venues')} className="mt-20 text-ingress-mobile md:text-ingress-desktop font-body max-md:mt-10 
+            transition-all duration-500 ease-in-out 
+            text-text-primary bg-gradient-to-r from-text-primary to-accent bg-clip-text 
+            group-hover:text-transparent">
+            
+            Just curious? Click here for exploring Venues without signing in{' '}
+            <CiLogin className="inline-block text-accent hover:cursor-pointer" />
+          </p>
+        </div>
         <div className='md:w-3/5'>
         <CustomButton
         onClick={() => navigation('/register')}
         icon={NoroffLogo}
         text="Sign up with Noroff" />
-        <div onClick={() => navigation('/login')} className="mt-6 text-body-large-mobile sm:text-body-large-desktop text-text-secondary hover:cursor-pointer">Already have an account? Login<IoLogIn className="inline-block text-primary text-2xl" /></div>
+        <div className='group text-center cursor-pointer relative'>
+        <p onClick={() => navigation('/login')} className="mt-6 text-body-large-mobile sm:text-body-large-desktop font-body transition-all duration-500 ease-in-out text-text-primary bg-gradient-to-r from-text-secondary to-primary bg-clip-text 
+            group-hover:text-transparent">Already have an account? Login<IoLogIn className="inline-block text-primary text-2xl" /></p>
+        </div>
+
         </div>
       </div>
     </div>
