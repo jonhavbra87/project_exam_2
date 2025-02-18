@@ -16,10 +16,10 @@ export const SignUpButton: React.FC<ButtonProps> = ({
           loading="lazy"
           src={icon}
           alt="logo"
-          className="object-contain shrink-0 rounded-none aspect-square w-[22px] rounded-sm"
+          className="object-contain shrink-0 aspect-square w-[24px] rounded-sm"
         />
       )}
-      <span className="grow shrink my-auto w-[179px]">{text}</span>
+      <span className="grow shrink my-auto">{text}</span>
     </button>
   );
 };
