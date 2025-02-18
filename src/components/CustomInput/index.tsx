@@ -4,7 +4,7 @@ import { InputProps } from "../../types/InputProps";
 export const CustomInput = forwardRef<HTMLInputElement, InputProps>(
   ({ label, type = "text", Icon, required, ...rest }, ref) => {
     const [isFocused, setIsFocused] = useState(false);
-
+    const inputId = `input-${label.replace(/\s+/g, "-").toLowerCase()}`;
     return (
       <div className="relative w-full">
         {/* Input Container */}
@@ -16,15 +16,17 @@ export const CustomInput = forwardRef<HTMLInputElement, InputProps>(
           <input
             type={type}
             required={required}
-            {...rest} // Tar imot `register()`
-            ref={ref} // ✅ Bruker `ref` for `react-hook-form`
+            {...rest} 
+            ref={ref}
             onFocus={() => setIsFocused(true)}
             onBlur={(e) => setIsFocused(!!e.target.value)}
             className="w-full bg-transparent focus:outline-none text-text-primary pt-2 pb-1"
+            aria-label={label}
           />
 
           {/* Label (flytter seg opp ved fokus/skrift) */}
           <label
+            htmlFor={inputId}
             className={`absolute left-10 transition-all text-text-secondary ${
               isFocused ? "top-1 text-xs" : "top-3 text-sm"
             }`}
