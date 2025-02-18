@@ -17,12 +17,14 @@ import PrivacyGuidelines from './components/PrivacyGuidelines';
 import ProfileVenueUpdate from './pages/Profile/Venues/Update';
 import Landingpage from './pages/Landingpage';
 import { useAuthStore } from './store/authStore';
+import { Toaster } from 'react-hot-toast';
 // import Register from './components/Register';
 
 function App() {
   const { isAuthenticated } = useAuthStore();
   return (
     <div className="text-text-primary">
+      <Toaster position='top-right' reverseOrder={false} />
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route

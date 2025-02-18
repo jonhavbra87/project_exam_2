@@ -8,23 +8,85 @@ import { CustomInput } from '../CustomInput';
 import { CustomButton } from '../CustomButton';
 import NoroffLogo from '../../assets/noroff_logo.svg';
 import { CiLogin } from 'react-icons/ci';
+import toast from 'react-hot-toast';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
+// function Login() {
+//   const [email, setEmail] = useState('');
+//   const [password, setPassword] = useState('');
+//   const { login, loading, error } = useLogin();
+//   const navigate = useNavigate();
+
+//   const handleSubmit = async (event: React.FormEvent) => {
+//     event.preventDefault();
+
+//     try {
+//       await login(email, password);
+//       toast.success("Successfully logged in! ✅"); 
+//       setTimeout(() => {
+//       navigate('/profile');
+//       }
+//       , 2000);
+      
+//     } catch (error) {
+//       toast.error("Invalid username or password! ❌");
+//       console.error('❌ Error in login:', error);
+//       return;
+//     }
+//   };
+
+const schema = yup.object().shape({
+  email: yup
+    .string()
+    .email("Invalid email")
+    .matches(/^[a-zA-Z0-9._%+-]+@stud\.noroff\.no$/, "Email must be a @stud.noroff.no address")
+    .required("Email is required"),
+  password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+});
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { login, loading, error } = useLogin();
   const navigate = useNavigate();
+  const { login, loading, error } = useLogin();
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
+  // ✅ React Hook Form setup
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: yupResolver(schema),
+  });
+  console.log("Form errors:", errors);
 
+
+  const onSubmit = async (data) => {
+    console.log("Submitting with data:", data);
+  
+    if (Object.keys(errors).length > 0) {
+      toast.error("Please fix the errors before submitting! ❌");
+      return;
+    }
+  
     try {
-      await login(email, password);
-      navigate('/profile');
+      const response = await login(data.email, data.password);
+  
+      if (!response) {
+        toast.error("Invalid username or password! ❌");
+        return; // 🚀 STOPP navigering hvis API returnerer en feil
+      }
+  
+      toast.success("Successfully logged in! ✅");
+  
+      setTimeout(() => {
+        navigate("/profile");
+      }, 1000);
     } catch (error) {
-      console.error('❌ Error in login:', error);
+      toast.error("Login failed: " + (error.message || "Unknown error") + " ❌");
     }
   };
+  
+  
 
   return (
     <div className="flex items-center justify-center min-h-screen">
@@ -41,12 +103,11 @@ function Login() {
         </div>
 
         <div className="flex flex-col items-center w-1/2 max-md:w-full">
-          <form onSubmit={handleSubmit} className="w-full max-w-sm">
+          <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm">
             <p className="text-ingress-mobile md:text-ingress-desktop font-ingress text-white mb-8">
               Please provide your existing information for successful login
             </p>
 
-            {/* Feilmelding */}
             {error && (
               <p className="text-red-500 text-body-large-mobile md:text-body-large-desktop text-center mb-3">
                 {error}
@@ -58,20 +119,24 @@ function Login() {
               type="email"
               placeholder="Email"
               Icon={IoIosMail}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
+              {...register("email")}
+              // value={email}
+              // onChange={(e) => setEmail(e.target.value)}
+              // required
             />
+            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
 
             <CustomInput
               label="Password"
               type="password"
               placeholder="Password"
               Icon={MdPassword}
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
+              {...register("password")}
+              // value={password}
+              // onChange={(e) => setPassword(e.target.value)}
+              // required
             />
+            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
 
             <p
               onClick={() => navigate('/register')}

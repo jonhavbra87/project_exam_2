@@ -3,7 +3,7 @@ export interface InputProps {
   placeholder: string;
   type?: string;
   Icon?: React.ElementType;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  // value: string;
+  // onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   required?: boolean;
 }
