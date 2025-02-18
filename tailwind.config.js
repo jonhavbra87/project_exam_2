@@ -144,21 +144,18 @@ export default {
         button: {
           primary: '#7E30E1',
           secondary: '#E26EE5',
-          hover: '#5D0EAD',
+          hover: '#49108B',
           hoverSecondary: '#C850C0',
           disabled: '#B3BAC6',
         },
-        background: {
-          DEFAULT: '#F9FAFB',
-          secondary: '#ECEFF4',
-        },
+        background: '#fcfcf7',
         text: {
           primary: '#1F1F1F',
           secondary: '#6A6A6A',
           muted: '#8A8A8A',
           contrast: '#FFFFFF',
         },
-        header: '#222222',
+        header: '#220840',
       },
       keyframes: {
         'slide-down': {

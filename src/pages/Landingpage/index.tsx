@@ -1,4 +1,4 @@
-import { SignUpButton } from '../../components/SignUpButton';
+import { CustomButton } from '../../components/CustomButton';
 import SignUpImg from '../../assets/signup_collage.png';
 import NoroffLogo from '../../assets/noroff_logo.svg';
 import { CiLogin } from 'react-icons/ci';
@@ -29,7 +29,7 @@ function Landingpage() {
           Just curious? Click here for exploring Venues without signing in{' '}
           <CiLogin onClick={() => navigation('/venues')} className="inline-block text-text-secondary hover:cursor-pointer" />
         </div>
-        <SignUpButton
+        <CustomButton
         onClick={() => navigation('/register')}
         icon={NoroffLogo}
         text="Sign up with Noroff" />
