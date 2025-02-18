@@ -4,11 +4,11 @@
 
 html,
 body {
-  background-color: #f9fafb;
+  /* background-color: #f9fafb; */
   color: #1f1f1f;
 }
-
+/* Stops scrolling behavior that does not suppose to be there */
 .slider-container {
-  overscroll-behavior-y: contain; /* Stops vertical scrolling */
-  touch-action: pan-y; /* Stops horizontal swiping causes vertical swipe */
+  overscroll-behavior-y: contain;
+  touch-action: pan-y;
 }

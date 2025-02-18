@@ -29,8 +29,9 @@ const useLogin = () => {
       const result = await response.json();
       console.log(result);
 
-      if (!response.ok) {
-        setError('Login failed');
+      if (!response.ok || !result.data) {
+        console.error("❌ API error:", result.message || "Unexpected response format");
+        return null;
       }
 
       const profile: Profile = {

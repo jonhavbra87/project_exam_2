@@ -1,6 +1,5 @@
 // import { FaHome, FaImage, FaMoneyBill, FaStar, FaUsers } from "react-icons/fa";
 
-
 // const VenueFormFields = ( { register, errors }) => {
 
 //   return(

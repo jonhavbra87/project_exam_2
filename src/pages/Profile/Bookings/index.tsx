@@ -5,7 +5,7 @@ import BookingCard from '../../../components/BookingCard';
 
 function Bookings() {
   const { fetchBookingsByUser, bookings, isLoading, isError } = useBookingAPI();
-  const { profile } = useAuthStore(); 
+  const { profile } = useAuthStore();
 
   const currentDate = new Date();
   const activeBookings = bookings.filter(

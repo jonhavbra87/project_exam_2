@@ -1,6 +1,11 @@
 import { create } from 'zustand';
 import { Venues } from '../types/Venues';
-import { API_KEY, API_PROFILE, API_VENUES, BASE_API_URL } from '../api/apiConfig';
+import {
+  API_KEY,
+  API_PROFILE,
+  API_VENUES,
+  BASE_API_URL,
+} from '../api/apiConfig';
 import { useAuthStore } from '../store/authStore';
 
 interface VenueState {
@@ -43,7 +48,9 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         },
       });
       if (!response.ok) {
-        throw new Error(`Could not fetch venues: ${response.status} ${response.statusText}`);
+        throw new Error(
+          `Could not fetch venues: ${response.status} ${response.statusText}`
+        );
       }
       const json = await response.json();
       set(() => ({
@@ -53,7 +60,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       }));
       console.log('Venues successfully fetched:', json.data.length, 'items.');
     } catch (error) {
-      console.error("Error fetching venues:", error);
+      console.error('Error fetching venues:', error);
       set({ isError: true, isLoading: false });
     }
   },
@@ -70,7 +77,9 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         },
       });
       if (!response.ok) {
-        throw new Error(`Could not fetch venues: ${response.status} ${response.statusText}`);
+        throw new Error(
+          `Could not fetch venues: ${response.status} ${response.statusText}`
+        );
       }
       const json = await response.json();
       const newVenues = json.data || [];
@@ -81,7 +90,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       });
       console.log('Fetched first 24 venues.');
     } catch (error) {
-      console.error("Error fetching initial venues:", error);
+      console.error('Error fetching initial venues:', error);
       set({ isError: true, isLoading: false });
     }
   },
@@ -99,7 +108,9 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         },
       });
       if (!response.ok) {
-        throw new Error(`Could not fetch more venues: ${response.status} ${response.statusText}`);
+        throw new Error(
+          `Could not fetch more venues: ${response.status} ${response.statusText}`
+        );
       }
       const json = await response.json();
       const newVenues = json.data || [];
@@ -110,16 +121,16 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       }));
       console.log(`Fetched ${newVenues.length} more venues.`);
     } catch (error) {
-      console.error("Error fetching more venues:", error);
+      console.error('Error fetching more venues:', error);
       set({ isError: true, isLoading: false });
     }
   },
-  
+
   fetchVenueDetails: async (url: string) => {
     set({ isLoading: true, isError: false });
     try {
-      const response = await fetch(url,{
-        headers: { "X-Noroff-API-Key": API_KEY },
+      const response = await fetch(url, {
+        headers: { 'X-Noroff-API-Key': API_KEY },
       });
       if (!response.ok) throw new Error('Network response was not ok');
       const json = await response.json();
@@ -219,14 +230,15 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
 
   fetchVenuesByUser: async (name: string) => {
     if (!name) {
-      console.error("fetchVenuesByUser: User name is required.");
+      console.error('fetchVenuesByUser: User name is required.');
       return;
     }
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
     try {
       const response = await fetch(
-        `${BASE_API_URL}${API_PROFILE}/${name}/venues?_owner=true&_bookings=true`, {
+        `${BASE_API_URL}${API_PROFILE}/${name}/venues?_owner=true&_bookings=true`,
+        {
           method: 'GET',
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -249,17 +261,20 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
   fetchVenuesBySearch: async (query: string) => {
     set({ isLoading: true, isError: false });
     try {
-      const response = await fetch(`${BASE_API_URL}${API_VENUES}/search?q=${query}`, {
-        headers: { "X-Noroff-API-Key": API_KEY },
-      });
-      if (!response.ok) throw new Error("Could not search venues");
+      const response = await fetch(
+        `${BASE_API_URL}${API_VENUES}/search?q=${query}`,
+        {
+          headers: { 'X-Noroff-API-Key': API_KEY },
+        }
+      );
+      if (!response.ok) throw new Error('Could not search venues');
       const json = await response.json();
       set({
         venues: json.data || [],
         isLoading: false,
       });
     } catch (error) {
-      console.error("Error searching venues:", error);
+      console.error('Error searching venues:', error);
       set({ isError: true, isLoading: false });
     }
   },

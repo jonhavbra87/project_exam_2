@@ -14,7 +14,7 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
   };
 
   return (
-    <div className="bg-base rounded-lg shadow-lg border border-neutral-950 hover:shadow-xl transition-shadow relative">
+    <div className="bg-gradient-to-tr from-primary-3 to-secondary rounded-lg shadow-lg border border-white hover:shadow-xl transition-shadow relative">
       {/* Content that wraps product image and text */}
       <div
         className="cursor-pointer block relative group"
@@ -35,22 +35,22 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
 
       <div className="p-4">
         <div className="flex flex-row justify-between items-center">
-          <h2 className="text-ingress-desktop font-bold mb-2 text-text-primary">
+          <h2 className="text-ingress-desktop font-ingress font-bold mb-2 text-white">
             {venue.name}
           </h2>
           <VenueRating rating={venue.rating} />
-          <div className="absolute top-4 right-4 text-3xl text-white">
+          <div className="absolute top-4 right-4 text-2xl text-white">
             <SlHeart />
           </div>
         </div>
         <p className="text-body-small-desktop text-text-secondary mb-2 line-clamp-1">
           {venue.location.continent}
         </p>
-        <p className="text-body-medium-desktop text-text-primary mb-2 line-clamp-1">
+        <p className="text-body-large-mobile md:text-body-large-desktop font-body text-white mb-2 line-clamp-1">
           {venue.description}
         </p>
       </div>
-      <div className="px-4 flex flex-row items-center text-body-medium-desktop text-text-primary mb-2 gap-2">
+      <div className="px-4 flex flex-row items-center text-body-medium-desktop font-body text-white mb-2 gap-2">
         <p className="">
           <FaUser />{' '}
         </p>
@@ -60,7 +60,7 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
         <VenuePrice product={venue} />
         <Link
           to={`/venue/${venue.id}`}
-          className="text-button-primary-desktop font-bold border-r border-b border-text-primary w-16 h-8 rounded-md bg-button-secondary hover:bg-button-hoverSecondary flex items-center justify-center"
+          className="text-button-primary-desktop font-bold border-r border-b border-white w-16 h-8 rounded-md bg-button-secondary hover:bg-button-hoverSecondary flex items-center justify-center"
         >
           View
         </Link>

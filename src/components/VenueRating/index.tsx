@@ -20,14 +20,14 @@ function VenueRating({ rating }: { rating: number }) {
     return (
       <div className="flex items-center text-ingress-desktop">
         <FaRegStar className="text-accent" />
-        <p className="text-white ml-2">{rating}</p>
+        <p className="text-white text-ingress-mobile md:text-ingress-desktop font-ingress ml-2">{rating}</p>
         <span className="sr-only">Rated 0 out of {totalStars} stars</span>
       </div>
     );
   }
 
   return (
-    <div className="flex items-center text-ingress-desktop">
+    <div className="flex items-center text-white text-ingress-mobile md:text-ingress-desktop font-ingress">
       {Array(filledStars)
         .fill(0)
         .map((_, index) => (
@@ -39,7 +39,7 @@ function VenueRating({ rating }: { rating: number }) {
         .map((_, index) => (
           <FaRegStar key={`empty-${index}`} className="text-accent" />
         ))}
-      <p className="text-text-primary ml-2">{rating}</p>
+      <p className="text-white text-ingress-mobile md:text-ingress-desktop font-ingress">{rating}</p>
 
       <span className="sr-only">
         Rated {rating} out of {totalStars} stars

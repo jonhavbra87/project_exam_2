@@ -8,6 +8,7 @@ type AuthState = {
   isAuthenticated: boolean;
   venueManager: boolean;
   login: (profile: Profile, accessToken: string, venueManager: boolean) => void;
+  // register: (profile: Profile, accessToken: string, venueManager: boolean) => void;
   logout: () => void;
   setVenueManager: (venueManager: boolean) => void;
 };
@@ -28,6 +29,16 @@ export const useAuthStore = create<AuthState>()(
           venueManager: !!venueManager,
         });
       },
+
+      // register: (profile: Profile, accessToken: string, venueManager: boolean) => {
+      //   console.log("🟢 Storing accessToken in Zustand (register):", accessToken);
+      //   set({
+      //     profile,
+      //     accessToken,
+      //     isAuthenticated: true,
+      //     venueManager: !!venueManager,
+      //   });
+      // },
 
       setVenueManager: (venueManager: boolean) => {
         set({ venueManager: !!venueManager });
