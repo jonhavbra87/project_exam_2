@@ -7,26 +7,30 @@ function Layout() {
   const navigate = useNavigate();
   const location = useLocation();
   const isLandingPage = location.pathname === '/';
-  const isAuthPage = location.pathname === '/login' || location.pathname === '/register';
+  const isAuthPage =
+    location.pathname === '/login' || location.pathname === '/register';
 
   return (
-    <div className={`flex flex-col h-dvh ${isAuthPage ? 'bg-gradient-to-t from-primary-3 via-primary-3 to-secondary' : 'bg-background'}`}>
+    <div
+      className={`flex flex-col h-dvh ${isAuthPage ? 'bg-gradient-to-t from-primary-3 via-primary-3 to-secondary' : 'bg-background'}`}
+    >
       <div className={`flex flex-col h-dvh ${isAuthPage ? '' : ''}`}>
-
-      {!isAuthPage && <Header />}
+        {!isAuthPage && <Header />}
       </div>
-    {/* Main content tar hele skjermen */}
-    <main className={`flex-grow w-11/12 lg:w-10/12 max-w-screen-xl mx-auto ${isAuthPage ? "flex items-center justify-center" : ""}`}>
-      {!isLandingPage && (
-        <button
-        onClick={() => navigate(-1)}
-        className="absolute top-4 left-6 flex items-center text-red-600 hover:text-gray-900 transition-all"
-        >
-        <FaArrowLeft className="mr-2" />
-        Back
-        </button>
-      )}
-      <Outlet />
+      {/* Main content tar hele skjermen */}
+      <main
+        className={`flex-grow w-11/12 lg:w-10/12 max-w-screen-xl mx-auto ${isAuthPage ? 'flex items-center justify-center' : ''}`}
+      >
+        {!isLandingPage && (
+          <button
+            onClick={() => navigate(-1)}
+            className="absolute top-4 left-6 flex items-center text-red-600 hover:text-gray-900 transition-all"
+          >
+            <FaArrowLeft className="mr-2" />
+            Back
+          </button>
+        )}
+        <Outlet />
       </main>
       {!isAuthPage && <Footer />}
     </div>

@@ -25,7 +25,10 @@ function App() {
     <div className="text-text-primary">
       <Routes>
         <Route path="/" element={<Layout />}>
-        <Route index element={isAuthenticated ? <Venues /> : <Landingpage />} />
+          <Route
+            index
+            element={isAuthenticated ? <Venues /> : <Landingpage />}
+          />
           <Route path="venues" element={<Venues />} />
           <Route path="venue/:id" element={<VenueDetails />} />
           <Route path="/signup" element={<SignUp />} />
@@ -34,17 +37,20 @@ function App() {
           <Route path="Profile" element={<Profile />} />
           <Route path="Profile/bookings" element={<Bookings />} />
           <Route path="profile/editprofile" element={<EditProfile />} />
-          <Route
-            path="profile/venues"
-            element={<VenuesByUser />}
-          />
+          <Route path="profile/venues" element={<VenuesByUser />} />
           <Route
             path="profile/venues/create"
             element={<ProfileVenueCreate />}
           />
-          <Route path='profile/venues/:id/update' element={<ProfileVenueUpdate />} />
-          <Route path='profile/termsofservice' element={<TermsOfService />} />
-          <Route path="profile/privacyguidelines" element={<PrivacyGuidelines />} />
+          <Route
+            path="profile/venues/:id/update"
+            element={<ProfileVenueUpdate />}
+          />
+          <Route path="profile/termsofservice" element={<TermsOfService />} />
+          <Route
+            path="profile/privacyguidelines"
+            element={<PrivacyGuidelines />}
+          />
           <Route path="Contact" element={<Contact />} />
           <Route path="*" element={<NotFound />} />
         </Route>

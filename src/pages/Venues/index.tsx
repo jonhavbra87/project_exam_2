@@ -7,9 +7,17 @@ import BouncingArrow from '../../components/BouncingArrow';
 import StyledLoader from '../../styles/StyledLoader';
 
 function Venues() {
-  const { venues, isLoading, isError, hasMore, fetchLimitVenues, fetchMoreVenues, fetchVenuesBySearch } = useVenueAPI();
+  const {
+    venues,
+    isLoading,
+    isError,
+    hasMore,
+    fetchLimitVenues,
+    fetchMoreVenues,
+    fetchVenuesBySearch,
+  } = useVenueAPI();
   const [searchTerm, setSearchTerm] = useState('');
-  const [page, setPage] = useState(2); 
+  const [page, setPage] = useState(2);
   const [showLoader, setShowLoader] = useState(true);
 
   useEffect(() => {
@@ -31,7 +39,7 @@ function Venues() {
   const handleSearch = (query: string) => {
     setSearchTerm(query);
     setPage(2);
-    
+
     if (query.trim().length > 2) {
       fetchVenuesBySearch(query);
     } else {
@@ -42,7 +50,7 @@ function Venues() {
   const observer = useRef<IntersectionObserver | null>(null);
   const lastVenueRef = useCallback(
     (node: HTMLElement | null) => {
-      if (isLoading || !hasMore || searchTerm) return; 
+      if (isLoading || !hasMore || searchTerm) return;
 
       if (observer.current) observer.current.disconnect();
 
@@ -58,8 +66,7 @@ function Venues() {
     [isLoading, hasMore, fetchMoreVenues, searchTerm, page]
   );
 
-
-  if (isLoading && venues.length === 0 || showLoader) {
+  if ((isLoading && venues.length === 0) || showLoader) {
     return <StyledLoader />;
   }
 
@@ -110,9 +117,7 @@ function Venues() {
         })}
       </ul>
 
-      {isLoading && (
-        <StyledLoader />
-      )}
+      {isLoading && <StyledLoader />}
     </div>
   );
 }

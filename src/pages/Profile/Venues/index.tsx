@@ -1,16 +1,17 @@
-import { useVenueAPI } from "../../../hooks/useVenueAPI";
-import { useAuthStore } from "../../../store/authStore";
-import { useEffect } from "react";
-import { Venues } from "../../../types/Venues";
-import { FaPeopleRoof } from "react-icons/fa6";
-import { IoSettings } from "react-icons/io5";
-import { FaTrash } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
-import useToastNotification from "../../../hooks/useToastNotification"; // ✅ Import custom toast hook
+import { useVenueAPI } from '../../../hooks/useVenueAPI';
+import { useAuthStore } from '../../../store/authStore';
+import { useEffect } from 'react';
+import { Venues } from '../../../types/Venues';
+import { FaPeopleRoof } from 'react-icons/fa6';
+import { IoSettings } from 'react-icons/io5';
+import { FaTrash } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
+import useToastNotification from '../../../hooks/useToastNotification'; // ✅ Import custom toast hook
 
 const VenuesByUser = () => {
   const { profile } = useAuthStore();
-  const { fetchVenuesByUser, deleteVenue, isLoading, isError, venues } = useVenueAPI();
+  const { fetchVenuesByUser, deleteVenue, isLoading, isError, venues } =
+    useVenueAPI();
   const profileName = profile?.name;
   const venuesArray: Venues[] = Array.isArray(venues) ? venues : [];
   const navigate = useNavigate();
@@ -24,27 +25,33 @@ const VenuesByUser = () => {
 
   const handleDeleteVenue = async (venueId: string) => {
     if (!profileName) {
-      toast.error("Error: Profile not found.");
+      toast.error('Error: Profile not found.');
       return;
     }
 
-    const confirmDelete = window.confirm("Are you sure you want to delete this venue?");
+    const confirmDelete = window.confirm(
+      'Are you sure you want to delete this venue?'
+    );
     if (!confirmDelete) return;
 
     try {
       await deleteVenue(venueId);
-      toast.success("Venue deleted successfully!"); // ✅ Bruker custom toast hook
+      toast.success('Venue deleted successfully!'); // ✅ Bruker custom toast hook
       fetchVenuesByUser(profileName);
     } catch (error) {
-      console.error("Failed to delete venue", error);
-      toast.error("Error: Could not delete the venue. Please try again.");
+      console.error('Failed to delete venue', error);
+      toast.error('Error: Could not delete the venue. Please try again.');
     }
   };
 
   if (isLoading)
     return <p className="text-center text-gray-500">Laster bookinger...</p>;
   if (isError)
-    return <p className="text-center text-red-500">Kunne ikke hente bookinger. Prøv igjen senere.</p>;
+    return (
+      <p className="text-center text-red-500">
+        Kunne ikke hente bookinger. Prøv igjen senere.
+      </p>
+    );
   if (venues.length === 0)
     return <p className="text-center text-gray-500">Du har ingen bookinger.</p>;
 
@@ -55,7 +62,10 @@ const VenuesByUser = () => {
       {/* 🔹 Map over venuesUser array */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {venuesArray.map((venue) => (
-          <div key={venue.id} className="p-4 border rounded-lg shadow-md bg-white relative">
+          <div
+            key={venue.id}
+            className="p-4 border rounded-lg shadow-md bg-white relative"
+          >
             <img
               src={venue?.media?.[0]?.url || 'https://via.placeholder.com/400'}
               alt={venue?.media?.[0]?.alt || 'Venue image'}
@@ -77,9 +87,13 @@ const VenuesByUser = () => {
               <FaTrash />
             </div>
 
-            <h2 className="text-h2-mobile md:text-h2-desktop font-semibold">{venue.name}</h2>
+            <h2 className="text-h2-mobile md:text-h2-desktop font-semibold">
+              {venue.name}
+            </h2>
             <p className="text-text-secondary">{venue.description}</p>
-            <p className="text-text-secondary font-semibold mt-2">${venue.price} per night</p>
+            <p className="text-text-secondary font-semibold mt-2">
+              ${venue.price} per night
+            </p>
             <p className="text-text-secondary font-semibold mt-2 flex gap-2">
               <FaPeopleRoof /> <span>{venue.maxGuests}</span>
             </p>

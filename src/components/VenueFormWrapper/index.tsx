@@ -5,7 +5,6 @@
 // import GradientHeading from '../../styles/GradientHeading';
 // import VenueFormFields from '../VenueFormFields';
 
-
 // const defaultValues = {
 //   name: '',
 //   description: '',
@@ -38,7 +37,7 @@
 //   isSubmitting = false
 // }) => {
 //   const navigate = useNavigate();
-  
+
 //   const {
 //     register,
 //     handleSubmit,
@@ -66,7 +65,7 @@
 //         className="w-full max-w-md mx-auto p-4 bg-white shadow-lg rounded-lg"
 //       >
 //         <VenueFormFields register={register} errors={errors} />
-        
+
 //         <div className="flex justify-between mt-6">
 //           <button
 //             type="button"

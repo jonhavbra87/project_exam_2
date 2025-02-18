@@ -4,9 +4,7 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { FaImage, FaMoneyBill, FaUsers, FaStar, FaHome } from 'react-icons/fa';
 import GradientHeading from '../../../../styles/GradientHeading';
-import {
-  type VenueFormData,
-} from '../../../../components/VenueFormSchema';
+import { type VenueFormData } from '../../../../components/VenueFormSchema';
 import { useVenueAPI } from '../../../../hooks/useVenueAPI';
 import { useAuthStore } from '../../../../store/authStore';
 import { useEffect } from 'react';
@@ -14,7 +12,7 @@ import { API_VENUES, BASE_API_URL } from '../../../../api/apiConfig';
 
 const ProfileVenueUpdate = () => {
   const navigate = useNavigate();
-const { id } = useParams();
+  const { id } = useParams();
   const { updateVenue, fetchVenueDetails } = useVenueAPI();
   const { profile } = useAuthStore((state) => state);
 
@@ -56,7 +54,6 @@ const { id } = useParams();
   }, [id, fetchVenueDetails]);
 
   const onSubmit = async (data: VenueFormData) => {
-
     try {
       console.log('Form date before formatting:', data);
 
@@ -108,7 +105,7 @@ const { id } = useParams();
           },
         },
         price: Number(data.price),
-        maxGuests: Number(data.maxGuests), 
+        maxGuests: Number(data.maxGuests),
         rating: Number(data.rating),
         meta: {
           wifi: Boolean(data.meta.wifi),
@@ -121,10 +118,10 @@ const { id } = useParams();
         lng: Number(data.location.lng),
       };
       console.log('Formatted data:', formattedData);
-      
+
       const success = await updateVenue(id, formattedData);
       console.log('Success:', success);
-      
+
       if (success) {
         toast.success('Venue updated!', { id: loadingToast });
         navigate('/profile');
