@@ -3,4 +3,5 @@ export interface InputProps {
   type?: string;
   Icon?: React.ElementType;
   required?: boolean;
+  defaultValue?: string;
 }

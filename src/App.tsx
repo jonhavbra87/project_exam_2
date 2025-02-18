@@ -2,7 +2,7 @@ import './index.css';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
 import NotFound from './pages/NotFound';
-import SignUp from './pages/Landingpage';
+import SignUp from './pages/LandingPage';
 import VenueDetails from './pages/VenueDetails';
 import Venues from './pages/Venues';
 import Profile from './pages/Profile';
@@ -15,7 +15,7 @@ import VenuesByUser from './pages/Profile/Venues';
 import TermsOfService from './components/TermsOfService';
 import PrivacyGuidelines from './components/PrivacyGuidelines';
 import ProfileVenueUpdate from './pages/Profile/Venues/Update';
-import Landingpage from './pages/Landingpage';
+import LandingPage from './pages/LandingPage';
 import { useAuthStore } from './store/authStore';
 import { Toaster } from 'react-hot-toast';
 // import Register from './components/Register';
@@ -29,7 +29,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route
             index
-            element={isAuthenticated ? <Venues /> : <Landingpage />}
+            element={isAuthenticated ? <Venues /> : <LandingPage />}
           />
           <Route path="venues" element={<Venues />} />
           <Route path="venue/:id" element={<VenueDetails />} />

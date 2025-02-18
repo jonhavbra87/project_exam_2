@@ -25,17 +25,19 @@ function Venues() {
       fetchLimitVenues();
     }
   }, [fetchLimitVenues, searchTerm]);
+
   // Control Loader display with a timeout
   useEffect(() => {
     if (!isLoading) {
       const timeout = setTimeout(() => {
         setShowLoader(false);
-      }, 1000); // Minimum 2 seconds
+      }, 1000); 
 
       return () => clearTimeout(timeout); // Cleanup timeout
     }
   }, [isLoading]);
-  // 🔍 **Håndterer søk**
+
+  
   const handleSearch = (query: string) => {
     setSearchTerm(query);
     setPage(2);
@@ -79,7 +81,7 @@ function Venues() {
   }
 
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading h-screen">
         Let’s explore the world
         <span className="text-primary"> together</span>
@@ -99,7 +101,7 @@ function Venues() {
         <GradientHeading>Venues</GradientHeading>
       </div>
 
-      <ul className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid">
+      <ul className="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 md:grid-cols-3">
         {venues.map((venue, index) => {
           if (index === venues.length - 1) {
             return (

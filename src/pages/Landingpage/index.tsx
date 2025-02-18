@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { IoLogIn } from 'react-icons/io5';
 
 
-function Landingpage() {
+function LandingPage() {
   const navigation = useNavigate();
   
   return (
@@ -52,4 +52,4 @@ function Landingpage() {
   );
 }
 
-export default Landingpage;
+export default LandingPage;
