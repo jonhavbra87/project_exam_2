@@ -15,10 +15,10 @@ import VenuesByUser from './pages/Profile/Venues';
 import TermsOfService from './components/TermsOfService';
 import PrivacyGuidelines from './components/PrivacyGuidelines';
 import ProfileVenueUpdate from './pages/Profile/Venues/Update';
-import LandingPage from './pages/LandingPage';
 import { useAuthStore } from './store/authStore';
 import { Toaster } from 'react-hot-toast';
 import Register from './components/Register';
+import LandingPage from './pages/LandingPage';
 
 function App() {
   const { isAuthenticated } = useAuthStore();
