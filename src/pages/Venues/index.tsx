@@ -4,7 +4,7 @@ import SearchBar from '../../components/SearchBar';
 import VenueCard from '../../components/VenueCard';
 import GradientHeading from '../../styles/GradientHeading';
 import BouncingArrow from '../../components/BouncingArrow';
-import StyledLoader from '../../styles/StyledLoader';
+import StyledLoader, { LoaderContainer } from '../../styles/StyledLoader';
 
 function Venues() {
   const {
@@ -69,7 +69,11 @@ function Venues() {
   );
 
   if ((isLoading && venues.length === 0) || showLoader) {
-    return <StyledLoader />;
+    return (
+      <LoaderContainer>
+        <StyledLoader />
+      </LoaderContainer>
+    )
   }
 
   if (isError) {

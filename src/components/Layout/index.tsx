@@ -13,7 +13,7 @@ function Layout() {
   return (
     <div className={`flex flex-col min-h-screen ${isAuthPage ? "bg-gradient-to-t from-primary-3 via-primary-3 to-secondary" : "bg-background"}`}>
       {!isAuthPage && <Header />}
-      <main className={`flex-grow w-11/12 lg:w-10/12 max-w-screen-xl mx-auto ${isAuthPage ? "flex items-center justify-center" : ""}`}>
+      <main className={`flex-grow w-11/12 lg:w-10/12 max-w-screen-xl mx-auto my-10 ${isAuthPage ? "flex items-center justify-center" : ""}`}>
         {/* {!isLandingPage && (
           <button
             onClick={() => navigate(-1)}
