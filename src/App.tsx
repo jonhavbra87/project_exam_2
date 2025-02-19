@@ -17,8 +17,8 @@ import PrivacyGuidelines from './components/PrivacyGuidelines';
 import ProfileVenueUpdate from './pages/Profile/Venues/Update';
 import { useAuthStore } from './store/authStore';
 import { Toaster } from 'react-hot-toast';
-import Register from './components/Register';
 import LandingPage from './pages/LandingPage';
+import Register from './components/Register';
 
 function App() {
   const { isAuthenticated } = useAuthStore();
