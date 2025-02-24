@@ -149,7 +149,7 @@ export default {
           hoverSecondary: '#C850C0',
           disabled: '#B3BAC6',
         },
-        background: '#fcfcf7',
+        background: '#F3F8FF',
         text: {
           primary: '#1F1F1F',
           secondary: '#6A6A6A',

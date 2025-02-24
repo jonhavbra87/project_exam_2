@@ -42,11 +42,11 @@ function SearchBar({ onSearch }: SearchBarProps) {
 
       <input
         id="searchInput"
-        placeholder="Search for Venues"
+        placeholder="Search for Venues & press enter"
         type="text"
         value={query}
         onChange={handleInputChange}
-        onKeyUp={handleSearch}
+        // onKeyUp={handleSearch}
         className="rounded-md grow border-text-primary border-r border-b text-text-secondary p-4 ps-16 focus:outline-none focus:outline-primary focus:-outline-offset-2"
       />
       {/* Clear Button (X) - Visible only when query is not empty */}

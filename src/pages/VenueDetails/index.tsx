@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useVenueAPI } from '../../hooks/useVenueAPI';
 import VenueCalendar from '../../components/VenueCalendar';
 
+
 function VenueDetails() {
   const { id } = useParams();
   const { venueDetails, isLoading, isError, fetchVenueDetails } = useVenueAPI();
@@ -22,7 +23,7 @@ function VenueDetails() {
     }
   }, [id, fetchVenueDetails]);
 
-  console.log('API response:', venueDetails);
+  console.log('API response venue detials script:', venueDetails);
 
   if (isLoading) {
     return (
@@ -109,15 +110,12 @@ function VenueDetails() {
         {/* Right Column */}
         <div className="md:w-1/3 p-6 bg-gray-50 rounded-lg shadow-lg">
           <h3 className="text-lg font-semibold mb-4">Book your stay</h3>
-          <VenueCalendar />
+          <VenueCalendar venueId={id!}/>
 
           <div className="mt-4 text-gray-600">
             <p>Price:</p>
             <VenuePrice product={venueDetails} />
           </div>
-          <button className="mt-4 w-full bg-accent px-4 py-2 rounded-md hover:bg-button-hoverSecondary">
-            Book
-          </button>
         </div>
       </div>
 

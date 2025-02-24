@@ -23,7 +23,7 @@ export const LoaderContainer = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  background: rgba(255, 255, 255, 0.8); 
+  background: rgba(0, 0, 0, 0.5); 
   z-index: 9999;
 `;
 
@@ -56,13 +56,13 @@ export const StyledLoader = styled.div`
 
 
   @media (max-width: 768px) {
-    width: 36px;
-    height: 36px;
+    width: 64px;
+    height: 64px;
   }
 
   @media (max-width: 480px) {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
   }
 `;
 

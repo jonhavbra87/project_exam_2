@@ -4,7 +4,7 @@ import SearchBar from '../../components/SearchBar';
 import VenueCard from '../../components/VenueCard';
 import GradientHeading from '../../styles/GradientHeading';
 import BouncingArrow from '../../components/BouncingArrow';
-import StyledLoader from '../../styles/StyledLoader';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 function Venues() {
   const {
@@ -18,7 +18,7 @@ function Venues() {
   } = useVenueAPI();
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(2);
-  const [showLoader, setShowLoader] = useState(true);
+  const [showLoader, setShowLoader] = useState(false);
 
   useEffect(() => {
     if (!searchTerm) {
@@ -26,16 +26,18 @@ function Venues() {
     }
   }, [fetchLimitVenues, searchTerm]);
 
-  // Control Loader display with a timeout
   useEffect(() => {
-    if (!isLoading) {
+    if (isLoading) {
+      setShowLoader(true);
+    } else {
       const timeout = setTimeout(() => {
         setShowLoader(false);
-      }, 1000); 
+      }, 500); 
 
-      return () => clearTimeout(timeout); // Cleanup timeout
+      return () => clearTimeout(timeout);
     }
   }, [isLoading]);
+
 
   
   const handleSearch = (query: string) => {
@@ -50,6 +52,7 @@ function Venues() {
   };
 
   const observer = useRef<IntersectionObserver | null>(null);
+  
   const lastVenueRef = useCallback(
     (node: HTMLElement | null) => {
       if (isLoading || !hasMore || searchTerm) return;
@@ -68,8 +71,8 @@ function Venues() {
     [isLoading, hasMore, fetchMoreVenues, searchTerm, page]
   );
 
-  if ((isLoading && venues.length === 0) || showLoader) {
-    return <StyledLoader />;
+  if ((showLoader && venues.length === 0)) {
+    return <LoadingSpinner isLoading={isLoading} />;
   }
 
   if (isError) {
@@ -82,6 +85,7 @@ function Venues() {
 
   return (
     <div className="min-h-screen flex flex-col">
+      
       <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading h-screen">
         Let’s explore the world
         <span className="text-primary"> together</span>
@@ -119,7 +123,10 @@ function Venues() {
         })}
       </ul>
 
-      {isLoading && <StyledLoader />}
+      {showLoader &&  
+        <LoadingSpinner isLoading={isLoading} />
+
+        }
     </div>
   );
 }
