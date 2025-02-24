@@ -7,19 +7,19 @@ export interface Booking {
   guests: number;
   created: string;
   updated: string;
-  venue?: Venues; // 📌 Venue er valgfri fordi den kanskje ikke returneres av API
+  venue?: Venues; 
   customer?: Customer;
 }
 
-// 📌 Ny type for opprettelse av booking (API-krav)
+
 export interface BookingCreateRequest {
   dateFrom: string;
   dateTo: string;
   guests: number;
-  venueId: string; // 📌 Må være inkludert ved opprettelse
+  venueId: string; 
 }
 
-// 📌 Kunde-informasjon
+
 export interface Customer {
   name: string;
   email: string;
