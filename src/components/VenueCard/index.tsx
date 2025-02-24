@@ -1,10 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Venues } from '../../types/Venues';
 import { VenuePrice } from '../VenuePrice';
 import VenueRating from '../VenueRating';
 import { FaUser } from 'react-icons/fa';
 import { SlHeart } from 'react-icons/sl';
 import VenueImage from '../VenueImage';
+import { CustomButton } from '../CustomButton';
 
 export const VenueCard = ({ venue }: { venue: Venues }) => {
   const navigate = useNavigate();
@@ -14,7 +15,7 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
   };
 
   return (
-    <div className="bg-gradient-to-tr from-primary-3 to-secondary rounded-lg shadow-lg border border-white hover:shadow-xl transition-shadow relative">
+    <div className="bg-gradient-to-tr from-black via-primary-3 to-secondary rounded-lg shadow-lg border border-white hover:shadow-xl transition-shadow relative">
       {/* Content that wraps product image and text */}
       <div
         className="cursor-pointer block relative group"
@@ -58,12 +59,13 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
       </div>
       <footer className="flex justify-between items-center m-4 gap-4 text-body-small-desktop">
         <VenuePrice product={venue} />
-        <Link
-          to={`/venue/${venue.id}`}
-          className="text-button-primary-desktop font-bold border-r border-b border-white w-16 h-8 rounded-md bg-button-secondary hover:bg-button-hoverSecondary flex items-center justify-center"
-        >
-          View
-        </Link>
+        <div className='w-1/3'>
+        <CustomButton
+          text="View"
+          variant="accent"
+          onClick={navigateToVenue}
+          />
+        </div>
       </footer>
     </div>
   );

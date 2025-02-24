@@ -4,6 +4,7 @@ import {
   BASE_API_URL,
   API_KEY,
   API_PROFILE,
+  API_VENUES,
 } from '../api/apiConfig';
 import { useAuthStore } from '../store/authStore';
 import { Booking } from '../types/Booking';
@@ -26,23 +27,20 @@ interface BookingState {
   fetchBookingsByUser: (userEmail: string) => Promise<void>;
 }
 
-// 📌 Zustand store for håndtering av bookinger
 export const useBookingAPI = create<BookingState>((set, get) => ({
   bookings: [],
   bookingDetails: null,
   isLoading: false,
   isError: false,
 
-  // 📌 Hent alle bookinger
   fetchBookings: async () => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
 
     try {
       const response = await fetch(
-        `${BASE_API_URL}${API_BOOKINGS}?_venue=true`,
+        `${BASE_API_URL}${API_BOOKINGS}?_bookings=true`,
         {
-          // 📌 Henter venue-data også
           method: 'GET',
           headers: {
             Authorization: `Bearer ${accessToken}`,
@@ -52,7 +50,7 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
         }
       );
 
-      if (!response.ok) throw new Error('Kunne ikke hente bookinger');
+      if (!response.ok) throw new Error('Could not fetch bookings');
 
       const data = await response.json();
       set({ bookings: data.data, isLoading: false });
@@ -63,13 +61,13 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
   },
 
   // 📌 Hent en enkelt booking basert på ID
-  fetchBookingDetails: async (id: string) => {
+  fetchBookingDetails: async (venueId: string) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
 
     try {
       const response = await fetch(
-        `${BASE_API_URL}${API_BOOKINGS}/${id}?_venue=true`,
+        `${BASE_API_URL}${API_VENUES}/${venueId}?_bookings=true`,
         {
           method: 'GET',
           headers: {
@@ -80,15 +78,24 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
         }
       );
 
-      if (!response.ok) throw new Error('Kunne ikke hente bookingdetaljer');
+      console.log('API response booking urldetails:', response);
+
+      if (!response.ok) throw new Error('Could not fetch booking details');
 
       const data = await response.json();
-      set({ bookingDetails: data.data, isLoading: false });
+      console.log('Full API response:', data);
+
+      // Log bookings rett før set()
+      console.log('Bookings received from API:', data.data.bookings);
+
+      set({ bookings: data.data.bookings, isLoading: false });
+
     } catch (error) {
       console.error('Feil ved henting av bookingdetaljer:', error);
       set({ isError: true, isLoading: false });
     }
   },
+
 
   // 📌 Opprett en ny booking
   createBooking: async (
@@ -110,7 +117,7 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
 
       if (!response.ok) throw new Error('Could not crate booking');
 
-      await get().fetchBookings(); // 📌 Oppdater listen over bookinger etter opprettelse
+      await get().fetchBookings(); 
       set({ isLoading: false });
       return true;
     } catch (error) {
@@ -190,12 +197,15 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
             'X-Noroff-API-Key': API_KEY,
             'Content-Type': 'application/json',
           },
+          
         }
       );
+      console.log('API response booking by user:', response);
 
       if (!response.ok) throw new Error('Kunne ikke hente brukerens bookinger');
 
       const resault = await response.json();
+      console.log('API response booking by user data:', resault);
 
       // 📌 Filtrer kun bookinger tilhørende den innloggede brukeren
       const userBookings = resault.data;
@@ -206,4 +216,5 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
       set({ isError: true, isLoading: false });
     }
   },
+  
 }));
