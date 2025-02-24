@@ -55,12 +55,12 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
       const data = await response.json();
       set({ bookings: data.data, isLoading: false });
     } catch (error) {
-      console.error('Feil ved henting av bookinger:', error);
+      console.error('Error fetching bookings:', error);
       set({ isError: true, isLoading: false });
     }
   },
 
-  // 📌 Hent en enkelt booking basert på ID
+  // Fetch booking details
   fetchBookingDetails: async (venueId: string) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
@@ -78,26 +78,20 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
         }
       );
 
-      console.log('API response booking urldetails:', response);
-
       if (!response.ok) throw new Error('Could not fetch booking details');
 
       const data = await response.json();
-      console.log('Full API response:', data);
-
-      // Log bookings rett før set()
-      console.log('Bookings received from API:', data.data.bookings);
 
       set({ bookings: data.data.bookings, isLoading: false });
 
     } catch (error) {
-      console.error('Feil ved henting av bookingdetaljer:', error);
+      console.error('Error fetching user data', error);
       set({ isError: true, isLoading: false });
     }
   },
 
 
-  // 📌 Opprett en ny booking
+  // Create a booking
   createBooking: async (
     bookingData: Omit<Booking, 'id' | 'created' | 'updated'>
   ) => {
@@ -121,13 +115,13 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
       set({ isLoading: false });
       return true;
     } catch (error) {
-      console.error('Feil ved oppretting av booking:', error);
+      console.error('Error creating a booking:', error);
       set({ isError: true, isLoading: false });
       return false;
     }
   },
 
-  // 📌 Oppdater en eksisterende booking
+  // Update a booking
   updateBooking: async (id, updatedData) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
@@ -143,19 +137,19 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
         body: JSON.stringify(updatedData),
       });
 
-      if (!response.ok) throw new Error('Kunne ikke oppdatere booking');
+      if (!response.ok) throw new Error('Could not update booking');
 
-      await get().fetchBookings(); // 📌 Oppdater listen over bookinger etter oppdatering
+      await get().fetchBookings();
       set({ isLoading: false });
       return true;
     } catch (error) {
-      console.error('Feil ved oppdatering av booking:', error);
+      console.error('Error updating a booking:', error);
       set({ isError: true, isLoading: false });
       return false;
     }
   },
 
-  // 📌 Slett en booking basert på ID
+  // Delete a booking
   deleteBooking: async (id) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
@@ -170,19 +164,19 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
         },
       });
 
-      if (!response.ok) throw new Error('Kunne ikke slette booking');
+      if (!response.ok) throw new Error('Could not delete booking');
 
       await get().fetchBookings(); // 📌 Oppdater listen over bookinger etter sletting
       set({ isLoading: false });
       return true;
     } catch (error) {
-      console.error('Feil ved sletting av booking:', error);
+      console.error('Error deleting booking:', error);
       set({ isError: true, isLoading: false });
       return false;
     }
   },
 
-  // 📌 Hent bookinger for den innloggede brukeren
+  // Fetch bookings by user
   fetchBookingsByUser: async (name) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
@@ -197,24 +191,15 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
             'X-Noroff-API-Key': API_KEY,
             'Content-Type': 'application/json',
           },
-          
         }
       );
-      console.log('API response booking by user:', response);
-
-      if (!response.ok) throw new Error('Kunne ikke hente brukerens bookinger');
-
-      const resault = await response.json();
-      console.log('API response booking by user data:', resault);
-
-      // 📌 Filtrer kun bookinger tilhørende den innloggede brukeren
-      const userBookings = resault.data;
-
+      if (!response.ok) throw new Error('Could not fetch user bookings');
+      const result = await response.json();
+      const userBookings = result.data;
       set({ bookings: userBookings, isLoading: false });
     } catch (error) {
-      console.error('Feil ved henting av brukerens bookinger:', error);
+      console.error('Error fetching user bookings:', error);
       set({ isError: true, isLoading: false });
     }
   },
-  
 }));

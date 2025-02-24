@@ -45,7 +45,7 @@ function VenueMap({ venue }: { venue: Venues }) {
       ) {
         setCoordinates([lat, lng]);
         setAddressAvailable(true);
-        setLocationText(`${address || city || country || 'Ukjent lokasjon'}`);
+        setLocationText(`${address || city || country || 'Unknown location'}`);
       } else if (address || city || country) {
         setLocationText(
           `${address ? `${address}, ` : ''}${city ? `${city}, ` : ''}${country || ''}`
@@ -53,7 +53,7 @@ function VenueMap({ venue }: { venue: Venues }) {
         setCoordinates([59.9139, 10.7522]); // Fallback to Oslo
         setAddressAvailable(true);
       } else {
-        setLocationText('Ingen spesifisert lokasjon');
+        setLocationText('No address available');
         setCoordinates([59.9139, 10.7522]); // 🔹 Fallback to Oslo
         setAddressAvailable(false);
       }
@@ -62,13 +62,13 @@ function VenueMap({ venue }: { venue: Venues }) {
   }, [venue]);
 
   if (isLoading) {
-    return <p className="text-gray-500">⏳ Laster kart...</p>;
+    return <p className="text-gray-500">Loading map...</p>;
   }
 
   if (!coordinates) {
     return (
       <p className="text-red-500">
-        ⚠️ {locationText || 'Lokasjon ikke tilgjengelig.'}
+        ⚠️ {locationText || 'No address available'}
       </p>
     );
   }
@@ -77,7 +77,7 @@ function VenueMap({ venue }: { venue: Venues }) {
     <div className="h-96 w-full rounded-lg shadow-md relative">
       {!addressAvailable && (
         <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-md z-10">
-          📍 Address is not available
+          Address is not available
         </div>
       )}
 

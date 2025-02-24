@@ -5,6 +5,7 @@ import VenueCard from '../../components/VenueCard';
 import GradientHeading from '../../styles/GradientHeading';
 import BouncingArrow from '../../components/BouncingArrow';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 function Venues() {
   const {
@@ -77,9 +78,7 @@ function Venues() {
 
   if (isError) {
     return (
-      <div className="text-center text-red-500">
-        ❌ Feil ved lasting av data.
-      </div>
+      toast.error('An error occurred while fetching data. Please try again later.')
     );
   }
 

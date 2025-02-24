@@ -115,7 +115,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       const json = await response.json();
       const newVenues = json.data || [];
       set((state) => ({
-        venues: [...state.venues, ...newVenues], // 🔄 Legger til flere venues
+        venues: [...state.venues, ...newVenues], // Append new venues to existing list
         hasMore: newVenues.length > 0,
         isLoading: false,
       }));
