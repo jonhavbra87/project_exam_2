@@ -110,7 +110,7 @@ function VenueDetails() {
         {/* Right Column */}
         <div className="md:w-1/3 p-6 rounded-lg shadow-lg">
           <h3 className="text-lg font-semibold mb-4">Book your stay</h3>
-          <VenueCalendar venueId={id!}/>
+          <VenueCalendar venueId={id!} maxGuests={venueDetails.maxGuests}/>
 
           <div className="mt-4 text-gray-600">
             <p>Price:</p>
