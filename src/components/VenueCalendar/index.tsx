@@ -8,13 +8,15 @@ import toast from 'react-hot-toast';
 import { CustomButton } from '../CustomButton';
 import { BookingCreateRequest } from '../../types/Booking';
 import isBetween from 'dayjs/plugin/isBetween';
+import { StyledDatePickerWrapper } from '../../styles/StyledDatePickerWrapper';
 dayjs.extend(isBetween);
 
 interface VenueCalendarProps {
   venueId: string;
+  maxGuests: number;
 }
 
-const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId }) => {
+const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests}) => {
   const { fetchBookingDetails, createBooking, bookings, isLoading } = useBookingAPI();
   const { accessToken } = useAuthStore();
   const [selectedDates, setSelectedDates] = useState<[Date | null, Date | null]>([null, null]);
@@ -93,8 +95,8 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId }) => {
     const newBooking: BookingCreateRequest = {
       dateFrom: selectedDates[0].toISOString(),
       dateTo: selectedDates[1].toISOString(),
-      guests: guests,
-      venueId: venueId, 
+      guests,
+      venueId, 
     };
 
     try {
@@ -122,13 +124,13 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId }) => {
 
   return (
     <div className="w-full max-w-xl mx-auto">
-      <h3 className='text-h3-desktop'>Pick a date for booking</h3>
       <div>
         {isLoading ? (
           <p className="text-center">Loading bookings...</p>
         ) : (
           <div className="space-y-6">
             <div>
+              <StyledDatePickerWrapper>
               <DatePicker
                 selected={selectedDates[0]}
                 onChange={handleDateChange}
@@ -140,12 +142,35 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId }) => {
                 excludeDates={bookedDates}
                 selectsDisabledDaysInRange
                 dateFormat="dd/MM/yyyy"
-                className="w-full"
               />
+              </StyledDatePickerWrapper>
+            </div>
+                        
+            <div>
+              <label htmlFor="guests" className="block text-body-small-mobile md:text-body-medium-desktop font-medium font-body mb-2">
+                Guests
+              </label>
+              <input
+                id="guests"
+                type="number"
+                value={guests}
+                onChange={(e) => {
+                  const value = Math.max(1, parseInt(e.target.value) || 1);
+                  if (value <= maxGuests) {
+                    setGuests(value);
+                  } else {
+                    toast.error(`Maximum guests allowed is ${maxGuests}`);
+                  }
+                }}
+                min={1}
+                max={maxGuests}
+                className="w-full border rounded-md p-2"
+              />
+              <p className="text-sm text-gray-500">Max guests: {maxGuests}</p>
             </div>
 
-            <div>
-              <label htmlFor="guests" className="block text-sm font-medium mb-2">
+            {/* <div>
+              <label htmlFor="guests" className="block text-body-small-mobile md:text-body-medium-desktop font-medium font-body mb-2">
                 Guests
               </label>
               <input
@@ -156,10 +181,10 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId }) => {
                 min={1}
                 className="w-full border rounded-md p-2"
               />
-            </div>
+            </div> */}
 
             <CustomButton
-              text={isBooking ? 'Booker...' : 'Book nå'}
+              text={isBooking ? 'Booking...' : 'Book now'}
               onClick={handleBooking}
               disabled={!selectedDates[0] || !selectedDates[1] || isBooking}
             />
