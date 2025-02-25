@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { CustomButton } from '../CustomButton';
 import { BookingCreateRequest } from '../../types/Booking';
 import isBetween from 'dayjs/plugin/isBetween';
+import { StyledDatePickerWrapper } from '../../styles/StyledDatePickerWrapper';
 dayjs.extend(isBetween);
 
 interface VenueCalendarProps {
@@ -122,13 +123,13 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId }) => {
 
   return (
     <div className="w-full max-w-xl mx-auto">
-      <h3 className='text-h3-desktop'>Pick a date for booking</h3>
       <div>
         {isLoading ? (
           <p className="text-center">Loading bookings...</p>
         ) : (
           <div className="space-y-6">
             <div>
+              <StyledDatePickerWrapper>
               <DatePicker
                 selected={selectedDates[0]}
                 onChange={handleDateChange}
@@ -140,8 +141,9 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId }) => {
                 excludeDates={bookedDates}
                 selectsDisabledDaysInRange
                 dateFormat="dd/MM/yyyy"
-                className="w-full"
+                // className="w-full border rounded-md p-2"
               />
+              </StyledDatePickerWrapper>
             </div>
 
             <div>
@@ -159,7 +161,7 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId }) => {
             </div>
 
             <CustomButton
-              text={isBooking ? 'Booker...' : 'Book nå'}
+              text={isBooking ? 'Booking...' : 'Book now'}
               onClick={handleBooking}
               disabled={!selectedDates[0] || !selectedDates[1] || isBooking}
             />
