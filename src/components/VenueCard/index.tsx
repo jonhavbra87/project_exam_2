@@ -3,9 +3,9 @@ import { Venues } from '../../types/Venues';
 import { VenuePrice } from '../VenuePrice';
 import VenueRating from '../VenueRating';
 import { FaUser } from 'react-icons/fa';
-import { SlHeart } from 'react-icons/sl';
 import VenueImage from '../VenueImage';
 import { CustomButton } from '../CustomButton';
+import { TiHeartFullOutline } from 'react-icons/ti';
 
 export const VenueCard = ({ venue }: { venue: Venues }) => {
   const navigate = useNavigate();
@@ -15,7 +15,7 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
   };
 
   return (
-    <div className="bg-gradient-to-tr from-black via-primary-3 to-secondary rounded-lg shadow-lg border border-white hover:shadow-xl transition-shadow relative">
+    <div className="bg-white rounded-lg shadow-lg border border-black hover:shadow-xl transition-shadow relative">
       {/* Content that wraps product image and text */}
       <div
         className="cursor-pointer block relative group"
@@ -36,25 +36,19 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
 
       <div className="p-4">
         <div className="flex flex-row justify-between items-center">
-          <h2 className="text-ingress-desktop font-ingress font-bold mb-2 text-white">
+          <h2 className="text-ingress-desktop font-ingress font-bold mb-2 text-text-primary">
             {venue.name}
           </h2>
           <VenueRating rating={venue.rating} />
-          <div className="absolute top-4 right-4 text-2xl text-white">
-            <SlHeart />
-          </div>
+          <TiHeartFullOutline className='absolute top-4 right-4 text-black text-opacity-20 stroke-white stroke-2 text-2xl'/>
         </div>
         <p className="text-body-small-desktop text-text-secondary mb-2 line-clamp-1">
-          {venue.location.continent}
-        </p>
-        <p className="text-body-large-mobile md:text-body-large-desktop font-body text-white mb-2 line-clamp-1">
-          {venue.description}
-        </p>
+  {venue.location.continent || "Secret location"}
+</p>
+
       </div>
-      <div className="px-4 flex flex-row items-center text-body-medium-desktop font-body text-white mb-2 gap-2">
-        <p className="">
-          <FaUser />{' '}
-        </p>
+      <div className="px-4 flex flex-row items-center text-body-medium-desktop font-body text-text-primary mb-2 gap-2">
+          <FaUser className='text-secondary'/>{' '}
         <p>{venue.maxGuests}</p>
       </div>
       <footer className="flex justify-between items-center m-4 gap-4 text-body-small-desktop">

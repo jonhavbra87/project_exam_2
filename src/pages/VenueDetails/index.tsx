@@ -11,6 +11,7 @@ import VenueAddress from '../../components/VenueAddress';
 import { useEffect } from 'react';
 import { useVenueAPI } from '../../hooks/useVenueAPI';
 import VenueCalendar from '../../components/VenueCalendar';
+import { FaUser } from 'react-icons/fa';
 
 
 function VenueDetails() {
@@ -58,32 +59,38 @@ function VenueDetails() {
       <div className="mt-6 flex flex-col md:flex-row gap-6">
         {/* Left Column */}
         <div className="md:w-2/3">
-          <h2 className="text-h2-desktop font-bold flex flex-row">
+          <h2 className="text-h2-mobile md:text-h2-desktop font-bold flex flex-row">
             {venueDetails.name}
             <span>
               <SlHeart className="text-primary text-lg" />
             </span>
           </h2>
-          <p className="text-ingress-desktop text-text-secondary mb-4">
-            {venueDetails.location.country}
+          <p className="text-ingress-mobile md:text-ingress-desktop text-text-secondary mb-4">
+            {venueDetails.location.country || "Secret location"}
           </p>
           <VenueRating rating={venueDetails.rating} />
 
-          <h3 className="text-ingress-desktop font-semibold mt-6">
+          <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-semibold mt-6">
             Description
           </h3>
-          <p className="text-md text-text-primary mb-4">
+          <p className="text-body-large-mobile md:text-body-large-desktop font-body text-text-primary mb-4">
             {venueDetails.description}
           </p>
 
-          <h3 className="text-ingress-desktop font-semibold mt-6">
+          <div className="flex flex-row  items-center text-body-large-desktop font-body text-text-primary mb-2 gap-2">
+            <FaUser className='text-secondary'/>{' '}
+            <p>{venueDetails.maxGuests}</p>
+          </div>
+          <p className='text-body-large-mobile md:text-body-large-desktop font-body font-medium'>{venueDetails.price} NOK per night</p>
+          
+          <h3 className="text-h3-mobile md:text-h3-desktop  font-ingress font-semibold mt-6">
             Facilities
           </h3>
           <div className="mt-4 flex flex-wrap gap-4">
             <MetaDataVenue meta={venueDetails.meta} />
           </div>
 
-          <h3 className="text-ingress-desktop font-semibold mt-6">
+          <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-semibold mt-6">
             Venue Manager
           </h3>
           <div className="mt-4 flex items-center gap-4">
@@ -96,10 +103,10 @@ function VenueDetails() {
               className="w-16 h-16 rounded-full"
             />
             <div>
-              <h3 className="text-body-large-desktop font-bold">
+              <h3 className="text-ingress-mobile md:text-ingress-desktop font-ingress font-bold">
                 {venueDetails.owner?.name || 'No Owner name available'}
               </h3>
-              <p className="text-body-medium-desktop text-text-secondary line-clamp-1">
+              <p className="text-body-small-mobile md:text-body-medium-desktop font-body text-text-secondary line-clamp-1">
                 {venueDetails.owner?.bio || 'No bio available'}
               </p>
             </div>
@@ -107,8 +114,8 @@ function VenueDetails() {
         </div>
 
         {/* Right Column */}
-        <div className="md:w-1/3 p-6 rounded-lg shadow-lg">
-          <h3 className="text-lg font-semibold mb-4">Book your stay</h3>
+        <div className="md:w-1/3">
+          <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-bold mb-4">Book your stay</h3>
           <VenueCalendar venueId={id!} maxGuests={venueDetails.maxGuests}/>
 
           <div className="mt-4 text-gray-600">
@@ -120,7 +127,7 @@ function VenueDetails() {
 
       {/* Location */}
       <div className="mt-6">
-        <h3 className="text-ingress-desktop font-semibold">Location</h3>
+        <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-semibold">Location</h3>
         <VenueAddress location={venueDetails.location} />
         <VenueMap venue={venueDetails} />
       </div>

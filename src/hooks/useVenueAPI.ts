@@ -67,7 +67,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
   fetchLimitVenues: async () => {
     set({ isLoading: true, isError: false });
     try {
-      const url = `${BASE_API_URL}${API_VENUES}?limit=24&page=1&sort=name&sortOrder=asc`;
+      const url = `${BASE_API_URL}${API_VENUES}?limit=24&page=1&sort=rating`;
       console.log('Fetching initial venues from:', url);
       const response = await fetch(url, {
         method: 'GET',
@@ -98,7 +98,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
   fetchMoreVenues: async (page: number) => {
     set({ isLoading: true, isError: false });
     try {
-      const url = `${BASE_API_URL}${API_VENUES}?limit=24&page=${page}&sort=name&sortOrder=asc`;
+      const url = `${BASE_API_URL}${API_VENUES}?limit=24&page=${page}&sort=rating`;
       console.log('Fetching more venues from:', url);
       const response = await fetch(url, {
         method: 'GET',

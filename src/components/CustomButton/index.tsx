@@ -16,7 +16,7 @@ export const CustomButton: React.FC<ButtonProps> = ({
       case 'secondary':
         return 'bg-secondary-3 border-r-2 border-b-2 border-b-accent border-r-accent hover:bg-button-hover active:bg-accent';
       case 'accent':
-        return 'bg-accent border-r-2 border-b-2 border-b-white border-r-white hover:bg-button-hoverSecondary active:bg-accent-2';
+        return 'bg-accent border-r-2 border-b-2 border-b-black border-r-black hover:bg-button-hoverSecondary active:bg-accent-2';
       default:
         return 'bg-primary-3 border-r-2 border-b-2 border-b-accent border-r-accent hover:bg-button-hover active:bg-accent';
     }
