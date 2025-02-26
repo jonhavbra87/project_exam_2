@@ -18,6 +18,15 @@ function NavLinks({ toggleMenu }: { toggleMenu: () => void }) {
           </li>
           <li>
             <NavLink
+              to="/contact"
+              className="text-white text-lg hover:text-secondary transition-colors duration-200"
+              onClick={() => toggleMenu()}
+            >
+              Contact
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
               to="/profile/"
               className="text-white text-lg hover:text-secondary transition-colors duration-200"
               onClick={() => toggleMenu()}
