@@ -11,13 +11,14 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../store/authStore';
 import { FiSettings } from 'react-icons/fi';
+import UnauthProfile from '../../components/UnauthProfile';
 
 const ProfilePage = () => {
   const { profile, venueManager, logout } = useAuthStore();
   const navigate = useNavigate();
 
   if (!profile) {
-    return <div className="text-center text-gray-500 mt-10">Loading...</div>;
+    return <><UnauthProfile /></>
   }
 
   const sections = [

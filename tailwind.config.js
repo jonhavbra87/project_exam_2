@@ -57,16 +57,16 @@ export default {
 
         // Body text
         'body-large-desktop': [
+          '18px',
+          { lineHeight: '28px', letterSpacing: '0' },
+        ],
+        'body-medium-desktop': [
           '16px',
           { lineHeight: '24px', letterSpacing: '0' },
         ],
-        'body-medium-desktop': [
+        'body-small-desktop': [
           '14px',
           { lineHeight: '20px', letterSpacing: '0' },
-        ],
-        'body-small-desktop': [
-          '12px',
-          { lineHeight: '16px', letterSpacing: '0' },
         ],
 
         'body-large-mobile': [
