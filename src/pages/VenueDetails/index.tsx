@@ -44,7 +44,6 @@ function VenueDetails() {
   return (
     <div className="">
       <div className="flex items-center mb-4">
-        <button className="text-text-secondary  ">&lt; Back</button>
         <GradientHeading className="text-h1-desktop font-bold mx-auto">
           Venue Details
         </GradientHeading>

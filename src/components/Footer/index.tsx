@@ -1,9 +1,12 @@
 import { FaInstagram, FaSnapchat, FaFacebookSquare } from 'react-icons/fa';
 import Logo from '../../assets/holidaze_logo.svg';
-import { CiMail } from 'react-icons/ci';
 import { BsTwitterX } from 'react-icons/bs';
+import { CustomInput } from '../CustomInput';
+import { IoIosMail } from 'react-icons/io';
+import { useNavigate } from 'react-router-dom';
 
 function Footer() {
+  const navigate = useNavigate();
   return (
     <footer className="bg-primary-3 py-10 px-6 w-full">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -28,11 +31,10 @@ function Footer() {
             the first to discover exclusive deals, hidden getaways, and expert
             travel tips. Let’s explore the world together!
           </p>
-          <form className="flex items-center w-full max-w-lg bg-gray-50 rounded-md border-r border-b border-solid border-b-neutral-900 border-r-neutral-900">
-            {/* Icon */}
-            <CiMail className="ml-3 w-5 h-5 text-neutral-900" />
+          <form className="flex items-center w-full max-w-lg ">
 
-            {/* Email Input */}
+{/* 
+            <CiMail className="ml-3 w-5 h-5 text-neutral-900" />
             <label htmlFor="emailInput" className="sr-only">
               Enter your email
             </label>
@@ -42,12 +44,23 @@ function Footer() {
               placeholder="Enter your email"
               className="flex-grow bg-neutral-50 px-3 py-2 text-neutral-800 placeholder-neutral-800 focus:outline-none"
               required
-            />
+            /> */}
+            <div className='flex-grow'>
+
+            <CustomInput
+              label="User e-mail"
+              type="email"
+              Icon={IoIosMail}
+              required
+              defaultValue="" 
+              />
+              </div>
+
 
             {/* Submit Button */}
             <button
               type="submit"
-              className="bg-button-primary text-white px-5 py-2 rounded-r-md hover:bg-button-hover focus:outline-none"
+              className="bg-button-primary-2 border-2 border-button-primary text-white px-3 py-3 mb-6 rounded-md hover:bg-button-hover hover:border-button-hover transition-all duration-300 focus:outline-none"
             >
               Subscribe
             </button>
@@ -56,33 +69,29 @@ function Footer() {
 
         {/* Legal Info */}
       </div>
-      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 mt-8 gap-8 text-neutral-700 border-t-2 border-neutral-700 ">
+      <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 mt-8 gap-8 text-text-muted border-t-2 border-text-muted ">
         <ul className="flex flex-wrap justify-center md:justify-start items-center md:items-start gap-x-4 mt-4 text-body-medium-desktop font-body">
           <li>
-            <a href="#" className="hover:text-primary transition">
+            <a onClick={() => navigate("/profile/termsofservice")} className="hover:text-secondary cursor-pointer transition">
               Terms
             </a>
           </li>
           <li>
-            <a href="#" className="hover:text-primary transition">
+            <p onClick={() => navigate("/profile/privacyguidelines")} className="hover:text-secondary cursor-pointer transition">
               Privacy
-            </a>
+            </p>
           </li>
-          <li>
-            <a href="#" className="hover:text-primary transition">
-              Conditions
-            </a>
-          </li>
+
           <p className="text-body-large-desktop">|</p>
           <li>
-            <a href="#" className="hover:text-primary transition">
+            <p onClick={() => navigate("/profile")} className="hover:text-secondary cursor-pointer transition">
               My Account
-            </a>
+            </p>
           </li>
           <li>
-            <a href="#" className="hover:text-primary transition">
+            <p onClick={() => navigate("/contact")} className="hover:text-secondary cursor-pointer transition">
               Contact
-            </a>
+            </p>
           </li>
         </ul>
         <div>
@@ -90,7 +99,7 @@ function Footer() {
             &copy; 2025 HOLIDAZE Ltd. All Rights Reserved.
           </p>
         </div>
-        <div className="flex gap-4 text-lg my-4 text-white justify-center md:justify-end">
+        <div className="flex gap-4 md:text-body-large-desktop my-4 text-white justify-center md:justify-end">
           <a
             href="https://twitter.com"
             target="_blank"
