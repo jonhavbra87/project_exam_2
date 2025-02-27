@@ -102,9 +102,9 @@ function MediaGallery({ images }: MediaGalleryProps) {
           // Shows only one img if there is only one
           <img
             src={safeImages[0].url}
-            alt={safeImages[0].alt || 'Stedets bilde'}
+            alt={safeImages[0].alt || 'Venue image'}
             className="rounded-lg object-cover w-full h-[500px]"
-            aria-label="Bildevisning (kun ett bilde)"
+            aria-label="Img carousel with one image"
           />
         ) : (
           // Shows Carousel if there is more than one img

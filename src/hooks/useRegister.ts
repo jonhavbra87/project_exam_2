@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { API_AUTH, API_KEY, API_REGISTER, BASE_API_URL } from "../api/apiConfig";
 import useLogin from "./useLogin";
+import toast from "react-hot-toast";
 
 const useRegister = () => {
   const [loading, setLoading] = useState(false);
@@ -35,12 +36,12 @@ const useRegister = () => {
         }),
       });
 
-      const result = await response.json();
-      console.log("API Response:", result);
+      const resault = await response.json();
 
-      if (!response.ok || !result.data) {
-        setError(result.message || "Unexpected response format");
-        console.error("❌ API error:", result.message || "Unexpected response format");
+      if (!response.ok || !resault.data) {
+        setError(resault.message || "Unexpected response format");
+        console.error("API error:", resault.message || "Unexpected response format");
+        toast.error("Registration failed. Please try again.");
         return null; 
       }
 
@@ -49,7 +50,8 @@ const useRegister = () => {
 
       if (!loginResponse) {
         setError("Login after registration failed. Please try logging in manually.");
-        console.error("❌ Login after registration failed.");
+        console.error("Login after registration failed.");
+        toast.error("Login after registration failed. Please try logging in manually.");
         return null;
       }
 

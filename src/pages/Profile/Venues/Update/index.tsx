@@ -102,8 +102,6 @@ const ProfileVenueUpdate = () => {
 
   const onSubmit = async (data: VenueFormData) => {
     try {
-      console.log('Form data before formatting:', data);
-
       if (!profile) {
         toast.error('You need to be logged in to update a venue.');
         return;
@@ -112,11 +110,7 @@ const ProfileVenueUpdate = () => {
         toast.error('Venue ID is missing.');
         return;
       }
-
-      console.log('Profile:', profile);
-
       const loadingToast = toast.loading('Updating venue...');
-
       const validMedia = Array.isArray(data.media)
         ? data.media.filter(
             (item): item is { url: string; alt: string } =>
@@ -165,11 +159,8 @@ const ProfileVenueUpdate = () => {
           lng: Number(data.location.lng),
         },
       };
-      console.log('Formatted data:', formattedData);
-
+      
       const success = await updateVenue(id, formattedData);
-      console.log('Success:', success);
-
       if (success) {
         toast.success('Venue updated!', { id: loadingToast });
         navigate('/profile');

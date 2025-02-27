@@ -2,6 +2,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import GradientHeading from '../../styles/GradientHeading';
+import toast from 'react-hot-toast';
 
 // Validationg schema with yup
 const schema = yup
@@ -46,8 +47,8 @@ function Contact() {
   });
 
   function onSubmit(data: FormData) {
-    console.log(data);
-    alert('Your message has been sent!');
+    console.info('Data:', data);
+    toast.success('Your message has been sent!');
     reset();
   }
 

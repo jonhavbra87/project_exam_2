@@ -3,6 +3,7 @@ import { useAuthStore } from '../../../store/authStore';
 import { useBookingAPI } from '../../../hooks/useBookingAPI';
 import BookingCard from '../../../components/BookingCard';
 import { MdBedroomParent } from 'react-icons/md';
+import GradientHeading from '../../../styles/GradientHeading';
 
 function Bookings() {
   const { fetchBookingsByUser, bookings, isLoading, isError } = useBookingAPI();
@@ -43,11 +44,12 @@ function Bookings() {
     )
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold text-center mb-6">Mine bookinger</h1>
+    <div className="container mx-auto">
+      <GradientHeading>My Bookings</GradientHeading>
+
       {activeBookings.length > 0 && (
         <div>
-          <h2 className="text-2xl font-semibold mb-4">Active Bookings</h2>
+          <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold  text-text-primary mb-4">Active Bookings</h2>
           <div className="grid gap-6">
             {activeBookings.map((booking) => (
               <BookingCard
@@ -61,7 +63,7 @@ function Bookings() {
       )}
       {expiredBookings.length > 0 && (
         <div className="mt-10">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-600">
+          <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold mb-4 text-text-secondary">
             Expired Bookings
           </h2>
           <div className="grid gap-6 opacity-70">

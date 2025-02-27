@@ -27,7 +27,6 @@ const useLogin = () => {
       );
 
       const result = await response.json();
-      console.log(result);
 
       if (!response.ok || !result.data) {
         console.error("❌ API error:", result.message || "Unexpected response format");
@@ -42,7 +41,6 @@ const useLogin = () => {
       };
 
       const accessToken = result.data.accessToken;
-      console.log('token from useLogin:', accessToken);
 
       const venueManager = Boolean(result.data.venueManager);
 

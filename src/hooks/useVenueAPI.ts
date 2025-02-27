@@ -59,7 +59,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         hasMore: json.data.length > 0,
         isLoading: false,
       }));
-      console.log('Venues successfully fetched:', json.data.length, 'items.');
     } catch (error) {
       console.error('Error fetching venues:', error);
       set({ isError: true, isLoading: false });
@@ -69,7 +68,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
     set({ isLoading: true, isError: false });
     try {
       const url = `${BASE_API_URL}${API_VENUES}?limit=24&page=1&sort=rating`;
-      console.log('Fetching initial venues from:', url);
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -89,7 +87,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         hasMore: newVenues.length > 0,
         isLoading: false,
       });
-      console.log('Fetched first 24 venues.');
     } catch (error) {
       console.error('Error fetching initial venues:', error);
       set({ isError: true, isLoading: false });
@@ -100,7 +97,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
     set({ isLoading: true, isError: false });
     try {
       const url = `${BASE_API_URL}${API_VENUES}?limit=24&page=${page}&sort=rating`;
-      console.log('Fetching more venues from:', url);
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -120,7 +116,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         hasMore: newVenues.length > 0,
         isLoading: false,
       }));
-      console.log(`Fetched ${newVenues.length} more venues.`);
     } catch (error) {
       console.error('Error fetching more venues:', error);
       set({ isError: true, isLoading: false });
@@ -137,7 +132,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       const json = await response.json();
       const venueData = json.data;
       set({ venueDetails: venueData, isLoading: false });
-      console.log('Venue details fetched:', venueData);
       return venueData;
     } catch (error) {
       console.error('Fetching error:', error);
@@ -160,7 +154,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         },
         body: JSON.stringify(venueData),
       });
-      console.log('response crateVenue', response);
       if (!response.ok) throw new Error('Could not create venue');
       await get().fetchVenues(`${BASE_API_URL}${API_VENUES}`);
       set({ isLoading: false });

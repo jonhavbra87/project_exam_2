@@ -133,7 +133,7 @@ const VenuesByUser = () => {
               </div>
               
               {/* Image - Hidden on mobile, visible on larger screens */}
-              <div className="hidden md:block md:flex-shrink-0 md:w-32 md:self-stretch">
+              <div className="hidden md:block md:flex-shrink-0 md:w-1/3 md:self-stretch">
                 <img
                   src={venue?.media?.[0]?.url || 'https://via.placeholder.com/400'}
                   alt={venue?.media?.[0]?.alt || 'Venue image'}

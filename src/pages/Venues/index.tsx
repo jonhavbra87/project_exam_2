@@ -105,21 +105,22 @@ function Venues() {
       </div>
 
       <ul className="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 md:grid-cols-3">
-        {venues.map((venue, index) => {
-          if (index === venues.length - 1) {
-            return (
-              <li key={venue.id} ref={lastVenueRef}>
-                <VenueCard venue={venue} />
-              </li>
-            );
-          } else {
-            return (
-              <li key={venue.id}>
-                <VenueCard venue={venue} />
-              </li>
-            );
-          }
-        })}
+      {venues.map((venue, index) => {
+        const uniqueKey = `${venue.id}-${index}`;
+        if (index === venues.length - 1) {
+          return (
+            <li key={uniqueKey} ref={lastVenueRef}>
+              <VenueCard venue={venue} />
+            </li>
+          );
+        } else {
+          return (
+            <li key={uniqueKey}>
+              <VenueCard venue={venue} />
+            </li>
+          );
+        }
+      })}
       </ul>
 
       {showLoader &&  

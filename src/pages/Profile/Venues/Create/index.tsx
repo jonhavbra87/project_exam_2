@@ -47,18 +47,11 @@ const ProfileVenueCreate = () => {
 
   const onSubmit = async (data: VenueFormData) => {
     try {
-      console.log('Form date before formatting:', data);
-
       if (!profile) {
         toast.error('You need to be logged in to create a venue.');
         return;
       }
-      console.log('Profile:', profile);
-
       const loadingToast = toast.loading('Oppretter venue...');
-
-      console.log('Toast loading created:', loadingToast);
-
       const validMedia = Array.isArray(data.media)
         ? data.media.filter(
             (item): item is { url: string; alt: string } =>
@@ -110,10 +103,7 @@ const ProfileVenueCreate = () => {
           lng: Number(data.location.lng), 
         },
       };
-      console.log('Formatted data:', formattedData);
-
       const success = await createVenue(formattedData);
-      console.log('Success:', success);
 
       if (success) {
         toast.success('Venue opprettet!', {

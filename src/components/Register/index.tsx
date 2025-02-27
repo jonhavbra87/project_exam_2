@@ -36,8 +36,6 @@ function Register() {
     resolver: yupResolver(schema),
   });
 
-  console.log("Form errors:", errors);
-
   interface RegisterFormData {
     name: string;
     email: string;
