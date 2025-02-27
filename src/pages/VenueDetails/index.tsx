@@ -25,18 +25,28 @@ function VenueDetails() {
     }
   }, [id, fetchVenueDetails]);
 
+  useEffect(() => {
+    if (isError) {
+      toast.error('An error occurred while fetching data. Please try again later.');
+    }
+  }, [isError]);
 
   if (isLoading) {
-    return (
-<LoadingSpinner isLoading={isLoading} />
-    );
+    return <LoadingSpinner isLoading={isLoading} />;
   }
+
   if (isError || !venueDetails) {
     return (
-      toast.error('An error occurred while fetching data. Please try again later.')
+      <div className="flex flex-col items-center justify-center min-h-screen text-center">
+        <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold text-secondary mb-4">
+          Error Loading Venue
+        </h2>
+        <p className="text-body-large-mobile md:text-body-large-desktop font-body font-medium">
+          An error occurred while fetching data. Please try again later.
+        </p>
+      </div>
     );
   }
-  
 
   return (
     <div className="">

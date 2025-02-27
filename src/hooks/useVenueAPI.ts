@@ -135,7 +135,10 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       });
       if (!response.ok) throw new Error('Network response was not ok');
       const json = await response.json();
-      set({ venueDetails: json.data, isLoading: false });
+      const venueData = json.data;
+      set({ venueDetails: venueData, isLoading: false });
+      console.log('Venue details fetched:', venueData);
+      return venueData;
     } catch (error) {
       console.error('Fetching error:', error);
       set({ isError: true, isLoading: false });
