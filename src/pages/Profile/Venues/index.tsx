@@ -6,7 +6,10 @@ import { FaPeopleRoof } from 'react-icons/fa6';
 import { IoSettings } from 'react-icons/io5';
 import { FaTrash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
-import useToastNotification from '../../../hooks/useToastNotification'; // ✅ Import custom toast hook
+import useToastNotification from '../../../hooks/useToastNotification';
+import GradientHeading from '../../../styles/GradientHeading';
+import LoadingSpinner from '../../../components/LoadingSpinner';
+import { BsHouseExclamationFill } from 'react-icons/bs';
 
 const VenuesByUser = () => {
   const { profile } = useAuthStore();
@@ -15,7 +18,7 @@ const VenuesByUser = () => {
   const profileName = profile?.name;
   const venuesArray: Venues[] = Array.isArray(venues) ? venues : [];
   const navigate = useNavigate();
-  const toast = useToastNotification(); // ✅ Bruk custom toast hook
+  const toast = useToastNotification();
 
   useEffect(() => {
     if (profileName) {
@@ -45,19 +48,26 @@ const VenuesByUser = () => {
   };
 
   if (isLoading)
-    return <p className="text-center text-gray-500">Laster bookinger...</p>;
+    return (<LoadingSpinner isLoading={isLoading} />);
   if (isError)
     return (
-      <p className="text-center text-red-500">
-        Kunne ikke hente bookinger. Prøv igjen senere.
-      </p>
+      toast.error('An error occurred while fetching data. Please try again later.')
     );
   if (venues.length === 0)
-    return <p className="text-center text-gray-500">Du har ingen bookinger.</p>;
+    return (
+    <div>
+      <div className="flex flex-col items-center justify-center min-h-screen text-center">
+      <h2 className="text-h1-mobile md:text-h1-desktop font-heading font-semibold text-secondary mb-16">No Venues</h2>
+      <BsHouseExclamationFill className="text-6xl text-primary-3 mb-8" />
+      <p className="text-body-large-mobile md:text-body-large-desktop font-body font-medium mb-16">It looks like you don’t have any venues yet. Create one now to start exploring your listings!</p>
+      </div>
+    </div>
+
+    )
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center mb-6">My Venues</h1>
+      <GradientHeading>My Venues</GradientHeading>
 
       {/* 🔹 Map over venuesUser array */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

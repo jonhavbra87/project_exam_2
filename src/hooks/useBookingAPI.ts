@@ -166,7 +166,7 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
 
       if (!response.ok) throw new Error('Could not delete booking');
 
-      await get().fetchBookings(); // 📌 Oppdater listen over bookinger etter sletting
+      await get().fetchBookings();
       set({ isLoading: false });
       return true;
     } catch (error) {

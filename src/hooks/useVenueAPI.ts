@@ -7,6 +7,7 @@ import {
   BASE_API_URL,
 } from '../api/apiConfig';
 import { useAuthStore } from '../store/authStore';
+import toast from 'react-hot-toast';
 
 interface VenueState {
   venues: Venues[];
@@ -199,6 +200,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       return true;
     } catch (error) {
       console.error('Error updating venue:', error);
+      toast.error('Error updating venue.');
       set({ isError: true, isLoading: false });
       return false;
     }
@@ -220,9 +222,11 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         venues: state.venues.filter((venue) => venue.id !== id),
         isLoading: false,
       }));
+      toast.success('Venue deleted successfully.');
       return true;
     } catch (error) {
       console.error('Error deleting venue:', error);
+      toast.error('Error deleting venue.');
       set({ isError: true, isLoading: false });
       return false;
     }
@@ -231,6 +235,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
   fetchVenuesByUser: async (name: string) => {
     if (!name) {
       console.error('fetchVenuesByUser: User name is required.');
+      toast.error('User name is required.');
       return;
     }
     const { accessToken } = useAuthStore.getState();
@@ -254,6 +259,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       });
     } catch (error) {
       console.error('Error fetching user venues:', error);
+      toast.error('Error fetching user venues.');
       set({ isError: true, isLoading: false });
     }
   },

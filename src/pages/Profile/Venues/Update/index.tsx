@@ -83,11 +83,12 @@ const ProfileVenueUpdate = () => {
           ? validMedia
           : [
               {
-                url: 'https://placeholder.com/image.jpg',
-                alt: 'Default venue image',
+                url: 'https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+                alt: 'Placeholder venue image',
               },
             ];
 
+            
       const formattedData = {
         ...data,
         media: mediaToSubmit,
@@ -96,11 +97,11 @@ const ProfileVenueUpdate = () => {
           email: profile.email,
           bio: profile.bio || '',
           avatar: {
-            url: profile.avatar?.url || 'https://placeholder.com/avatar.jpg',
+            url: profile.avatar?.url || 'https://images.unsplash.com/photo-1578593828319-a0f580bd9d07?q=80&w=1328&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: profile.avatar?.alt || 'User avatar',
           },
           banner: {
-            url: profile.banner?.url || 'https://placeholder.com/banner.jpg',
+            url: profile.banner?.url || 'https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: profile.banner?.alt || 'User banner',
           },
         },
