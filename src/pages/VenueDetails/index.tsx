@@ -1,6 +1,5 @@
 import { useParams } from 'react-router-dom';
 import { API_VENUES, BASE_API_URL } from '../../api/apiConfig';
-import { VenuePrice } from '../../components/VenuePrice';
 import VenueRating from '../../components/VenueRating';
 import MetaDataVenue from '../../components/MetaDataVenue';
 import GradientHeading from '../../styles/GradientHeading';
@@ -12,6 +11,8 @@ import { useEffect } from 'react';
 import { useVenueAPI } from '../../hooks/useVenueAPI';
 import VenueCalendar from '../../components/VenueCalendar';
 import { FaUser } from 'react-icons/fa';
+import LoadingSpinner from '../../components/LoadingSpinner';
+import toast from 'react-hot-toast';
 
 
 function VenueDetails() {
@@ -24,23 +25,18 @@ function VenueDetails() {
     }
   }, [id, fetchVenueDetails]);
 
-  console.log('API response venue detials script:', venueDetails);
 
   if (isLoading) {
     return (
-      <div className="text-center text-gray-500">
-        ⏳ Loading venue details...
-      </div>
+<LoadingSpinner isLoading={isLoading} />
     );
   }
-
   if (isError || !venueDetails) {
     return (
-      <div className="text-center text-red-500">
-        ❌ Error loading venue data.
-      </div>
+      toast.error('An error occurred while fetching data. Please try again later.')
     );
   }
+  
 
   return (
     <div className="">
@@ -116,12 +112,7 @@ function VenueDetails() {
         {/* Right Column */}
         <div className="md:w-1/3">
           <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-bold mb-4">Book your stay</h3>
-          <VenueCalendar venueId={id!} maxGuests={venueDetails.maxGuests}/>
-
-          <div className="mt-4 text-gray-600">
-            <p>Price:</p>
-            <VenuePrice product={venueDetails} />
-          </div>
+          <VenueCalendar venueId={id!} maxGuests={venueDetails.maxGuests} pricePerNight={venueDetails.price}/>
         </div>
       </div>
 

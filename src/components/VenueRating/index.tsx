@@ -39,8 +39,6 @@ function VenueRating({ rating }: { rating: number }) {
         .map((_, index) => (
           <FaRegStar key={`empty-${index}`} className="text-secondary" />
         ))}
-      <p className="text-text-primary text-ingress-mobile md:text-ingress-desktop font-ingress">{rating}</p>
-
       <span className="sr-only">
         Rated {rating} out of {totalStars} stars
       </span>

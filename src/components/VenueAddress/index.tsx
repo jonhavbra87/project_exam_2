@@ -12,7 +12,7 @@ function VenueAddress({ location }: VenueAddressProps) {
       .filter((value) => value?.trim())
       .join(', ') || 'No address available';
 
-  return <p className="text-md text-text-secondary">{formattedAddress}</p>;
+  return <p className="text-body-small-mobile md:text-body-medium-desktop text-text-primary">{formattedAddress}</p>;
 }
 
 export default VenueAddress;
