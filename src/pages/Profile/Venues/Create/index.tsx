@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-// import { yupResolver } from '@hookform/resolvers/yup';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { toast } from 'react-hot-toast';
 import { FaImage, FaMoneyBill, FaUsers, FaStar, FaHome } from 'react-icons/fa';
 import GradientHeading from '../../../../styles/GradientHeading';
-import { type VenueFormData } from '../../../../components/VenueFormSchema';
+import { venueSchema, type VenueFormData } from '../../../../components/VenueFormSchema';
 import { useVenueAPI } from '../../../../hooks/useVenueAPI';
 import { useAuthStore } from '../../../../store/authStore';
 
@@ -19,14 +19,14 @@ const ProfileVenueCreate = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
   } = useForm<VenueFormData>({
-    // resolver: yupResolver(venueSchema),
+    resolver: yupResolver(venueSchema),
     defaultValues: {
       name: '',
       description: '',
       media: [{ url: '', alt: 'Venue Image' }],
       price: 0,
       maxGuests: 1,
-      rating: 0,
+      rating: 1,
       meta: {
         wifi: false,
         parking: false,
@@ -47,18 +47,11 @@ const ProfileVenueCreate = () => {
 
   const onSubmit = async (data: VenueFormData) => {
     try {
-      console.log('Form date before formatting:', data);
-
       if (!profile) {
         toast.error('You need to be logged in to create a venue.');
         return;
       }
-      console.log('Profile:', profile);
-
       const loadingToast = toast.loading('Oppretter venue...');
-
-      console.log('Toast loading created:', loadingToast);
-
       const validMedia = Array.isArray(data.media)
         ? data.media.filter(
             (item): item is { url: string; alt: string } =>
@@ -70,7 +63,7 @@ const ProfileVenueCreate = () => {
           ? validMedia
           : [
               {
-                url: 'https://placeholder.com/image.jpg',
+                url: 'https://images.unsplash.com/photo-1563089145-599997674d42?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
                 alt: 'Default venue image',
               },
             ];
@@ -83,17 +76,17 @@ const ProfileVenueCreate = () => {
           email: profile.email,
           bio: profile.bio || '',
           avatar: {
-            url: profile.avatar?.url || 'https://placeholder.com/avatar.jpg',
+            url: profile.avatar?.url || 'https://images.unsplash.com/photo-1578593828319-a0f580bd9d07?q=80&w=1328&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: profile.avatar?.alt || 'User avatar',
           },
           banner: {
-            url: profile.banner?.url || 'https://placeholder.com/banner.jpg',
+            url: profile.banner?.url || 'https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: profile.banner?.alt || 'User banner',
           },
         },
-        price: Number(data.price), // 🔥 Konverterer til number
-        maxGuests: Number(data.maxGuests), // 🔥 Konverterer til number
-        rating: Number(data.rating), // 🔥 Konverterer til number
+        price: Number(data.price),
+        maxGuests: Number(data.maxGuests),
+        rating: Number(data.rating), 
         meta: {
           wifi: Boolean(data.meta.wifi),
           parking: Boolean(data.meta.parking),
@@ -106,14 +99,11 @@ const ProfileVenueCreate = () => {
           zip: data.location.zip,
           country: data.location.country,
           continent: data.location.continent,
-          lat: Number(data.location.lat), // 🔥 Sørger for at det er et tall
-          lng: Number(data.location.lng), // 🔥 Sørger for at det er et tall
+          lat: Number(data.location.lat),
+          lng: Number(data.location.lng), 
         },
       };
-      console.log('Formatted data:', formattedData);
-
       const success = await createVenue(formattedData);
-      console.log('Success:', success);
 
       if (success) {
         toast.success('Venue opprettet!', {
@@ -121,6 +111,7 @@ const ProfileVenueCreate = () => {
         });
         navigate('/profile');
       } else {
+        console.error('Error creating venue');
         toast.error('Kunne ikke opprette venue. Prøv igjen.', {
           id: loadingToast,
         });
@@ -210,6 +201,7 @@ const ProfileVenueCreate = () => {
           <input
             {...register('maxGuests')}
             type="number"
+            placeholder='Max guests allowed (100)'
             className="w-full pl-10 p-2 border rounded-lg"
           />
         </div>
@@ -228,7 +220,8 @@ const ProfileVenueCreate = () => {
           <input
             {...register('rating')}
             type="number"
-            step="0.1"
+            step="1"
+            placeholder='Rating between 1 and 5'
             className="w-full pl-10 p-2 border rounded-lg"
           />
         </div>

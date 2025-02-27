@@ -33,7 +33,7 @@ function Login() {
   } = useForm({
     resolver: yupResolver(schema),
   });
-  console.log("Form errors:", errors);
+
 
 
   interface LoginFormData {
@@ -42,7 +42,7 @@ function Login() {
   }
 
   const onSubmit = async (data: LoginFormData) => {
-    console.log("Submitting with data:", data);
+
   
     if (Object.keys(errors).length > 0) {
       toast.error("Please fix the errors before submitting! ❌");

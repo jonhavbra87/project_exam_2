@@ -34,14 +34,11 @@ const useUpdateProfile = () => {
         throw new Error(response.statusText || 'Failed to update profile');
       }
       const result = await response.json();
-      // console.log("🟢 Profile Update API Response:", result);
 
       const { name, email, bio, avatar, banner, venueManager } = result.data;
-
-      // 📌 Oppdater VenueManager-status i Zustan
+      
       setVenueManager(venueManager);
 
-      // 📌 Oppdater Zustand med ny profilinfo
       login(
         {
           name,

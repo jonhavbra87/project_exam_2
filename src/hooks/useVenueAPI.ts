@@ -7,6 +7,7 @@ import {
   BASE_API_URL,
 } from '../api/apiConfig';
 import { useAuthStore } from '../store/authStore';
+import toast from 'react-hot-toast';
 
 interface VenueState {
   venues: Venues[];
@@ -58,7 +59,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         hasMore: json.data.length > 0,
         isLoading: false,
       }));
-      console.log('Venues successfully fetched:', json.data.length, 'items.');
     } catch (error) {
       console.error('Error fetching venues:', error);
       set({ isError: true, isLoading: false });
@@ -68,7 +68,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
     set({ isLoading: true, isError: false });
     try {
       const url = `${BASE_API_URL}${API_VENUES}?limit=24&page=1&sort=rating`;
-      console.log('Fetching initial venues from:', url);
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -88,7 +87,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         hasMore: newVenues.length > 0,
         isLoading: false,
       });
-      console.log('Fetched first 24 venues.');
     } catch (error) {
       console.error('Error fetching initial venues:', error);
       set({ isError: true, isLoading: false });
@@ -99,7 +97,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
     set({ isLoading: true, isError: false });
     try {
       const url = `${BASE_API_URL}${API_VENUES}?limit=24&page=${page}&sort=rating`;
-      console.log('Fetching more venues from:', url);
       const response = await fetch(url, {
         method: 'GET',
         headers: {
@@ -119,7 +116,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         hasMore: newVenues.length > 0,
         isLoading: false,
       }));
-      console.log(`Fetched ${newVenues.length} more venues.`);
     } catch (error) {
       console.error('Error fetching more venues:', error);
       set({ isError: true, isLoading: false });
@@ -134,7 +130,9 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       });
       if (!response.ok) throw new Error('Network response was not ok');
       const json = await response.json();
-      set({ venueDetails: json.data, isLoading: false });
+      const venueData = json.data;
+      set({ venueDetails: venueData, isLoading: false });
+      return venueData;
     } catch (error) {
       console.error('Fetching error:', error);
       set({ isError: true, isLoading: false });
@@ -156,7 +154,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         },
         body: JSON.stringify(venueData),
       });
-      console.log('response crateVenue', response);
       if (!response.ok) throw new Error('Could not create venue');
       await get().fetchVenues(`${BASE_API_URL}${API_VENUES}`);
       set({ isLoading: false });
@@ -199,6 +196,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       return true;
     } catch (error) {
       console.error('Error updating venue:', error);
+      toast.error('Error updating venue.');
       set({ isError: true, isLoading: false });
       return false;
     }
@@ -220,9 +218,11 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
         venues: state.venues.filter((venue) => venue.id !== id),
         isLoading: false,
       }));
+      toast.success('Venue deleted successfully.');
       return true;
     } catch (error) {
       console.error('Error deleting venue:', error);
+      toast.error('Error deleting venue.');
       set({ isError: true, isLoading: false });
       return false;
     }
@@ -231,6 +231,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
   fetchVenuesByUser: async (name: string) => {
     if (!name) {
       console.error('fetchVenuesByUser: User name is required.');
+      toast.error('User name is required.');
       return;
     }
     const { accessToken } = useAuthStore.getState();
@@ -254,6 +255,7 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       });
     } catch (error) {
       console.error('Error fetching user venues:', error);
+      toast.error('Error fetching user venues.');
       set({ isError: true, isLoading: false });
     }
   },

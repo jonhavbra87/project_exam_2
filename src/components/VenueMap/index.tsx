@@ -3,6 +3,8 @@ import 'leaflet/dist/leaflet.css';
 import { Venues } from '../../types/Venues';
 import { useEffect, useState } from 'react';
 import L from 'leaflet';
+import LoadingSpinner from '../LoadingSpinner';
+import toast from 'react-hot-toast';
 
 // 📌 **Custom Leaflet Marker**
 const customIcon = new L.Icon({
@@ -62,24 +64,20 @@ function VenueMap({ venue }: { venue: Venues }) {
   }, [venue]);
 
   if (isLoading) {
-    return <p className="text-gray-500">Loading map...</p>;
+    return (<LoadingSpinner isLoading={isLoading} />)
   }
 
   if (!coordinates) {
     return (
-      <p className="text-red-500">
-        ⚠️ {locationText || 'No address available'}
-      </p>
+      toast.error('This venue has no coordinates available')
     );
   }
 
   return (
-    <div className="h-96 w-full rounded-lg shadow-md relative">
-      {!addressAvailable && (
-        <div className="absolute top-4 left-1/2 transform -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded-md z-10">
-          Address is not available
-        </div>
-      )}
+    <div className="h-96 w-full rounded-lg shadow-md relative z-1">
+      <p className="absolute top-2 left-2 bg-background px-2 py-1 rounded-lg shadow-md text-text-primary">
+        {addressAvailable || 'No address available'}
+      </p>
 
       <MapContainer center={coordinates} zoom={12} className="h-full w-full">
         <TileLayer

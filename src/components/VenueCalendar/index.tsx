@@ -9,51 +9,60 @@ import { CustomButton } from '../CustomButton';
 import { BookingCreateRequest } from '../../types/Booking';
 import isBetween from 'dayjs/plugin/isBetween';
 import { StyledDatePickerWrapper } from '../../styles/StyledDatePickerWrapper';
+
 dayjs.extend(isBetween);
 
 interface VenueCalendarProps {
   venueId: string;
   maxGuests: number;
+  pricePerNight: number;
 }
 
-const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests}) => {
+const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests, pricePerNight}) => {
   const { fetchBookingDetails, createBooking, bookings, isLoading } = useBookingAPI();
   const { accessToken } = useAuthStore();
   const [selectedDates, setSelectedDates] = useState<[Date | null, Date | null]>([null, null]);
   const [guests, setGuests] = useState<number>(1);
   const [isBooking, setIsBooking] = useState(false);
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
+  const [totalPrice, setTotalPrice] = useState<number>(0);
   
-
   useEffect(() => {
     if (venueId) {
       fetchBookingDetails(venueId);
     }
   }, [venueId, fetchBookingDetails]);
-
+  
   
   useEffect(() => {
     if (!venueId || bookings.length === 0) return;
-
+    
     const venueBookings = bookings || [];
-
+    
     const booked: Date[] = venueBookings.flatMap((booking) => {
       const start = dayjs(booking.dateFrom).startOf('day');
       const end = dayjs(booking.dateTo).startOf('day');
       const dates: Date[] = [];
-
+      
       for (let d = start; d.isBefore(end) || d.isSame(end, 'day'); d = d.add(1, 'day')) {
         dates.push(d.toDate());
       }
       return dates;
     });
-
+    
     setBookedDates(booked);
   }, [bookings, venueId]);
+  
 
+  
   const handleDateChange = (dates: [Date | null, Date | null]) => {
     setSelectedDates(dates);
-
+    if (dates[0] && dates[1]) {
+      const nights = dayjs(dates[1]).diff(dayjs(dates[0]), 'day');
+      setTotalPrice(nights * pricePerNight);
+    } else {
+      setTotalPrice(0);
+    }
   };
   
   const isDateRangeBooked = () => {
@@ -107,6 +116,7 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests}) => {
         fetchBookingDetails(venueId);
         setSelectedDates([null, null]);
         setGuests(1);
+        setTotalPrice(0);
       } else {
         toast.error('Booking failed. Try again.');
       }
@@ -166,23 +176,11 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests}) => {
                 max={maxGuests}
                 className="w-full border rounded-md p-2"
               />
-              <p className="text-sm text-gray-500">Max guests: {maxGuests}</p>
+              <p className="text-body-small-mobile md:text-body-small-desktop font-light font-body text-text-secondary">Max guests: {maxGuests}</p>
             </div>
-
-            {/* <div>
-              <label htmlFor="guests" className="block text-body-small-mobile md:text-body-medium-desktop font-medium font-body mb-2">
-                Guests
-              </label>
-              <input
-                id="guests"
-                type="number"
-                value={guests}
-                onChange={(e) => setGuests(Math.max(1, parseInt(e.target.value) || 1))}
-                min={1}
-                className="w-full border rounded-md p-2"
-              />
-            </div> */}
-
+            <div className="text-body-large-mobile md:text-body-large-desktop font-semibold font-body text-text-primary">
+              Total Price: {totalPrice} NOK
+            </div>
             <CustomButton
               text={isBooking ? 'Booking...' : 'Book now'}
               onClick={handleBooking}
