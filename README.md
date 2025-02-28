@@ -1,6 +1,6 @@
 # Project Exam 2
 
-![Holidaze](https://i.postimg.cc/bvrLjhZJ/Skjermbilde-2025-02-27-kl-14-05-55.png)
+![Holidaze](https://i.postimg.cc/G2FVNRBf/Skjermbilde-2025-02-28-kl-14-21-43.png)
 
 ## 🎯 **Project Goal**
 
