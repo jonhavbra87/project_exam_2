@@ -1,6 +1,6 @@
 # Project Exam 2
 
-![eComStore](https://postimg.cc/Ty8nrBqM)
+![Holidaze](https://postimg.cc/Ty8nrBqM)
 
 ## 🎯 **Project Goal**
 
