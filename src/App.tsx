@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Main application component defining the routing structure
+ * @module App
+ */
 import './index.css';
 import { Route, Routes } from 'react-router-dom';
 import Layout from './components/Layout';
@@ -20,6 +24,20 @@ import { Toaster } from 'react-hot-toast';
 import LandingPage from './pages/LandingPage';
 import Register from './components/Register';
 import Messages from './components/Messages';
+/**
+ * Main application component that handles routing and layout structure
+ * 
+ * This component serves as the application's root, defining all routes and
+ * their corresponding components. It renders different views based on the
+ * user's authentication status and provides toast notifications for user feedback.
+ * 
+ * The routing structure includes:
+ * - Public routes for venue browsing, authentication, and general information
+ * - Protected profile routes for bookings, venues, and account management
+ * - Error handling with a 404 page
+ * 
+ * @returns {JSX.Element} The rendered application with routing configuration
+ */
 
 function App() {
   const { isAuthenticated } = useAuthStore();
