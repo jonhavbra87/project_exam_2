@@ -1,4 +1,38 @@
+/**
+ * @fileoverview Styled wrapper for React DatePicker component
+ * @module components/DatePicker/styles
+ */
 import styled from "styled-components";
+
+
+/**
+ * Styled wrapper component for customizing the appearance of react-datepicker
+ * 
+ * This component applies custom styling to the react-datepicker library components,
+ * providing a consistent theme with the application's color scheme. It includes
+ * custom styling for the calendar header, day elements, selected ranges, and
+ * various interaction states.
+ *
+ * @component
+ * @example
+ * import DatePicker from "react-datepicker";
+ * import "react-datepicker/dist/react-datepicker.css";
+ * import { StyledDatePickerWrapper } from "./DatePickerStyles";
+ * 
+ * const MyDatePicker = () => {
+ *   const [startDate, setStartDate] = useState(new Date());
+ *   
+ *   return (
+ *     <StyledDatePickerWrapper>
+ *       <DatePicker
+ *         selected={startDate}
+ *         onChange={(date) => setStartDate(date)}
+ *         dateFormat="MMMM d, yyyy"
+ *       />
+ *     </StyledDatePickerWrapper>
+ *   );
+ * };
+ */
 
 export const StyledDatePickerWrapper = styled.div`
   .react-datepicker {

@@ -1,6 +1,29 @@
+/**
+ * @fileoverview Styled gradient heading component with responsive sizing
+ * @module components/typography/GradientHeading
+ */
 import styled from 'styled-components';
 
-// Define a styled H1 element using styled-components
+
+/**
+ * A styled h1 component featuring a gradient text effect and responsive sizing
+ * 
+ * This heading component uses a dark gradient effect with text-background-clip
+ * to create a visually striking header. The component is fully responsive with
+ * font sizes that scale based on viewport width.
+ * 
+ * @component
+ * @example
+ * import GradientHeading from './typography/GradientHeading';
+ * 
+ * const PageHeader = () => {
+ *   return (
+ *     <header>
+ *       <GradientHeading>Welcome to Our Platform</GradientHeading>
+ *     </header>
+ *   );
+ * };
+ */
 const GradientHeading = styled.h1`
   font-size: 2.5rem; /* Base font size for mobile */
   font-weight: bold;
