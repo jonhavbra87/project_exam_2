@@ -19,6 +19,7 @@ import { useAuthStore } from './store/authStore';
 import { Toaster } from 'react-hot-toast';
 import LandingPage from './pages/LandingPage';
 import Register from './components/Register';
+import Messages from './components/Messages';
 
 function App() {
   const { isAuthenticated } = useAuthStore();
@@ -37,6 +38,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="Profile" element={<Profile />} />
+          <Route path='/profile/messages' element={<Messages />} />
           <Route path="Profile/bookings" element={<Bookings />} />
           <Route path="profile/editprofile" element={<EditProfile />} />
           <Route path="profile/venues" element={<VenuesByUser />} />

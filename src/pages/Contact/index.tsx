@@ -55,9 +55,17 @@ function Contact() {
   return (
     <div>
       <GradientHeading>Contact Us</GradientHeading>
+      <div className='flex flex-col md:flex-row'>
+      <div className='w-full md:w-1/3 md:mr-8'>
+        <h2 className='text-h2-mobile md:text-h2-desktop font-heading font-semibold text-text-primary mb-8 text-center md:text-start'>Get in Touch – We’re Here to Help!</h2>
+        <p className='text-body-large-mobile md:text-body-large-desktop font-body font-light text-text-primary mb-4'>Have questions, feedback, or need assistance? We’d love to hear from you! Whether you're a venue manager looking for support, a customer with inquiries, or just someone who wants to learn more, our team is ready to assist.</p>
+        <p className='text-body-large-mobile md:text-body-large-desktop font-body font-light text-text-primary mb-4'>Email Us: Reach out anytime, and we’ll get back to you as soon as possible.</p>
+        <p className='text-body-large-mobile md:text-body-large-desktop font-body font-light text-text-primary mb-4'>Call Us: Need immediate assistance? Our support team is just a call away.</p>
+        <p className='text-body-large-mobile md:text-body-large-desktop font-body font-light text-text-primary mb-4'>Live Chat: Get quick answers through our real-time chat feature.</p>
+        <p className='text-body-large-mobile md:text-body-large-desktop font-body font-light text-text-primary mb-4'>We value every message and strive to provide the best support experience. Don’t hesitate—contact us today, and let’s make your experience even better!</p>
+      </div>
       <form
-        className="flex flex-col gap-6 p-8 max-w-xl mx-auto bg-gradient-to-t from-primary-3 to-secondary rounded-lg shadow-md 
-                md:max-w-2xl lg:max-w-3xl lg:p-10 xl:max-w-4xl xl:p-12"
+        className="flex flex-col gap-6 p-8 w-full md:w-2/3 mx-auto bg-gradient-to-t from-primary-3 to-secondary rounded-lg shadow-md lg:p-10 xl:max-w-4xl xl:p-12"
         onSubmit={handleSubmit(onSubmit)}
       >
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-2">
@@ -146,6 +154,7 @@ function Contact() {
           Submit
         </button>
       </form>
+      </div>
     </div>
   );
 }
