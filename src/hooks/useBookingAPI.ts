@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Booking API store for managing booking-related operations and state
+ * @module store/bookingStore
+ */
 import { create } from 'zustand';
 import {
   API_BOOKINGS,
@@ -8,6 +12,22 @@ import {
 } from '../api/apiConfig';
 import { useAuthStore } from '../store/authStore';
 import { Booking } from '../types/Booking';
+
+/**
+ * Interface defining the booking state and operations
+ * 
+ * @typedef {Object} BookingState
+ * @property {Booking[]} bookings - List of bookings
+ * @property {Booking|null} bookingDetails - Details of selected booking
+ * @property {boolean} isLoading - Indicates if a booking operation is in progress
+ * @property {boolean} isError - Indicates if an error occurred during a booking operation
+ * @property {function(): Promise<void>} fetchBookings - Fetches all bookings
+ * @property {function(id: string): Promise<void>} fetchBookingDetails - Fetches details for a specific booking
+ * @property {function(bookingData: Omit<Booking, 'id' | 'created' | 'updated'>): Promise<boolean>} createBooking - Creates a new booking
+ * @property {function(id: string, updatedData: Partial<Omit<Booking, 'id' | 'created' | 'updated'>>): Promise<boolean>} updateBooking - Updates an existing booking
+ * @property {function(id: string): Promise<boolean>} deleteBooking - Deletes a booking
+ * @property {function(userEmail: string): Promise<void>} fetchBookingsByUser - Fetches bookings for a specific user
+ */
 
 interface BookingState {
   bookings: Booking[];
@@ -26,6 +46,30 @@ interface BookingState {
   deleteBooking: (id: string) => Promise<boolean>;
   fetchBookingsByUser: (userEmail: string) => Promise<void>;
 }
+
+/**
+ * Zustand store for booking management
+ * 
+ * This store manages all booking-related state and operations, including
+ * fetching, creating, updating, and deleting bookings. It handles API
+ * interactions and maintains the loading/error states.
+ * 
+ * @example
+ * // Fetch all bookings
+ * useBookingAPI.getState().fetchBookings();
+ * 
+ * // Access booking data in a component
+ * const { bookings, isLoading } = useBookingAPI();
+ * 
+ * // Create a new booking
+ * const createBooking = useBookingAPI(state => state.createBooking);
+ * createBooking({
+ *   dateFrom: "2023-09-01T14:00:00.000Z",
+ *   dateTo: "2023-09-05T12:00:00.000Z",
+ *   guests: 2,
+ *   venueId: "venue-123"
+ * });
+ */
 
 export const useBookingAPI = create<BookingState>((set, get) => ({
   bookings: [],
@@ -60,7 +104,19 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
     }
   },
 
-  // Fetch booking details
+ /**
+   * Fetches booking details for a specific venue
+   * 
+   * @async
+   * @function fetchBookingDetails
+   * @param {string} venueId - The ID of the venue to fetch bookings for
+   * @returns {Promise<void>} A promise that resolves when the fetch operation completes
+   * @throws {Error} If the API request fails
+   * 
+   * @example
+   * await useBookingAPI.getState().fetchBookingDetails('venue-123');
+   */
+
   fetchBookingDetails: async (venueId: string) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
@@ -90,8 +146,24 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
     }
   },
 
-
-  // Create a booking
+  /**
+   * Creates a new booking
+   * 
+   * @async
+   * @function createBooking
+   * @param {Omit<Booking, 'id' | 'created' | 'updated'>} bookingData - The booking data to create
+   * @returns {Promise<boolean>} A promise that resolves to true if successful, false otherwise
+   * @throws {Error} If the API request fails
+   * 
+   * @example
+   * const success = await useBookingAPI.getState().createBooking({
+   *   dateFrom: "2023-09-01T14:00:00.000Z",
+   *   dateTo: "2023-09-05T12:00:00.000Z",
+   *   guests: 2,
+   *   venueId: "venue-123"
+   * });
+   */
+  
   createBooking: async (
     bookingData: Omit<Booking, 'id' | 'created' | 'updated'>
   ) => {
@@ -121,7 +193,21 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
     }
   },
 
-  // Update a booking
+  /**
+   * Updates an existing booking
+   * 
+   * @async
+   * @function updateBooking
+   * @param {string} id - The ID of the booking to update
+   * @param {Partial<Omit<Booking, 'id' | 'created' | 'updated'>>} updatedData - The updated booking data
+   * @returns {Promise<boolean>} A promise that resolves to true if successful, false otherwise
+   * @throws {Error} If the API request fails
+   * 
+   * @example
+   * const success = await useBookingAPI.getState().updateBooking('booking-123', {
+   *   guests: 3
+   * });
+   */
   updateBooking: async (id, updatedData) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
@@ -149,7 +235,18 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
     }
   },
 
-  // Delete a booking
+ /**
+   * Deletes a booking
+   * 
+   * @async
+   * @function deleteBooking
+   * @param {string} id - The ID of the booking to delete
+   * @returns {Promise<boolean>} A promise that resolves to true if successful, false otherwise
+   * @throws {Error} If the API request fails
+   * 
+   * @example
+   * const success = await useBookingAPI.getState().deleteBooking('booking-123');
+   */
   deleteBooking: async (id) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
@@ -176,7 +273,18 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
     }
   },
 
-  // Fetch bookings by user
+ /**
+   * Fetches bookings for a specific user
+   * 
+   * @async
+   * @function fetchBookingsByUser
+   * @param {string} name - The username to fetch bookings for
+   * @returns {Promise<void>} A promise that resolves when the fetch operation completes
+   * @throws {Error} If the API request fails
+   * 
+   * @example
+   * await useBookingAPI.getState().fetchBookingsByUser('johndoe');
+   */
   fetchBookingsByUser: async (name) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });

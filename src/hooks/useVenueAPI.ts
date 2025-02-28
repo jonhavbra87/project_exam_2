@@ -1,3 +1,7 @@
+/**
+ * @fileoverview API store for managing venue-related operations and state
+ * @module store/venueStore
+ */
 import { create } from 'zustand';
 import { Venues } from '../types/Venues';
 import {
@@ -8,6 +12,26 @@ import {
 } from '../api/apiConfig';
 import { useAuthStore } from '../store/authStore';
 import toast from 'react-hot-toast';
+
+/**
+ * Interface defining the venue state and operations
+ * 
+ * @typedef {Object} VenueState
+ * @property {Venues[]} venues - List of venues
+ * @property {Venues|null} venueDetails - Details of selected venue
+ * @property {boolean} isLoading - Indicates if a venue operation is in progress
+ * @property {boolean} isError - Indicates if an error occurred during a venue operation
+ * @property {boolean} hasMore - Indicates if there are more venues to load for pagination
+ * @property {function(url: string): Promise<void>} fetchVenues - Fetches venues from a specified URL
+ * @property {function(url: string): Promise<void>} fetchVenueDetails - Fetches details for a specific venue
+ * @property {function(): Promise<void>} fetchLimitVenues - Fetches initial set of venues with limit
+ * @property {function(page: number): Promise<void>} fetchMoreVenues - Fetches additional venues for pagination
+ * @property {function(venueData: Omit<Venues, 'id' | 'created' | 'updated'>): Promise<boolean>} createVenue - Creates a new venue
+ * @property {function(id: string, updatedData: Partial<Omit<Venues, 'id' | 'created' | 'updated'>>): Promise<boolean>} updateVenue - Updates an existing venue
+ * @property {function(id: string): Promise<boolean>} deleteVenue - Deletes a venue
+ * @property {function(userEmail: string): Promise<void>} fetchVenuesByUser - Fetches venues for a specific user
+ * @property {function(query: string): Promise<void>} fetchVenuesBySearch - Searches venues by query
+ */
 
 interface VenueState {
   venues: Venues[];
@@ -30,6 +54,33 @@ interface VenueState {
   fetchVenuesByUser: (userEmail: string) => Promise<void>;
   fetchVenuesBySearch: (query: string) => Promise<void>;
 }
+
+/**
+ * Zustand store for venue management
+ * 
+ * This store manages all venue-related state and operations, including
+ * fetching, creating, updating, and deleting venues. It also handles
+ * pagination, search functionality, and filtering venues by user.
+ * 
+ * @example
+ * // Fetch all venues
+ * useVenueAPI.getState().fetchVenues(`${BASE_API_URL}${API_VENUES}`);
+ * 
+ * // Access venues data in a component
+ * const { venues, isLoading } = useVenueAPI();
+ * 
+ * // Create a new venue
+ * const createVenue = useVenueAPI(state => state.createVenue);
+ * createVenue({
+ *   name: "Beach Resort",
+ *   description: "Luxury beach resort with ocean views",
+ *   media: [{ url: "image-url.jpg", alt: "Resort view" }],
+ *   price: 199,
+ *   maxGuests: 4,
+ *   rating: 4.8,
+ *   meta: { wifi: true, parking: true, breakfast: true }
+ * });
+ */
 
 export const useVenueAPI = create<VenueState>((set, get) => ({
   venues: [],
@@ -92,7 +143,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       set({ isError: true, isLoading: false });
     }
   },
-
   fetchMoreVenues: async (page: number) => {
     set({ isLoading: true, isError: false });
     try {
@@ -121,7 +171,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       set({ isError: true, isLoading: false });
     }
   },
-
   fetchVenueDetails: async (url: string) => {
     set({ isLoading: true, isError: false });
     try {
@@ -138,7 +187,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       set({ isError: true, isLoading: false });
     }
   },
-
   createVenue: async (
     venueData: Omit<Venues, 'id' | 'created' | 'updated'>
   ) => {
@@ -164,7 +212,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       return false;
     }
   },
-
   updateVenue: async (
     id: string,
     updatedData: Partial<Omit<Venues, 'id' | 'created' | 'updated'>>
@@ -201,7 +248,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       return false;
     }
   },
-
   deleteVenue: async (id: string) => {
     const { accessToken } = useAuthStore.getState();
     set({ isLoading: true, isError: false });
@@ -227,7 +273,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       return false;
     }
   },
-
   fetchVenuesByUser: async (name: string) => {
     if (!name) {
       console.error('fetchVenuesByUser: User name is required.');
@@ -259,7 +304,6 @@ export const useVenueAPI = create<VenueState>((set, get) => ({
       set({ isError: true, isLoading: false });
     }
   },
-
   fetchVenuesBySearch: async (query: string) => {
     set({ isLoading: true, isError: false });
     try {

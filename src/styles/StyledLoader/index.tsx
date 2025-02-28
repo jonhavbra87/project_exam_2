@@ -1,10 +1,25 @@
+/**
+ * @fileoverview Styled loading spinner components with animations
+ * @module components/Loader/styles
+ */
 import styled, { keyframes } from 'styled-components';
-
+/**
+ * Keyframes animation for rotating the loader 360 degrees
+ * 
+ * @constant
+ * @type {Keyframes}
+ */
 const rotate = keyframes`
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 `;
-
+/**
+ * Keyframes animation for the clip-path animation effect
+ * Creates a filling/sweeping effect using polygon clipping
+ * 
+ * @constant
+ * @type {Keyframes}
+ */
 const prixClipFix = keyframes`
   0% { clip-path: polygon(50% 50%, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0); }
   25% { clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 0, 100% 0, 100% 0); }
@@ -14,6 +29,16 @@ const prixClipFix = keyframes`
 `;
 
 
+/**
+ * Styled fullscreen container for the loader
+ * Creates a semi-transparent overlay that covers the entire viewport
+ * 
+ * @component
+ * @example
+ * <LoaderContainer>
+ *   <StyledLoader />
+ * </LoaderContainer>
+ */
 export const LoaderContainer = styled.div`
   display: flex;
   align-items: center;
@@ -27,7 +52,15 @@ export const LoaderContainer = styled.div`
   z-index: 9999;
 `;
 
-
+/**
+ * Styled circular loader with animation effects
+ * Features a dual-border design with rotating and sweeping animations
+ * Includes responsive sizing based on screen width
+ * 
+ * @component
+ * @example
+ * <StyledLoader />
+ */
 export const StyledLoader = styled.div`
   width: 64px;
   height: 64px;

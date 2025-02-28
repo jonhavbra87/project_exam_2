@@ -1,5 +1,5 @@
 import { CustomButton } from '../../components/CustomButton';
-import SignUpImg from '../../assets/signup_collage.png';
+import SignUpImg from '../../assets/signup_collage.webp';
 import NoroffLogo from '../../assets/noroff_logo.svg';
 import { CiLogin } from 'react-icons/ci';
 import { useNavigate } from 'react-router-dom';

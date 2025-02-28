@@ -1,13 +1,54 @@
+/**
+ * @fileoverview API hook for user registration functionality
+ * @module hooks/useRegister
+ */
+
 import { useState } from "react";
 import { API_AUTH, API_KEY, API_REGISTER, BASE_API_URL } from "../api/apiConfig";
 import useLogin from "./useLogin";
 import toast from "react-hot-toast";
+
+/**
+ * Custom hook for handling user registration
+ * 
+ * @returns {Object} Registration hook methods and state
+ * @returns {function(name: string, email: string, password: string, venueManager: boolean, avatarUrl?: string, bannerUrl?: string): Promise<Profile|null>} .register - Function to register a new user
+ * @returns {boolean} .loading - Indicates if registration operation is in progress
+ * @returns {string|null} .error - Error message if registration failed, null otherwise
+ * 
+ * @example
+ * const { register, loading, error } = useRegister();
+ * 
+ * // Handle registration form submission
+ * const handleSubmit = async (e) => {
+ *   e.preventDefault();
+ *   const user = await register(name, email, password, isVenueManager);
+ *   if (user) {
+ *     // Registration and automatic login successful
+ *     navigate('/dashboard');
+ *   }
+ * };
+ */
 
 const useRegister = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { login } = useLogin();
 
+    /**
+   * Registers a new user and automatically logs them in
+   * 
+   * @async
+   * @param {string} name - The user's display name
+   * @param {string} email - The user's email address
+   * @param {string} password - The user's password
+   * @param {boolean} venueManager - Whether the user should have venue manager privileges
+   * @param {string} [avatarUrl=""] - Optional URL for the user's avatar image
+   * @param {string} [bannerUrl=""] - Optional URL for the user's banner image
+   * @returns {Promise<Profile|null>} The user profile if registration and login successful, null otherwise
+   * @throws {Error} If the network request fails
+   */
+  
   const register = async (
     name: string,
     email: string,
