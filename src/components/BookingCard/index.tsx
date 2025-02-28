@@ -71,21 +71,21 @@ const BookingCard = ({
         {/* Content */}
         <div className="flex flex-col flex-grow md:pr-4">
           {/* Venue details */}
-          <h2 className="text-h2-mobile md:text-h2-desktop font-semibold">
+          <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold">
             {venue?.name || 'Unknown place'}
           </h2>
-          <p className="text-text-secondary mt-1 line-clamp-2">
+          <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-light text-text-secondary mt-1 line-clamp-2">
             {venue?.description?.slice(0, 150)}...
           </p>
-          <p className="text-text-secondary font-semibold mt-2 flex items-center gap-2">
+          <p className="text-body-large-mobile md:text-body-medium-desktop font-body text-text-secondary font-semibold mt-2 flex items-center gap-2">
             <FaCalendarAlt /> <span>{new Date(booking.dateFrom).toLocaleDateString()} - {new Date(booking.dateTo).toLocaleDateString()}</span>
           </p>
-          <p className="text-text-secondary font-semibold mt-1 flex items-center gap-2">
+          <p className="text-body-large-mobile md:text-body-medium-desktop font-body text-text-secondary font-semibold mt-1 flex items-center gap-2">
             <FaPeopleRoof /> <span>{booking.guests} guests</span>
           </p>
           
           {/* Meta data */}
-          <div className="mt-2 text-text-secondary">
+          <div className="mt-2 text-body-large-mobile md:text-body-medium-desktop font-body font-light text-text-secondary">
             <p>
               {[
                 venue?.meta?.wifi ? "WiFi" : null,
@@ -102,7 +102,7 @@ const BookingCard = ({
           <div className="flex flex-row items-center gap-3 mt-auto pt-4">
             <button
               onClick={navigateToVenue}
-              className="px-4 py-2 bg-button-primary text-white rounded-lg hover:bg-button-hover"
+              className="px-4 py-2 bg-button-primary text-body-large-mobile md:text-body-medium-desktop font-button font-medium text-white rounded-lg hover:bg-button-hover"
             >
               View Venue
             </button>
@@ -117,8 +117,8 @@ const BookingCard = ({
               </button>
             )}
             
-            <span className={`ml-auto font-semibold ${isExpired ? 'text-text-muted' : 'text-primary'}`}>
-              {isExpired ? '❌ Expired' : 'Active'}
+            <span className={`ml-auto text-body-large-mobile md:text-body-medium-desktop font-body font-semibold rounded-md py-2 px-3 ${isExpired ? 'bg-text-secondary text-text-contrast' : 'bg-primary text-text-contrast'}`}>
+              {isExpired ? 'Expired' : 'Active'}
             </span>
           </div>
           
@@ -130,8 +130,8 @@ const BookingCard = ({
               className="w-10 h-10 rounded-full border"
             />
             <div>
-              <p className="font-semibold">{customer?.name || 'Unknown customer'}</p>
-              <p className="text-sm text-gray-500">{customer?.email}</p>
+              <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-semibold text-text-primary">{customer?.name || 'Unknown customer'}</p>
+              <p className="text-body-small-mobile md:text-body-small-desktop font-body font-light text-text-secondary">{customer?.email}</p>
             </div>
           </div>
         </div>

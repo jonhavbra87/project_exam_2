@@ -47,7 +47,7 @@ const ProfilePage = () => {
           title: 'Messages',
           description:
             'Check your inbox for new messages and communicate with hosts or guests.',
-          link: '/messages',
+          link: '/profile/messages',
         },
         {
           icon: <FaCalendarAlt />,
@@ -96,28 +96,28 @@ const ProfilePage = () => {
       {/* 📌 HERO BANNER */}
       <div className="relative w-full h-48 md:h-64">
         <img
-          src={profile?.banner?.url || 'https://via.placeholder.com/1200x300'}
+          src={profile?.banner?.url || 'https://placehold.co/1200x300'}
           alt={profile?.banner?.alt || 'Banner'}
           className="w-full h-full object-cover ogject-center aspect-video overflow-hidden"
         />
       </div>
 
       {/* 📌 PROFILE CARD */}
-      <div className="relative mx-auto -mt-14 md:-mt-20 bg-white shadow-lg rounded-lg p-6 max-w-lg md:max-w-2xl text-center">
+      <div className="relative mx-auto mt-14 md:-mt-20 bg-white shadow-lg rounded-lg p-6 max-w-lg md:max-w-2xl text-center">
         <div className="flex flex-col items-center">
           <img
-            src={profile?.avatar?.url || 'https://via.placeholder.com/150'}
+            src={profile?.avatar?.url || 'https://placehold.co/150'}
             alt={profile?.avatar?.alt || 'User avatar'}
             className="w-24 h-24 md:w-32 md:h-32 rounded-full border border-header object-cover object-center aspect-square"
           />
-          <h2 className="text-body-large-desktop text-text-primaryfont-bold mt-2">
+          <h2 className="text-body-large-desktop text-text-primary font-ingress font-bold mt-4">
             {profile?.name}
           </h2>
           {/* <p className="text-body-medium-desktop text-text-secondary font-normal">{profile?.bio}</p> */}
 
           {/* 📌 Venue Manager Status & Toggle */}
           <p
-            className={`mt-2 p-4 text-white rounded ${
+            className={`mt-2 p-4 text-body-large-mobile md:text-body-large-desktop text-text-contrast font-body font-semibold rounded ${
               venueManager ? 'bg-secondary' : 'bg-header'
             }`}
           >
@@ -141,7 +141,7 @@ const ProfilePage = () => {
                           key={i}
                           to={item.link || '#'}
                           onClick={item.onClick}
-                          className={`flex items-center justify-between gap-4 p-4 bg-white rounded-lg shadow-[2px_3px_4.5px_rgba(0,0,0,0.25)]  hover:bg-gray-100 transition-all ${
+                          className={`flex items-center justify-between gap-4 px-4 py-6 bg-white rounded-lg shadow-[2px_3px_4.5px_rgba(0,0,0,0.25)]  hover:bg-gray-100 transition-all ${
                             item.link ? '' : 'text-red-600'
                           }`}
                         >
@@ -149,17 +149,17 @@ const ProfilePage = () => {
                           <div className="flex items-center gap-4">
                             <div className="text-xl">{item.icon}</div>
                             <div className="text-left">
-                              <h3 className="text-body-large-mobile md:text-body-large-desktop font-medium mb-2">
+                              <h3 className="text-body-large-mobile md:text-body-large-desktop font-ingress font-medium mb-2">
                                 {item.title}
                               </h3>
-                              <p className="text-body-medium-mobile md:text-body-medium-desktop text-text-secondary text-sm hidden sm:block">
+                              <p className="text-body-medium-mobile md:text-body-medium-desktop text-text-secondary font-body font-light hidden sm:block">
                                 {item.description}
                               </p>
                             </div>
                           </div>
 
                           {/* Pil som ligger helt til høyre og kun vises på mobil */}
-                          <FaChevronRight className="text-gray-400 sm:hidden" />
+                          <FaChevronRight className="text-text-secondary sm:hidden" />
                         </Component>
                       );
                     })}
