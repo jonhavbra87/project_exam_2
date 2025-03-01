@@ -68,6 +68,13 @@ There are two aspects to this brief: the customer-facing side of the website whe
 - **API**: The site interacts with the [Noroff Holidaze API](https://docs.noroff.dev/docs/v2) to manage items data.
 
 ---
+## 💡 Design & Planning
+- **Design Prototype:** https://www.figma.com/design/GP9xbG1mBt0ZkxqO8CucVM/PE2?node-id=1-4738&t=5zobQLobQWHfJSsq-1
+- **Style Guide:**  	https://www.figma.com/design/GP9xbG1mBt0ZkxqO8CucVM/PE2?node-id=1-4610&t=5zobQLobQWHfJSsq-1
+- **Gannt Chart:** https://bright-whale-c2f.notion.site/1731226a005c80fcaa4afdf5261031cf?v=1741226a005c80109812000c6a9afd15
+- **Kanban Board:** https://trello.com/invite/b/677cfead4127288a9e1f8212/ATTId98fa4f85d2e4b12e58986c2dd1cf3f16322CEAC/project-exam-2
+- 
+---
 
 ## 🛠️ **Setup Instructions**
 
