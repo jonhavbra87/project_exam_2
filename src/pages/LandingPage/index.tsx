@@ -39,7 +39,7 @@ function LandingPage(): JSX.Element {
     <div className="flex gap-5 max-md:flex-col min-h-screen justify-center items-center w-full">
       <div className="flex flex-col w-6/12 max-md:ml-0 max-md:w-full ">
         <img
-          loading="lazy"
+          fetchPriority="high"
           src={SignUpImg}
           alt="Explore destinations with Holidaze"
           className="object-contain grow mx-auto md:align-center rounded-xl w-3/4 mt-10 md:w-full"
