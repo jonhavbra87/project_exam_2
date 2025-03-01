@@ -48,6 +48,7 @@ There are two aspects to this brief: the customer-facing side of the website whe
 
 - **Login**: A registered user may login
 - **Update Avatar**: A registered user may update their avatar
+- **Update Banner**: A registered user may update their banner
 - **Logout**: A registered user may logout
 
 ### Contact form
@@ -62,10 +63,9 @@ There are two aspects to this brief: the customer-facing side of the website whe
 - **REACT** and **TypeScript** for the front-end development.
 - **Tailwind** for responsive design and UI components.
 - **Yup** & **React-Hook-Form** for validation.
-- **Zustand for CartStore.**
+- **Zustand** for storing login & registration information.
 - **Vite** as the build tool and development server for fast module-based development.
 - **API**: The site interacts with the [Noroff Holidaze API](https://docs.noroff.dev/docs/v2) to manage items data.
-- **Jest** for unit testing.
 
 ---
 
@@ -101,20 +101,6 @@ Check Lint:
 
 ```
 npm run lint
-```
-
-## 🧪 **Testing**
-
-### Testing with Actions on GitHub
-
-[![Unit Test]()
-
-### Command line testing
-
-Run UNIT-tests:
-
-```
-npm run test:unit
 ```
 
 ### Bagdes
