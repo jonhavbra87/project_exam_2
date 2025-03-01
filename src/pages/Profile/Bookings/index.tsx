@@ -4,8 +4,30 @@ import { useBookingAPI } from '../../../hooks/useBookingAPI';
 import BookingCard from '../../../components/BookingCard';
 import { MdBedroomParent } from 'react-icons/md';
 import GradientHeading from '../../../styles/GradientHeading';
+/**
+ * Bookings Component
+ * 
+ * Displays a user's booking history, categorized into active and expired bookings
+ * 
+ * @component
+ * @returns {React.ReactElement} A comprehensive view of user's bookings
+ * 
+ * @description
+ * Fetches and displays bookings for the logged-in user, with features:
+ * - Automatic categorization of bookings (active vs. expired)
+ * - Loading state handling
+ * - Error state handling
+ * - Empty state for users with no bookings
+ * 
+ * @remarks
+ * Requires authentication and uses custom hooks for API interaction
+ * 
+ * @example
+ * // Typical usage in a protected route
+ * <Route path="/bookings" element={<Bookings />} />
+ */
 
-function Bookings() {
+function Bookings():JSX.Element {
   const { fetchBookingsByUser, bookings, isLoading, isError } = useBookingAPI();
   const { profile } = useAuthStore();
 

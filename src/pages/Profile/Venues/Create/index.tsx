@@ -10,10 +10,34 @@ import {
 } from '../../../../components/VenueFormSchema';
 import { useVenueAPI } from '../../../../hooks/useVenueAPI';
 import { useAuthStore } from '../../../../store/authStore';
+/**
+ * ProfileVenueCreate Component
+ * 
+ * Provides a comprehensive form for creating a new venue with multiple input fields
+ * 
+ * @component
+ * @returns {React.ReactElement} A detailed venue creation form with validation
+ * 
+ * @description
+ * Allows authenticated users to create a new venue with:
+ * - Venue details (name, description, price, max guests)
+ * - Media upload
+ * - Facility options (WiFi, parking, breakfast, pets)
+ * - Detailed location information
+ * - Client-side validation using Yup schema
+ * 
+ * @remarks
+ * - Requires user authentication
+ * - Uses react-hook-form for form management
+ * - Provides toast notifications for submission status
+ * 
+ * @example
+ * // Typical usage in a protected route
+ * <Route path="/profile/create-venue" element={<ProfileVenueCreate />} />
+ */
 
-const ProfileVenueCreate = () => {
+const ProfileVenueCreate = (): JSX.Element => {
   const navigate = useNavigate();
-  // const { useCreateVenue } = useVenueAPI();
   const createVenue = useVenueAPI((state) => state.createVenue);
   const { profile } = useAuthStore((state) => state);
 

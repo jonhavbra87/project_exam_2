@@ -11,6 +11,30 @@ import GradientHeading from '../../../styles/GradientHeading';
 import LoadingSpinner from '../../../components/LoadingSpinner';
 import { BsHouseExclamationFill } from 'react-icons/bs';
 import { HiOutlineCurrencyDollar } from 'react-icons/hi';
+/**
+ * VenuesByUser Component
+ * 
+ * Displays a list of venues owned by the authenticated user
+ * 
+ * @component
+ * @returns {React.ReactElement} A list of user-owned venues with management options
+ * 
+ * @description
+ * Provides a comprehensive view of a user's venues, including:
+ * - Fetching venues associated with the user's profile
+ * - Displaying venue details (name, description, price, max guests)
+ * - Actions for each venue (view, edit, delete)
+ * - Responsive design with different layouts for mobile and desktop
+ * 
+ * @remarks
+ * - Requires user authentication
+ * - Handles loading and error states
+ * - Provides a "no venues" state for new users
+ * 
+ * @example
+ * // Typical usage in a protected route
+ * <Route path="/profile/venues" element={<VenuesByUser />} />
+ */
 
 const VenuesByUser = () => {
   const { profile } = useAuthStore();
@@ -76,7 +100,7 @@ const VenuesByUser = () => {
     <div>
       <GradientHeading>My Venues</GradientHeading>
 
-      {/* 🔹 Map over venuesUser array */}
+      {/* Map over venuesUser array */}
       <div className="flex flex-col gap-4">
         {venuesArray.map((venue) => (
           <div
@@ -89,7 +113,7 @@ const VenuesByUser = () => {
               <div className="w-full md:hidden mb-3">
                 <img
                   src={
-                    venue?.media?.[0]?.url || 'https://via.placeholder.com/400'
+                    venue?.media?.[0]?.url || 'https://placehold.co/400'
                   }
                   alt={venue?.media?.[0]?.alt || 'Venue image'}
                   className="w-full h-48 object-cover rounded-lg"
@@ -146,7 +170,7 @@ const VenuesByUser = () => {
               <div className="hidden md:block md:flex-shrink-0 md:w-1/3 md:self-stretch">
                 <img
                   src={
-                    venue?.media?.[0]?.url || 'https://via.placeholder.com/400'
+                    venue?.media?.[0]?.url || 'https://placehold.co/400'
                   }
                   alt={venue?.media?.[0]?.alt || 'Venue image'}
                   className="w-full h-full object-cover rounded-lg"

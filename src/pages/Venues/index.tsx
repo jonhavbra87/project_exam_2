@@ -6,8 +6,33 @@ import GradientHeading from '../../styles/GradientHeading';
 import BouncingArrow from '../../components/BouncingArrow';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import toast from 'react-hot-toast';
+/**
+ * Venues Component
+ * 
+ * Displays a paginated and searchable list of venues
+ * 
+ * @component
+ * @returns {React.ReactElement} A comprehensive venues page with infinite scrolling and search functionality
+ * 
+ * @description
+ * Provides advanced venue browsing features including:
+ * - Infinite scroll pagination
+ * - Search functionality
+ * - Loading and error states
+ * - Responsive grid layout
+ * - Engaging landing section with navigation arrow
+ * 
+ * @remarks
+ * - Uses Intersection Observer for infinite scrolling
+ * - Dynamically loads venues based on user interaction
+ * - Handles different states (loading, error, empty)
+ * 
+ * @example
+ * // Typical usage in routing configuration
+ * <Route path="/venues" element={<Venues />} />
+ */
 
-function Venues() {
+function Venues(): JSX.Element {
   const {
     venues,
     isLoading,
@@ -75,8 +100,16 @@ function Venues() {
   }
 
   if (isError) {
-    return toast.error(
-      'An error occurred while fetching data. Please try again later.'
+    toast.error('An error occurred while fetching data. Please try again later.');
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen text-center">
+        <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold text-secondary mb-4">
+          Error Loading Venues
+        </h2>
+        <p className="text-body-large-mobile md:text-body-large-desktop font-body font-medium">
+          An error occurred while fetching data. Please try again later.
+        </p>
+      </div>
     );
   }
 

@@ -16,8 +16,34 @@ import { useVenueAPI } from '../../../../hooks/useVenueAPI';
 import { useAuthStore } from '../../../../store/authStore';
 import { useEffect, useState } from 'react';
 import { API_VENUES, BASE_API_URL } from '../../../../api/apiConfig';
+/**
+ * ProfileVenueUpdate Component
+ * 
+ * Provides a comprehensive form for updating an existing venue with detailed information
+ * 
+ * @component
+ * @returns {React.ReactElement} A detailed venue update form with pre-filled data
+ * 
+ * @description
+ * Allows authenticated venue owners to update their venue details, including:
+ * - Venue basic information (name, description)
+ * - Media management (add/remove images)
+ * - Pricing and capacity details
+ * - Facility options (WiFi, parking, breakfast, pets)
+ * - Detailed location information
+ * 
+ * @remarks
+ * - Requires user authentication
+ * - Fetches existing venue details based on URL parameter
+ * - Uses react-hook-form for form management
+ * - Provides toast notifications for submission status
+ * 
+ * @example
+ * // Typical usage in a protected route
+ * <Route path="/profile/update-venue/:id" element={<ProfileVenueUpdate />} />
+ */
 
-const ProfileVenueUpdate = () => {
+const ProfileVenueUpdate = (): JSX.Element => {
   const navigate = useNavigate();
   const { id } = useParams();
   const { updateVenue, fetchVenueDetails, venueDetails, isLoading } =
@@ -60,7 +86,6 @@ const ProfileVenueUpdate = () => {
     },
   });
 
-  // Hent venue-detaljer når komponenten lastes
   useEffect(() => {
     const getVenueData = async () => {
       if (id) {
@@ -76,7 +101,6 @@ const ProfileVenueUpdate = () => {
     getVenueData();
   }, [id, fetchVenueDetails]);
 
-  // Oppdater skjemaet når venue-detaljer er lastet
   useEffect(() => {
     if (venueDetails) {
       const mediaArray =
@@ -260,8 +284,6 @@ const ProfileVenueUpdate = () => {
                       const updatedItems = [...mediaItems];
                       updatedItems.splice(index, 1);
                       setMediaItems(updatedItems);
-
-                      // Oppdater form-verdiene
                       const currentValues = getValues();
                       currentValues.media = updatedItems;
                       reset(currentValues);
@@ -282,8 +304,6 @@ const ProfileVenueUpdate = () => {
                   { url: '', alt: 'Venue Image' },
                 ];
                 setMediaItems(updatedItems);
-
-                // Oppdater form-verdiene
                 const currentValues = getValues();
                 currentValues.media = updatedItems;
                 reset(currentValues);

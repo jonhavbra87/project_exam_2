@@ -4,8 +4,35 @@ import NoroffLogo from '../../assets/noroff_logo.svg';
 import { CiLogin } from 'react-icons/ci';
 import { useNavigate } from 'react-router-dom';
 import { IoLogIn } from 'react-icons/io5';
+/**
+ * LandingPage Component
+ * 
+ * This component serves as the main entry point for the application,
+ * providing users with options to explore venues, sign up, or log in.
+ * 
+ * @component
+ * @returns {React.ReactElement} Rendered landing page with navigation options
+ * 
+ * @description
+ * The LandingPage features:
+ * - A welcoming hero image
+ * - Motivational text encouraging exploration
+ * - Quick access to venues without signing in
+ * - Sign up with Noroff button
+ * - Login option for existing users
+ * 
+ * @example
+ * // Typical usage in routing
+ * function App() {
+ *   return (
+ *     <Routes>
+ *       <Route path="/" element={<LandingPage />} />
+ *     </Routes>
+ *   );
+ * }
+ */
 
-function LandingPage() {
+function LandingPage(): JSX.Element {
   const navigation = useNavigate();
 
   return (

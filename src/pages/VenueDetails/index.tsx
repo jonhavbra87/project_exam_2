@@ -13,8 +13,34 @@ import VenueCalendar from '../../components/VenueCalendar';
 import { FaUser } from 'react-icons/fa';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import toast from 'react-hot-toast';
+/**
+ * VenueDetails Component
+ * 
+ * Displays comprehensive details for a specific venue
+ * 
+ * @component
+ * @returns {React.ReactElement} A detailed view of a venue with multiple sections
+ * 
+ * @description
+ * Provides a comprehensive venue information page, including:
+ * - Media gallery
+ * - Venue details (name, description, rating)
+ * - Facilities and amenities
+ * - Venue manager information
+ * - Booking calendar
+ * - Location details with map
+ * 
+ * @remarks
+ * - Fetches venue details based on URL parameter
+ * - Handles loading and error states
+ * - Responsive design with different layouts for mobile and desktop
+ * 
+ * @example
+ * // Typical usage in routing configuration
+ * <Route path="/venue/:id" element={<VenueDetails />} />
+ */
 
-function VenueDetails() {
+function VenueDetails(): JSX.Element {
   const { id } = useParams();
   const { venueDetails, isLoading, isError, fetchVenueDetails } = useVenueAPI();
 
@@ -57,7 +83,7 @@ function VenueDetails() {
         </GradientHeading>
       </div>
 
-      {/* Image Gallery - needs fixing */}
+      {/* Image Gallery */}
       <div>
         <MediaGallery images={venueDetails.media} />
       </div>
@@ -106,7 +132,7 @@ function VenueDetails() {
             <img
               src={
                 venueDetails.owner?.avatar?.url ||
-                'https://via.placeholder.com/150'
+                'https://placehold.com/150'
               }
               alt="Owner Avatar"
               className="w-16 h-16 rounded-full"

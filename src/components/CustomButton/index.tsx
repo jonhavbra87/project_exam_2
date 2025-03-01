@@ -82,9 +82,9 @@ export const CustomButton: React.FC<ButtonProps> = ({
         ${disabled ? 'bg-text-muted cursor-not-allowed' : getButtonClasses()}`}
     >
       {icon && (
-       <span className="shrink-0 flex items-center w-6 h-6">
-       {icon}
-     </span>
+      <span className="shrink-0 flex items-center w-6 h-6">
+      {icon}
+    </span>
       )}
       <span className="grow shrink my-auto">{text}</span>
     </button>

@@ -4,7 +4,12 @@ import * as yup from 'yup';
 import GradientHeading from '../../styles/GradientHeading';
 import toast from 'react-hot-toast';
 
-// Validationg schema with yup
+/**
+ * Validation schema for the contact form
+ * Defines the shape of the form data and the validation rules
+ * for each field
+ * @type {yup.ObjectSchema}
+ */
 const schema = yup
   .object({
     firstName: yup
@@ -33,10 +38,34 @@ const schema = yup
   })
   .required();
 
-// Bruker `yup.InferType` for å automatisk hente ut typene fra schema
 type FormData = yup.InferType<typeof schema>;
 
-function Contact() {
+/**
+ * Contact Component - Renders a contact form with validation
+ * 
+ * This component provides a comprehensive contact form with:
+ * - Input fields for first name, last name, email, and message
+ * - Client-side validation using Yup schema
+ * - Responsive design for mobile and desktop
+ * - Toast notification on successful form submission
+ * 
+ * @component
+ * @returns {React.ReactElement} Rendered contact form with additional contact information
+ * 
+ * @example
+ * // Typical usage in a parent component
+ * import Contact from './Contact';
+ * 
+ * function App() {
+ *   return (
+ *     <div>
+ *       <Contact />
+ *     </div>
+ *   );
+ * }
+ */
+
+function Contact():JSX.Element {
   const {
     register,
     handleSubmit,
