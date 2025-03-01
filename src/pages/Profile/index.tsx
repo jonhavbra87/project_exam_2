@@ -132,16 +132,16 @@ const ProfilePage = (): JSX.Element => {
       </div>
 
       {/* 📌 PROFILE CARD */}
-      <div className="relative mx-auto mt-14 md:-mt-20 bg-white shadow-lg rounded-lg p-6 max-w-lg md:max-w-2xl text-center">
-        <div className="flex flex-col items-center">
-          <img
-            src={profile?.avatar?.url || 'https://placehold.co/150'}
-            alt={profile?.avatar?.alt || 'User avatar'}
-            className="w-24 h-24 md:w-32 md:h-32 rounded-full border border-header object-cover object-center aspect-square"
-          />
-          <h2 className="text-body-large-desktop text-text-primary font-ingress font-bold mt-4">
-            {profile?.name}
-          </h2>
+      <div className="absolute left-1/2 transform -translate-x-1/2 -translate-y-1/3 bg-white shadow-lg rounded-lg p-6 max-w-lg md:max-w-2xl text-center w-11/12 sm:w-9/12 md:w-8/12 lg:w-6/12">
+          <div className="flex flex-col items-center">
+            <img
+              src={profile?.avatar?.url || 'https://placehold.co/150'}
+              alt={profile?.avatar?.alt || 'User avatar'}
+              className="w-24 h-24 md:w-32 md:h-32 rounded-full border border-header object-cover object-center aspect-square"
+            />
+            <h2 className="text-body-large-desktop text-text-primary font-ingress font-bold mt-4">
+              {profile?.name}
+            </h2>
 
           {/* 📌 Venue Manager Status & Toggle */}
           <p
@@ -155,7 +155,7 @@ const ProfilePage = (): JSX.Element => {
       </div>
 
       {/* 📌 PROFILE MENU SECTIONS */}
-      <div className="container mx-auto mt-10 px-4">
+      <div className="container mx-auto mt-52 md:mt-56 lg:mt-64 px-4">
         <div className="grid grid-cols-1 md:grid-cols-auto-fit gap-6">
           {sections.map((section, index) => (
             <div key={index}>

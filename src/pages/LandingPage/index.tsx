@@ -70,6 +70,7 @@ function LandingPage(): JSX.Element {
             onClick={() => navigation('/register')}
             icon={NoroffLogo}
             text="Sign up with Noroff"
+            variant="primary"
           />
           <div className="group text-center cursor-pointer relative">
             <p

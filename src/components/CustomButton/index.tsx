@@ -72,6 +72,16 @@ export const CustomButton: React.FC<ButtonProps> = ({
         return 'bg-primary-3 border-r-2 border-b-2 border-b-accent border-r-accent hover:bg-button-hover active:bg-accent';
     }
   };
+  const renderIcon = () => {
+    if (!icon) return null;
+    
+    if (typeof icon === 'string') {
+      return <img src={icon} alt="Button Icon" className="w-6 h-6" />;
+    }
+    
+    // Hvis icon er en React-komponent
+    return <span className="w-6 h-6">{icon}</span>;
+  };
 
   return (
     <button
@@ -81,10 +91,8 @@ export const CustomButton: React.FC<ButtonProps> = ({
       className={`flex w-full justify-center items-center gap-3 px-6 py-4 mt-4 text-white font-button rounded-lg transition-all duration-300 ease-in-out sm:px-8
         ${disabled ? 'bg-text-muted cursor-not-allowed' : getButtonClasses()}`}
     >
-      {icon && (
-        <span className="shrink-0 flex items-center w-6 h-6">{icon}</span>
-      )}
-      <span className="grow shrink my-auto">{text}</span>
+{renderIcon()}
+<span className="grow shrink my-auto">{text}</span>
     </button>
   );
 };
