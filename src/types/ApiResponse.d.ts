@@ -7,7 +7,7 @@ import { Venues } from './Venues';
 
 /**
  * Interface representing the standard API response structure for venues
- * 
+ *
  * @interface ApiResponse
  * @property {Venues[]} data - Array of venue objects returned by the API
  */
@@ -17,7 +17,7 @@ export interface ApiResponse {
 
 /**
  * Interface representing pagination metadata for API responses
- * 
+ *
  * @interface MetaData
  * @property {boolean} isFirstPage - Indicates if the current page is the first page
  * @property {boolean} isLastPage - Indicates if the current page is the last page

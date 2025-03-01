@@ -5,34 +5,34 @@ interface SearchBarProps {
   onSearch: (query: string) => void;
 }
 /**
-* SearchBar component for venue search functionality
-* 
-* @component
-* @param {Object} props - Component props
-* @param {Function} props.onSearch - Callback function when search is performed
-* @returns {JSX.Element} - Rendered SearchBar component
-* 
-* @description
-* A search input that allows users to search for venues.
-* Features:
-* - Search icon on the left side
-* - Clear button (X) that appears when text is entered
-* - Proper accessibility attributes and labels
-* - Form submission handling
-* 
-* The component maintains its own query state and calls the onSearch callback
-* when the user submits the form or clears the search. The search can be
-* submitted by pressing Enter or by form submission.
-* 
-* @example
-* // Basic usage
-* const handleSearch = (query) => {
-*   console.log('Searching for:', query);
-*   // Perform search logic here
-* };
-* 
-* <SearchBar onSearch={handleSearch} />
-*/
+ * SearchBar component for venue search functionality
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {Function} props.onSearch - Callback function when search is performed
+ * @returns {JSX.Element} - Rendered SearchBar component
+ *
+ * @description
+ * A search input that allows users to search for venues.
+ * Features:
+ * - Search icon on the left side
+ * - Clear button (X) that appears when text is entered
+ * - Proper accessibility attributes and labels
+ * - Form submission handling
+ *
+ * The component maintains its own query state and calls the onSearch callback
+ * when the user submits the form or clears the search. The search can be
+ * submitted by pressing Enter or by form submission.
+ *
+ * @example
+ * // Basic usage
+ * const handleSearch = (query) => {
+ *   console.log('Searching for:', query);
+ *   // Perform search logic here
+ * };
+ *
+ * <SearchBar onSearch={handleSearch} />
+ */
 
 function SearchBar({ onSearch }: SearchBarProps): JSX.Element {
   const [query, setQuery] = useState<string>('');
@@ -49,7 +49,7 @@ function SearchBar({ onSearch }: SearchBarProps): JSX.Element {
 
   const clearSearch = () => {
     setQuery('');
-    onSearch(''); 
+    onSearch('');
   };
 
   return (

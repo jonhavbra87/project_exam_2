@@ -7,7 +7,7 @@ import { Venues } from './Venues';
 
 /**
  * Interface representing a booking in the system
- * 
+ *
  * @interface Booking
  * @property {string} id - Unique identifier for the booking
  * @property {string} dateFrom - Start date of the booking in ISO format
@@ -31,7 +31,7 @@ export interface Booking {
 
 /**
  * Interface for the request payload when creating a new booking
- * 
+ *
  * @interface BookingCreateRequest
  * @property {string} dateFrom - Start date of the booking in ISO format
  * @property {string} dateTo - End date of the booking in ISO format
@@ -47,7 +47,7 @@ export interface BookingCreateRequest {
 
 /**
  * Interface representing a customer in the system
- * 
+ *
  * @interface Customer
  * @property {string} name - The customer's username
  * @property {string} email - The customer's email address

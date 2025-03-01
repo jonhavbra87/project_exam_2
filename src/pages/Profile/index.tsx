@@ -18,7 +18,11 @@ const ProfilePage = () => {
   const navigate = useNavigate();
 
   if (!profile) {
-    return <><UnauthProfile /></>
+    return (
+      <>
+        <UnauthProfile />
+      </>
+    );
   }
 
   const sections = [

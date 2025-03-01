@@ -10,7 +10,7 @@ import { Owner } from './Owner';
 
 /**
  * Interface representing a venue accommodation listing
- * 
+ *
  * @interface Venues
  * @property {string} id - Unique identifier for the venue
  * @property {string} name - Name of the venue
@@ -25,7 +25,7 @@ import { Owner } from './Owner';
  * @property {Location} location - Geographical location information
  * @property {Owner} owner - Information about the venue owner
  * @property {Booking[]} [bookings] - Optional array of bookings for the venue
- * 
+ *
  * @example
  * const sampleVenue: Venues = {
  *   id: "v-123456",

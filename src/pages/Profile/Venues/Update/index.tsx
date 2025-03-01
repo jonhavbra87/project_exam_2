@@ -1,7 +1,15 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
-import { FaImage, FaMoneyBill, FaUsers, FaStar, FaHome, FaPlus, FaTrash } from 'react-icons/fa';
+import {
+  FaImage,
+  FaMoneyBill,
+  FaUsers,
+  FaStar,
+  FaHome,
+  FaPlus,
+  FaTrash,
+} from 'react-icons/fa';
 import GradientHeading from '../../../../styles/GradientHeading';
 import { type VenueFormData } from '../../../../components/VenueFormSchema';
 import { useVenueAPI } from '../../../../hooks/useVenueAPI';
@@ -12,17 +20,20 @@ import { API_VENUES, BASE_API_URL } from '../../../../api/apiConfig';
 const ProfileVenueUpdate = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { updateVenue, fetchVenueDetails, venueDetails, isLoading } = useVenueAPI();
+  const { updateVenue, fetchVenueDetails, venueDetails, isLoading } =
+    useVenueAPI();
   const { profile } = useAuthStore((state) => state);
 
-  const [mediaItems, setMediaItems] = useState<Array<{url: string, alt: string}>>([{ url: '', alt: 'Venue Image' }]);
-  
+  const [mediaItems, setMediaItems] = useState<
+    Array<{ url: string; alt: string }>
+  >([{ url: '', alt: 'Venue Image' }]);
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    getValues
+    getValues,
   } = useForm<VenueFormData>({
     defaultValues: {
       name: '',
@@ -61,19 +72,20 @@ const ProfileVenueUpdate = () => {
         }
       }
     };
-    
+
     getVenueData();
   }, [id, fetchVenueDetails]);
 
   // Oppdater skjemaet når venue-detaljer er lastet
   useEffect(() => {
     if (venueDetails) {
-      const mediaArray = venueDetails.media && venueDetails.media.length > 0 
-        ? venueDetails.media 
-        : [{ url: '', alt: 'Venue Image' }];
-      
+      const mediaArray =
+        venueDetails.media && venueDetails.media.length > 0
+          ? venueDetails.media
+          : [{ url: '', alt: 'Venue Image' }];
+
       setMediaItems(mediaArray);
-      
+
       reset({
         name: venueDetails.name || '',
         description: venueDetails.description || '',
@@ -135,11 +147,15 @@ const ProfileVenueUpdate = () => {
           email: profile.email,
           bio: profile.bio || '',
           avatar: {
-            url: profile.avatar?.url || 'https://images.unsplash.com/photo-1578593828319-a0f580bd9d07?q=80&w=1328&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            url:
+              profile.avatar?.url ||
+              'https://images.unsplash.com/photo-1578593828319-a0f580bd9d07?q=80&w=1328&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: profile.avatar?.alt || 'User avatar',
           },
           banner: {
-            url: profile.banner?.url || 'https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            url:
+              profile.banner?.url ||
+              'https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             alt: profile.banner?.alt || 'User banner',
           },
         },
@@ -159,7 +175,7 @@ const ProfileVenueUpdate = () => {
           lng: Number(data.location.lng),
         },
       };
-      
+
       const success = await updateVenue(id, formattedData);
       if (success) {
         toast.success('Venue updated!', { id: loadingToast });
@@ -195,7 +211,9 @@ const ProfileVenueUpdate = () => {
               className="w-full pl-10 p-2 border rounded-lg bg-white text-text-secondary"
             />
             {errors.name && (
-              <span className="text-red-500 text-sm">{errors.name.message}</span>
+              <span className="text-red-500 text-sm">
+                {errors.name.message}
+              </span>
             )}
           </div>
 
@@ -242,7 +260,7 @@ const ProfileVenueUpdate = () => {
                       const updatedItems = [...mediaItems];
                       updatedItems.splice(index, 1);
                       setMediaItems(updatedItems);
-                      
+
                       // Oppdater form-verdiene
                       const currentValues = getValues();
                       currentValues.media = updatedItems;
@@ -259,9 +277,12 @@ const ProfileVenueUpdate = () => {
             <button
               type="button"
               onClick={() => {
-                const updatedItems = [...mediaItems, { url: '', alt: 'Venue Image' }];
+                const updatedItems = [
+                  ...mediaItems,
+                  { url: '', alt: 'Venue Image' },
+                ];
                 setMediaItems(updatedItems);
-                
+
                 // Oppdater form-verdiene
                 const currentValues = getValues();
                 currentValues.media = updatedItems;
@@ -324,7 +345,9 @@ const ProfileVenueUpdate = () => {
             />
           </div>
           {errors.rating && (
-            <span className="text-red-500 text-sm">{errors.rating.message}</span>
+            <span className="text-red-500 text-sm">
+              {errors.rating.message}
+            </span>
           )}
 
           {/* Facilietes */}

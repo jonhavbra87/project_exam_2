@@ -33,14 +33,12 @@ function Venues() {
     } else {
       const timeout = setTimeout(() => {
         setShowLoader(false);
-      }, 500); 
+      }, 500);
 
       return () => clearTimeout(timeout);
     }
   }, [isLoading]);
 
-
-  
   const handleSearch = (query: string) => {
     setSearchTerm(query);
     setPage(2);
@@ -53,7 +51,7 @@ function Venues() {
   };
 
   const observer = useRef<IntersectionObserver | null>(null);
-  
+
   const lastVenueRef = useCallback(
     (node: HTMLElement | null) => {
       if (isLoading || !hasMore || searchTerm) return;
@@ -72,19 +70,18 @@ function Venues() {
     [isLoading, hasMore, fetchMoreVenues, searchTerm, page]
   );
 
-  if ((showLoader && venues.length === 0)) {
+  if (showLoader && venues.length === 0) {
     return <LoadingSpinner isLoading={isLoading} />;
   }
 
   if (isError) {
-    return (
-      toast.error('An error occurred while fetching data. Please try again later.')
+    return toast.error(
+      'An error occurred while fetching data. Please try again later.'
     );
   }
 
   return (
     <div className="min-h-screen flex flex-col">
-      
       <div className="flex flex-col justify-center items-center text-text-primary text-h1-mobile md:text-h1-desktop font-heading h-screen">
         Let’s explore the world
         <span className="text-primary"> together</span>
@@ -105,28 +102,25 @@ function Venues() {
       </div>
 
       <ul className="grid grid-cols-1 gap-4 md:gap-6 sm:grid-cols-2 md:grid-cols-3">
-      {venues.map((venue, index) => {
-        const uniqueKey = `${venue.id}-${index}`;
-        if (index === venues.length - 1) {
-          return (
-            <li key={uniqueKey} ref={lastVenueRef}>
-              <VenueCard venue={venue} />
-            </li>
-          );
-        } else {
-          return (
-            <li key={uniqueKey}>
-              <VenueCard venue={venue} />
-            </li>
-          );
-        }
-      })}
+        {venues.map((venue, index) => {
+          const uniqueKey = `${venue.id}-${index}`;
+          if (index === venues.length - 1) {
+            return (
+              <li key={uniqueKey} ref={lastVenueRef}>
+                <VenueCard venue={venue} />
+              </li>
+            );
+          } else {
+            return (
+              <li key={uniqueKey}>
+                <VenueCard venue={venue} />
+              </li>
+            );
+          }
+        })}
       </ul>
 
-      {showLoader &&  
-        <LoadingSpinner isLoading={isLoading} />
-
-        }
+      {showLoader && <LoadingSpinner isLoading={isLoading} />}
     </div>
   );
 }

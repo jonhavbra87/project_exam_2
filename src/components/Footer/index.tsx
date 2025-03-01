@@ -9,14 +9,14 @@ import { useNavigate } from 'react-router-dom';
  * @description Website footer component that displays company branding, newsletter subscription form,
  * navigation links, copyright information, and social media links.
  * The footer is responsive and adapts its layout based on screen size.
- * 
+ *
  * @component
  * @returns {JSX.Element} - Rendered Footer component
- * 
+ *
  * @example
  * // Basic usage at the bottom of a page or layout
  * <Footer />
- * 
+ *
  * @example
  * // Usage in a layout component
  * const MainLayout = () => {
@@ -30,7 +30,7 @@ import { useNavigate } from 'react-router-dom';
  *     </div>
  *   );
  * }
- * 
+ *
  * @functionality
  * - Displays company logo and tagline
  * - Provides a newsletter subscription form
@@ -65,15 +65,15 @@ function Footer() {
             travel tips. Let’s explore the world together!
           </p>
           <form className="flex items-center w-full max-w-lg ">
-            <div className='flex-grow'>
-            <CustomInput
-              label="User e-mail"
-              type="email"
-              Icon={IoIosMail}
-              required
-              defaultValue="" 
+            <div className="flex-grow">
+              <CustomInput
+                label="User e-mail"
+                type="email"
+                Icon={IoIosMail}
+                required
+                defaultValue=""
               />
-              </div>
+            </div>
             {/* Submit Button */}
             <button
               type="submit"
@@ -88,30 +88,42 @@ function Footer() {
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 mt-8 gap-8 text-text-muted border-t-2 border-text-muted ">
         <ul className="flex flex-wrap justify-center md:justify-start items-center md:items-start gap-x-4 mt-4 text-body-medium-desktop font-body">
           <li>
-            <a onClick={() => navigate("/profile/termsofservice")} className="hover:text-secondary cursor-pointer transition">
+            <a
+              onClick={() => navigate('/profile/termsofservice')}
+              className="hover:text-secondary cursor-pointer transition"
+            >
               Terms
             </a>
           </li>
           <li>
-            <p onClick={() => navigate("/profile/privacyguidelines")} className="hover:text-secondary cursor-pointer transition">
+            <p
+              onClick={() => navigate('/profile/privacyguidelines')}
+              className="hover:text-secondary cursor-pointer transition"
+            >
               Privacy
             </p>
           </li>
           <p className="text-body-large-desktop">|</p>
           <li>
-            <p onClick={() => navigate("/profile")} className="hover:text-secondary cursor-pointer transition">
+            <p
+              onClick={() => navigate('/profile')}
+              className="hover:text-secondary cursor-pointer transition"
+            >
               My Account
             </p>
           </li>
           <li>
-            <p onClick={() => navigate("/contact")} className="hover:text-secondary cursor-pointer transition">
+            <p
+              onClick={() => navigate('/contact')}
+              className="hover:text-secondary cursor-pointer transition"
+            >
               Contact
             </p>
           </li>
         </ul>
         <div>
           <p className="flex justify-center md:justify-end items-center mt-4 text-body-medium-desktop font-body">
-            &copy; 2025 HOLIDAZE Ltd. All Rights Reserved.
+            &copy; 2025 HOLIDAZE | All Rights Reserved
           </p>
         </div>
         <div className="flex gap-4 md:text-body-large-desktop my-4 text-white justify-center md:justify-end">

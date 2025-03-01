@@ -5,7 +5,7 @@
 
 /**
  * Interface for props used by the Button component
- * 
+ *
  * @interface ButtonProps
  * @property {string} [icon] - Optional icon identifier to display in the button
  * @property {string} text - The text content of the button
@@ -13,18 +13,18 @@
  * @property {'button' | 'submit' | 'reset'} [type='button'] - The HTML button type attribute
  * @property {boolean} [disabled=false] - Whether the button is disabled
  * @property {'primary' | 'secondary' | 'accent'} [variant='primary'] - The visual style variant of the button
- * 
+ *
  * @example
  * // Primary button with text only
  * <Button text="Save Changes" onClick={handleSave} />
- * 
+ *
  * @example
  * // Disabled submit button with icon
- * <Button 
- *   text="Submit Form" 
- *   icon="send" 
- *   type="submit" 
- *   disabled={!isValid} 
+ * <Button
+ *   text="Submit Form"
+ *   icon="send"
+ *   type="submit"
+ *   disabled={!isValid}
  *   variant="accent"
  * />
  */

@@ -51,21 +51,25 @@ const VenuesByUser = () => {
     }
   };
 
-  if (isLoading)
-    return (<LoadingSpinner isLoading={isLoading} />);
+  if (isLoading) return <LoadingSpinner isLoading={isLoading} />;
   if (isError)
-    return (
-      toast.error('An error occurred while fetching data. Please try again later.')
+    return toast.error(
+      'An error occurred while fetching data. Please try again later.'
     );
   if (venues.length === 0)
     return (
-    <div>
-      <div className="flex flex-col items-center justify-center min-h-screen text-center">
-      <h2 className="text-h1-mobile md:text-h1-desktop font-heading font-semibold text-secondary mb-16">No Venues</h2>
-      <BsHouseExclamationFill className="text-6xl text-primary-3 mb-8" />
-      <p className="text-body-large-mobile md:text-body-large-desktop font-body font-medium mb-16">It looks like you don't have any venues yet. Create one now to start exploring your listings!</p>
+      <div>
+        <div className="flex flex-col items-center justify-center min-h-screen text-center">
+          <h2 className="text-h1-mobile md:text-h1-desktop font-heading font-semibold text-secondary mb-16">
+            No Venues
+          </h2>
+          <BsHouseExclamationFill className="text-6xl text-primary-3 mb-8" />
+          <p className="text-body-large-mobile md:text-body-large-desktop font-body font-medium mb-16">
+            It looks like you don't have any venues yet. Create one now to start
+            exploring your listings!
+          </p>
+        </div>
       </div>
-    </div>
     );
 
   return (
@@ -84,12 +88,14 @@ const VenuesByUser = () => {
               {/* Image - Full width on mobile, right side on larger screens */}
               <div className="w-full md:hidden mb-3">
                 <img
-                  src={venue?.media?.[0]?.url || 'https://via.placeholder.com/400'}
+                  src={
+                    venue?.media?.[0]?.url || 'https://via.placeholder.com/400'
+                  }
                   alt={venue?.media?.[0]?.alt || 'Venue image'}
                   className="w-full h-48 object-cover rounded-lg"
                 />
               </div>
-              
+
               {/* Content */}
               <div className="flex flex-col flex-grow md:pr-4">
                 {/* Venue details */}
@@ -100,12 +106,13 @@ const VenuesByUser = () => {
                   {venue.description}
                 </p>
                 <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-semibold text-text-secondary mt-2 flex items-center gap-2">
-                <HiOutlineCurrencyDollar /> <span>{venue.price} per night</span>
+                  <HiOutlineCurrencyDollar />{' '}
+                  <span>{venue.price} per night</span>
                 </p>
                 <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-semibold text-text-secondary mt-2 flex items-center gap-2">
                   <FaPeopleRoof /> <span>{venue.maxGuests} guests</span>
                 </p>
-                
+
                 {/* Action buttons in a row */}
                 <div className="flex flex-row items-center gap-3 mt-auto pt-4">
                   <button
@@ -114,9 +121,11 @@ const VenuesByUser = () => {
                   >
                     View
                   </button>
-                  
+
                   <button
-                    onClick={() => navigate(`/profile/venues/${venue.id}/update`)}
+                    onClick={() =>
+                      navigate(`/profile/venues/${venue.id}/update`)
+                    }
                     className="p-2 text-gray-700 rounded-lg hover:text-gray-500"
                     title="Edit venue"
                   >
@@ -132,11 +141,13 @@ const VenuesByUser = () => {
                   </button>
                 </div>
               </div>
-              
+
               {/* Image - Hidden on mobile, visible on larger screens */}
               <div className="hidden md:block md:flex-shrink-0 md:w-1/3 md:self-stretch">
                 <img
-                  src={venue?.media?.[0]?.url || 'https://via.placeholder.com/400'}
+                  src={
+                    venue?.media?.[0]?.url || 'https://via.placeholder.com/400'
+                  }
                   alt={venue?.media?.[0]?.alt || 'Venue image'}
                   className="w-full h-full object-cover rounded-lg"
                 />

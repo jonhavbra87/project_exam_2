@@ -5,7 +5,7 @@
 
 /**
  * Type representing a user profile in the system
- * 
+ *
  * @typedef {Object} Profile
  * @property {string} name - The user's username or display name
  * @property {string} email - The user's email address
@@ -16,14 +16,14 @@
  * @property {Object} [banner] - Optional user profile banner image
  * @property {string} banner.url - URL of the banner image
  * @property {string} banner.alt - Alt text description for the banner image
- * 
+ *
  * @example
  * // Minimal profile
  * const basicProfile: Profile = {
  *   name: "john_doe",
  *   email: "john.doe@example.com"
  * };
- * 
+ *
  * @example
  * // Complete profile with all fields
  * const fullProfile: Profile = {

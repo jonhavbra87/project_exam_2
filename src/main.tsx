@@ -12,7 +12,7 @@ import ScrollToTop from './utilities/ScrollToTop/index.tsx';
 
 /**
  * Renders the root React component to the DOM
- * 
+ *
  * This is the entry point of the application that:
  * 1. Creates a root using ReactDOM's createRoot API
  * 2. Wraps the application in StrictMode for development checks

@@ -14,7 +14,6 @@ import { FaUser } from 'react-icons/fa';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 
-
 function VenueDetails() {
   const { id } = useParams();
   const { venueDetails, isLoading, isError, fetchVenueDetails } = useVenueAPI();
@@ -27,7 +26,9 @@ function VenueDetails() {
 
   useEffect(() => {
     if (isError) {
-      toast.error('An error occurred while fetching data. Please try again later.');
+      toast.error(
+        'An error occurred while fetching data. Please try again later.'
+      );
     }
   }, [isError]);
 
@@ -72,7 +73,7 @@ function VenueDetails() {
             </span>
           </h2>
           <p className="text-ingress-mobile md:text-ingress-desktop text-text-secondary mb-4">
-            {venueDetails.location.country || "Secret location"}
+            {venueDetails.location.country || 'Secret location'}
           </p>
           <VenueRating rating={venueDetails.rating} />
 
@@ -84,11 +85,13 @@ function VenueDetails() {
           </p>
 
           <div className="flex flex-row  items-center text-body-large-desktop font-body text-text-primary mb-2 gap-2">
-            <FaUser className='text-secondary'/>{' '}
+            <FaUser className="text-secondary" />{' '}
             <p>{venueDetails.maxGuests}</p>
           </div>
-          <p className='text-body-large-mobile md:text-body-large-desktop font-body font-medium'>{venueDetails.price} NOK per night</p>
-          
+          <p className="text-body-large-mobile md:text-body-large-desktop font-body font-medium">
+            {venueDetails.price} NOK per night
+          </p>
+
           <h3 className="text-h3-mobile md:text-h3-desktop  font-ingress font-semibold mt-6">
             Facilities
           </h3>
@@ -121,14 +124,22 @@ function VenueDetails() {
 
         {/* Right Column */}
         <div className="md:w-1/3">
-          <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-bold mb-4">Book your stay</h3>
-          <VenueCalendar venueId={id!} maxGuests={venueDetails.maxGuests} pricePerNight={venueDetails.price}/>
+          <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-bold mb-4">
+            Book your stay
+          </h3>
+          <VenueCalendar
+            venueId={id!}
+            maxGuests={venueDetails.maxGuests}
+            pricePerNight={venueDetails.price}
+          />
         </div>
       </div>
 
       {/* Location */}
       <div className="mt-6">
-        <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-semibold">Location</h3>
+        <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-semibold">
+          Location
+        </h3>
         <VenueAddress location={venueDetails.location} />
         <VenueMap venue={venueDetails} />
       </div>

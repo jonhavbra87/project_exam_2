@@ -1,7 +1,6 @@
-
-import { Outlet, useLocation } from "react-router-dom";
-import Header from "../Header";
-import Footer from "../Footer";
+import { Outlet, useLocation } from 'react-router-dom';
+import Header from '../Header';
+import Footer from '../Footer';
 
 /**
  * @module Layout
@@ -9,10 +8,10 @@ import Footer from "../Footer";
  * It conditionally renders the Header and Footer components based on the current route.
  * For authentication pages (login/register), it displays a gradient background without header/footer.
  * For all other pages, it displays the standard layout with header and footer.
- * 
+ *
  * @component
  * @returns {JSX.Element} - Rendered Layout component with conditional header/footer and Outlet for nested routes
- * 
+ *
  * @example
  * // Usage in a Router configuration
  * const router = createBrowserRouter([
@@ -27,7 +26,7 @@ import Footer from "../Footer";
  *     ],
  *   },
  * ]);
- * 
+ *
  * @example
  * // Usage with React Router DOM v6
  * <BrowserRouter>
@@ -43,15 +42,19 @@ import Footer from "../Footer";
  */
 
 function Layout() {
-
   const location = useLocation();
 
-  const isAuthPage = location.pathname === "/login" || location.pathname === "/register";
+  const isAuthPage =
+    location.pathname === '/login' || location.pathname === '/register';
 
   return (
-    <div className={`flex flex-col min-h-screen ${isAuthPage ? "bg-gradient-to-t from-primary-3 via-primary-3 to-secondary" : "bg-background"}`}>
+    <div
+      className={`flex flex-col min-h-screen ${isAuthPage ? 'bg-gradient-to-t from-primary-3 via-primary-3 to-secondary' : 'bg-background'}`}
+    >
       {!isAuthPage && <Header />}
-      <main className={`flex-grow w-11/12 lg:w-10/12 max-w-screen-xl mx-auto my-20 ${isAuthPage ? "flex items-center justify-center" : ""}`}>
+      <main
+        className={`flex-grow w-11/12 lg:w-10/12 max-w-screen-xl mx-auto my-20 ${isAuthPage ? 'flex items-center justify-center' : ''}`}
+      >
         <Outlet />
       </main>
       {!isAuthPage && <Footer />}

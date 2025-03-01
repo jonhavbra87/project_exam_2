@@ -35,13 +35,18 @@ function Bookings() {
   if (bookings.length === 0)
     return (
       <div>
-      <div className="flex flex-col items-center justify-center min-h-screen text-center">
-      <h2 className="text-h1-mobile md:text-h1-desktop font-heading font-semibold text-secondary mb-16">No Bookings</h2>
-      <MdBedroomParent  className="text-6xl text-primary-3 mb-8" />
-      <p className="text-body-large-mobile md:text-body-large-desktop font-body font-medium mb-16">It looks like you don’t have any bookings yet. Make a booking now to get started!</p>
+        <div className="flex flex-col items-center justify-center min-h-screen text-center">
+          <h2 className="text-h1-mobile md:text-h1-desktop font-heading font-semibold text-secondary mb-16">
+            No Bookings
+          </h2>
+          <MdBedroomParent className="text-6xl text-primary-3 mb-8" />
+          <p className="text-body-large-mobile md:text-body-large-desktop font-body font-medium mb-16">
+            It looks like you don’t have any bookings yet. Make a booking now to
+            get started!
+          </p>
+        </div>
       </div>
-    </div>
-    )
+    );
 
   return (
     <div className="container mx-auto">
@@ -49,7 +54,9 @@ function Bookings() {
 
       {activeBookings.length > 0 && (
         <div>
-          <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold  text-text-primary mb-4">Active Bookings</h2>
+          <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold  text-text-primary mb-4">
+            Active Bookings
+          </h2>
           <div className="grid gap-6">
             {activeBookings.map((booking) => (
               <BookingCard

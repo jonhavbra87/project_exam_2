@@ -2,22 +2,22 @@
  * @fileoverview Component that scrolls the window to top on route changes
  * @module components/ScrollToTop
  */
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 /**
  * A utility component that scrolls the window to the top when the route changes
- * 
+ *
  * This component doesn't render anything visible but handles automatic scrolling
  * to the top of the page whenever the URL pathname changes. It should be placed
  * near the root of your application, typically just inside the Router component.
- * 
+ *
  * @returns {null} This component doesn't render anything
- * 
+ *
  * @example
  * // App.tsx router setup
  * import ScrollToTop from './components/ScrollToTop';
- * 
+ *
  * function App() {
  *   return (
  *     <Router>
@@ -51,11 +51,11 @@ import { useLocation } from "react-router-dom";
  */
 
 const ScrollToTop = () => {
-    const { pathname } = useLocation();
-    useEffect(() => {
-        window.scrollTo(0, 0);
-    }, [pathname]);
-    return null;
-    };
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+};
 
 export default ScrollToTop;

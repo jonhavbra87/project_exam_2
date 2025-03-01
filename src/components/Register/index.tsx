@@ -12,48 +12,56 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import useRegister from '../../hooks/useRegister';
 
-
 const schema = yup.object().shape({
-  name: yup.string().min(2, "Name must be at least 2 characters").required("Name is required"),
+  name: yup
+    .string()
+    .min(2, 'Name must be at least 2 characters')
+    .required('Name is required'),
   email: yup
     .string()
-    .email("Invalid email")
-    .matches(/^[a-zA-Z0-9._%+-]+@stud\.noroff\.no$/, "Email must be a @stud.noroff.no address")
-    .required("Email is required"),
-  password: yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
+    .email('Invalid email')
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@stud\.noroff\.no$/,
+      'Email must be a @stud.noroff.no address'
+    )
+    .required('Email is required'),
+  password: yup
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .required('Password is required'),
   venueManager: yup.boolean(),
 });
 /**
-* Register component for user registration
-* 
-* @component
-* @returns {JSX.Element} - Rendered Register component
-* 
-* @description
-* A comprehensive registration form that allows users to create an account with Noroff credentials.
-* The component uses react-hook-form for form handling and validation with Yup schema.
-* Users can provide their name, email, password, and choose to register as a venue manager.
-* The form enforces validation rules including:
-* - Name must be at least 2 characters
-* - Email must be a valid @stud.noroff.no address
-* - Password must be at least 8 characters
-* 
-* On successful registration, the user is automatically logged in and redirected to their profile.
-* Default avatar and banner images are assigned to new accounts.
-* 
-* @example
-* // Basic usage in router
-* <Route path="/register" element={<Register />} />
-* 
-* @example
-* // Usage with navigation
-* const navigate = useNavigate();
-* 
-* // Redirect to registration
-* const redirectToRegister = () => {
-*   navigate('/register');
-* };
-*/
+ * Register component for user registration
+ *
+ * @component
+ * @returns {JSX.Element} - Rendered Register component
+ *
+ * @description
+ * A comprehensive registration form that allows users to create an account with Noroff credentials.
+ * The component uses react-hook-form for form handling and validation with Yup schema.
+ * Users can provide their name, email, password, and choose to register as a venue manager.
+ * The form enforces validation rules including:
+ * - Name must be at least 2 characters
+ * - Email must be a valid @stud.noroff.no address
+ * - Password must be at least 8 characters
+ *
+ * On successful registration, the user is automatically logged in and redirected to their profile.
+ * Default avatar and banner images are assigned to new accounts.
+ *
+ * @example
+ * // Basic usage in router
+ * <Route path="/register" element={<Register />} />
+ *
+ * @example
+ * // Usage with navigation
+ * const navigate = useNavigate();
+ *
+ * // Redirect to registration
+ * const redirectToRegister = () => {
+ *   navigate('/register');
+ * };
+ */
 
 function Register(): JSX.Element {
   const navigate = useNavigate();
@@ -74,11 +82,12 @@ function Register(): JSX.Element {
     venueManager?: boolean;
   }
 
-
   const onSubmit = async (data: RegisterFormData) => {
-  const defaultAvatar = "https://images.unsplash.com/photo-1578593828319-a0f580bd9d07?q=80&w=1328&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"; 
-  const defaultBanner = "https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D";
-  
+    const defaultAvatar =
+      'https://images.unsplash.com/photo-1578593828319-a0f580bd9d07?q=80&w=1328&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+    const defaultBanner =
+      'https://images.unsplash.com/photo-1576485290814-1c72aa4bbb8e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D';
+
     const response = await registerUser(
       data.name,
       data.email,
@@ -87,19 +96,18 @@ function Register(): JSX.Element {
       defaultAvatar,
       defaultBanner
     );
-  
+
     if (response) {
-      toast.success("Successfully registered and logged in! ✅");
-      navigate("/profile");
+      toast.success('Successfully registered and logged in! ✅');
+      navigate('/profile');
     } else {
-      toast.error("Registration failed! ❌");
+      toast.error('Registration failed! ❌');
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="flex gap-5 max-md:flex-col justify-center items-center w-full max-w-4xl ">
-
         <div className="flex flex-col items-center text-center w-1/2 max-md:w-full mb-8">
           <img src={Logo} alt="Holidaze logo" className="w-4/5 sm:w-3/5 mb-8" />
           <p className="text-body-large-mobile md:text-body-large-desktop text-white font-ingress">
@@ -110,7 +118,6 @@ function Register(): JSX.Element {
             <span className="text-accent">together</span>
           </h1>
         </div>
-
 
         <div className="flex flex-col items-center w-1/2 max-md:w-full">
           <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm">
@@ -128,25 +135,31 @@ function Register(): JSX.Element {
               label="Full Name"
               type="text"
               Icon={IoIosPerson}
-              {...register("name")}
+              {...register('name')}
             />
-            {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
+            {errors.name && (
+              <p className="text-red-500 text-sm">{errors.name.message}</p>
+            )}
 
             <CustomInput
               label="User e-mail"
               type="email"
               Icon={IoIosMail}
-              {...register("email")}
+              {...register('email')}
             />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
 
             <CustomInput
               label="Password"
               type="password"
               Icon={MdPassword}
-              {...register("password")}
+              {...register('password')}
             />
-            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
 
             {/* ✅ Venue Manager Toggle */}
             <div className="flex items-center justify-between mt-4">
@@ -157,10 +170,9 @@ function Register(): JSX.Element {
                 id="venueManager"
                 type="checkbox"
                 className="w-5 h-5 ml-2 cursor-pointer"
-                {...register("venueManager")}
+                {...register('venueManager')}
               />
             </div>
-
 
             <p
               onClick={() => navigate('/login')}
@@ -172,7 +184,6 @@ function Register(): JSX.Element {
               </span>{' '}
               <CiLogin className="inline-block text-body-large-desktop text-accent" />
             </p>
-
 
             <CustomButton
               text={loading ? 'Registering...' : 'Sign up with Noroff'}
