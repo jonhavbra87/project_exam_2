@@ -18,6 +18,8 @@ import GradientHeading from '../../../styles/GradientHeading';
  * - Loading state handling
  * - Error state handling
  * - Empty state for users with no bookings
+ * - Responsive design for mobile and desktop
+ * - Refresh functionality for bookings
  * 
  * @remarks
  * Requires authentication and uses custom hooks for API interaction
