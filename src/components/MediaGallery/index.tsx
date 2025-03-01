@@ -3,7 +3,7 @@ import { Venues } from '../../types/Venues';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { EffectCoverflow } from 'swiper/modules';
 import 'swiper/swiper-bundle.css';
-
+import PlaceholderImg from '../../assets/signup_collage.webp';
 // Takes out the coverflow setting for better performance
 const coverflowSettings = {
   rotate: 50,
@@ -182,6 +182,11 @@ function MediaGallery({ images }: MediaGalleryProps): JSX.Element {
             alt={safeImages[0].alt || 'Venue image'}
             className="rounded-lg object-cover w-full h-[500px]"
             aria-label="Img carousel with one image"
+            onError={(event) => { 
+              const imgElement = event.target as HTMLImageElement;
+              imgElement.onerror = null; 
+              imgElement.src = PlaceholderImg; 
+            }}
           />
         ) : (
           // Shows Carousel if there is more than one img
@@ -235,6 +240,11 @@ function MediaGallery({ images }: MediaGalleryProps): JSX.Element {
               alt={safeImages[0].alt || 'Venue image'}
               className="object-cover w-full rounded-lg object-center"
               aria-label="Venue image"
+              onError={(event) => { 
+                const imgElement = event.target as HTMLImageElement;
+                imgElement.onerror = null; 
+                imgElement.src = PlaceholderImg;
+              }}
             />
           </div>
         ) : (
@@ -246,6 +256,11 @@ function MediaGallery({ images }: MediaGalleryProps): JSX.Element {
                 alt={mainImage.alt || 'Main image of the venue'}
                 className="object-cover w-full h-full rounded-tl-lg rounded-bl-lg object-center"
                 aria-label="Main image of the venue"
+                onError={(event) => { 
+                  const imgElement = event.target as HTMLImageElement;
+                  imgElement.onerror = null; 
+                  imgElement.src = PlaceholderImg;
+                }}
               />
             </div>
 

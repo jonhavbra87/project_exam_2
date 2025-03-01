@@ -96,89 +96,101 @@ const VenuesByUser = () => {
       </div>
     );
 
-  return (
-    <div>
-      <GradientHeading>My Venues</GradientHeading>
-
-      {/* Map over venuesUser array */}
-      <div className="flex flex-col gap-4">
-        {venuesArray.map((venue) => (
-          <div
-            key={venue.id}
-            className="p-4 border rounded-lg shadow-md bg-white"
-          >
-            {/* Responsive layout container - column on mobile, row on larger screens */}
-            <div className="flex flex-col md:flex-row md:justify-between md:items-stretch">
-              {/* Image - Full width on mobile, right side on larger screens */}
-              <div className="w-full md:hidden mb-3">
-                <img
-                  src={
-                    venue?.media?.[0]?.url || 'https://placehold.co/400'
-                  }
-                  alt={venue?.media?.[0]?.alt || 'Venue image'}
-                  className="w-full h-48 object-cover rounded-lg"
-                />
-              </div>
-
-              {/* Content */}
-              <div className="flex flex-col flex-grow md:pr-4">
-                {/* Venue details */}
-                <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold">
-                  {venue.name}
-                </h2>
-                <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-light text-text-secondary mt-1 line-clamp-2">
-                  {venue.description}
-                </p>
-                <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-semibold text-text-secondary mt-2 flex items-center gap-2">
-                  <HiOutlineCurrencyDollar />{' '}
-                  <span>{venue.price} per night</span>
-                </p>
-                <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-semibold text-text-secondary mt-2 flex items-center gap-2">
-                  <FaPeopleRoof /> <span>{venue.maxGuests} guests</span>
-                </p>
-
-                {/* Action buttons in a row */}
-                <div className="flex flex-row items-center gap-3 mt-auto pt-4">
-                  <button
-                    onClick={() => navigateToVenue({ venue })}
-                    className="px-4 py-2 bg-button-primary text-body-large-mobile md:text-body-medium-desktop font-button font-medium text-white rounded-lg hover:bg-button-hover"
-                  >
-                    View
-                  </button>
-
-                  <button
-                    onClick={() =>
-                      navigate(`/profile/venues/${venue.id}/update`)
-                    }
-                    className="p-2 text-gray-700 rounded-lg hover:text-gray-500"
-                    title="Edit venue"
-                  >
-                    <IoSettings />
-                  </button>
-
-                  <button
-                    className="p-2 text-red-500 rounded-lg hover:text-red-300"
-                    onClick={() => handleDeleteVenue(venue.id)}
-                    title="Delete venue"
-                  >
-                    <FaTrash />
-                  </button>
+ 
+    return (
+      <div>
+        <GradientHeading>My Venues</GradientHeading>
+  
+        {/* Map over venuesUser array */}
+        <div className="flex flex-col gap-4">
+          {venuesArray.map((venue, index) => {
+            // Use a combination of venue ID and index to ensure uniqueness
+            const uniqueKey = `${venue.id}-${index}`;
+            
+            return (
+              <div
+                key={uniqueKey}
+                className="p-4 border rounded-lg shadow-md bg-white"
+              >
+                {/* Responsive layout container - column on mobile, row on larger screens */}
+                <div className="flex flex-col md:flex-row md:justify-between md:items-stretch">
+                  {/* Image - Full width on mobile, right side on larger screens */}
+                  <div className="w-full md:hidden mb-3">
+                    <img
+                      src={venue?.media?.[0]?.url || 'https://placehold.co/400'}
+                      alt={venue?.media?.[0]?.alt || 'Venue image'}
+                      className="w-full h-48 object-cover rounded-lg"
+                      onError={(event) => { 
+                        const imgElement = event.target as HTMLImageElement;
+                        imgElement.onerror = null; 
+                        imgElement.src = "https://placehold.co/400"; 
+                      }}
+                    />
+                  </div>
+  
+                  {/* Content */}
+                  <div className="flex flex-col flex-grow md:pr-4">
+                    {/* Venue details */}
+                    <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold">
+                      {venue.name}
+                    </h2>
+                    <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-light text-text-secondary mt-1 line-clamp-2">
+                      {venue.description}
+                    </p>
+                    <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-semibold text-text-secondary mt-2 flex items-center gap-2">
+                      <HiOutlineCurrencyDollar />{' '}
+                      <span>{venue.price} per night</span>
+                    </p>
+                    <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-semibold text-text-secondary mt-2 flex items-center gap-2">
+                      <FaPeopleRoof /> <span>{venue.maxGuests} guests</span>
+                    </p>
+  
+                    {/* Action buttons in a row */}
+                    <div className="flex flex-row items-center gap-3 mt-auto pt-4">
+                      <button
+                        onClick={() => navigateToVenue({ venue })}
+                        className="px-4 py-2 bg-button-primary text-body-large-mobile md:text-body-medium-desktop font-button font-medium text-white rounded-lg hover:bg-button-hover"
+                      >
+                        View
+                      </button>
+  
+                      <button
+                        onClick={() =>
+                          navigate(`/profile/venues/${venue.id}/update`)
+                        }
+                        className="p-2 text-gray-700 rounded-lg hover:text-gray-500"
+                        title="Edit venue"
+                      >
+                        <IoSettings />
+                      </button>
+  
+                      <button
+                        className="p-2 text-red-500 rounded-lg hover:text-red-300"
+                        onClick={() => handleDeleteVenue(venue.id)}
+                        title="Delete venue"
+                      >
+                        <FaTrash />
+                      </button>
+                    </div>
+                  </div>
+  
+                  {/* Image - Hidden on mobile, visible on larger screens */}
+                  <div className="hidden md:block md:flex-shrink-0 md:w-1/3 md:self-stretch">
+                    <img
+                      src={venue?.media?.[0]?.url || 'https://placehold.co/400'}
+                      alt={venue?.media?.[0]?.alt || 'Venue image'}
+                      className="w-full h-full object-cover rounded-lg"
+                      onError={(event) => { 
+                        const imgElement = event.target as HTMLImageElement;
+                        imgElement.onerror = null; 
+                        imgElement.src = "https://placehold.co/400"; 
+                      }}
+                    />
+                  </div>
                 </div>
               </div>
-
-              {/* Image - Hidden on mobile, visible on larger screens */}
-              <div className="hidden md:block md:flex-shrink-0 md:w-1/3 md:self-stretch">
-                <img
-                  src={
-                    venue?.media?.[0]?.url || 'https://placehold.co/400'
-                  }
-                  alt={venue?.media?.[0]?.alt || 'Venue image'}
-                  className="w-full h-full object-cover rounded-lg"
-                />
-              </div>
-            </div>
-          </div>
-        ))}
+            );
+          })}
       </div>
     </div>
   );

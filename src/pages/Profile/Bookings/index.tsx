@@ -75,34 +75,34 @@ function Bookings():JSX.Element {
       <GradientHeading>My Bookings</GradientHeading>
 
       {activeBookings.length > 0 && (
-        <div>
-          <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold  text-text-primary mb-4">
-            Active Bookings
-          </h2>
-          <div className="grid gap-6">
-            {activeBookings.map((booking) => (
-              <BookingCard
-                key={booking.id}
-                booking={booking}
-                isExpired={false}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-      {expiredBookings.length > 0 && (
-        <div className="mt-10">
-          <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold mb-4 text-text-secondary">
-            Expired Bookings
-          </h2>
-          <div className="grid gap-6 opacity-70">
-            {expiredBookings.map((booking) => (
-              <BookingCard
-                key={booking.id}
-                booking={booking}
-                isExpired={true}
-              />
-            ))}
+  <div>
+    <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold text-text-primary mb-4">
+      Active Bookings
+    </h2>
+    <div className="grid gap-6">
+      {activeBookings.map((booking, index) => (
+        <BookingCard
+          key={`active-${booking.id}-${index}`}
+          booking={booking}
+          isExpired={false}
+        />
+      ))}
+    </div>
+  </div>
+)}
+{expiredBookings.length > 0 && (
+  <div className="mt-10">
+    <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold mb-4 text-text-secondary">
+      Expired Bookings
+    </h2>
+    <div className="grid gap-6 opacity-70">
+      {expiredBookings.map((booking, index) => (
+        <BookingCard
+          key={`expired-${booking.id}-${index}`}
+          booking={booking}
+          isExpired={true}
+        />
+      ))}
           </div>
         </div>
       )}
@@ -111,3 +111,4 @@ function Bookings():JSX.Element {
 }
 
 export default Bookings;
+
