@@ -7,7 +7,7 @@ import { Venues } from '../../types/Venues';
  * ```tsx
  * <VenuePrice product={product} />
  * ```
- * 
+ *
  */
 export const VenuePrice = ({ product }: { product: Venues }) => {
   return (

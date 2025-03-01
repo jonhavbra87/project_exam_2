@@ -5,12 +5,12 @@ import { ButtonProps } from '../../types/ButtonProps';
  * @module CustomButton
  * @description A reusable button component with multiple style variants and icon support.
  * This component provides consistent button styling across the application while
- * allowing for different visual styles through the variant prop. 
+ * allowing for different visual styles through the variant prop.
  */
 
 /**
  * CustomButton component renders a styled button with optional icon
- * 
+ *
  * @component
  * @param {Object} props - Component props
  * @param {string} [props.icon] - URL for the icon to display next to button text
@@ -20,33 +20,33 @@ import { ButtonProps } from '../../types/ButtonProps';
  * @param {boolean} [props.disabled=false] - Whether the button is disabled
  * @param {('primary'|'secondary'|'accent')} [props.variant='primary'] - Visual style variant of the button
  * @returns {JSX.Element} - Rendered CustomButton component
- * 
+ *
  * @example
  * // Primary button with text only
- * <CustomButton 
- *   text="Click Me" 
- *   onClick={() => console.log('Button clicked')} 
+ * <CustomButton
+ *   text="Click Me"
+ *   onClick={() => console.log('Button clicked')}
  * />
- * 
+ *
  * @example
  * // Secondary button with icon and custom type
- * <CustomButton 
- *   text="Submit Form" 
+ * <CustomButton
+ *   text="Submit Form"
  *   icon="/icons/send.svg"
  *   type="submit"
  *   variant="secondary"
  *   onClick={handleSubmit}
  * />
- * 
+ *
  * @example
  * // Disabled accent button
- * <CustomButton 
- *   text="Loading..." 
+ * <CustomButton
+ *   text="Loading..."
  *   variant="accent"
  *   disabled={true}
  *   onClick={() => {}}
  * />
- * 
+ *
  * @function getButtonClasses
  * @description Returns the appropriate CSS classes based on the button variant
  * @returns {string} CSS class string for the button based on variant
@@ -71,7 +71,7 @@ export const CustomButton: React.FC<ButtonProps> = ({
       default:
         return 'bg-primary-3 border-r-2 border-b-2 border-b-accent border-r-accent hover:bg-button-hover active:bg-accent';
     }
-  }
+  };
 
   return (
     <button
@@ -80,14 +80,9 @@ export const CustomButton: React.FC<ButtonProps> = ({
       disabled={disabled}
       className={`flex w-full justify-center items-center gap-3 px-6 py-4 mt-4 text-white font-button rounded-lg transition-all duration-300 ease-in-out sm:px-8
         ${disabled ? 'bg-text-muted cursor-not-allowed' : getButtonClasses()}`}
-      >
+    >
       {icon && (
-        <img
-          loading="lazy"
-          src={icon}
-          alt="icon"
-          className="object-contain shrink-0 aspect-square w-6 h-6 rounded-sm"
-        />
+        <span className="shrink-0 flex items-center w-6 h-6">{icon}</span>
       )}
       <span className="grow shrink my-auto">{text}</span>
     </button>

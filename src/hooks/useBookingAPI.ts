@@ -15,7 +15,7 @@ import { Booking } from '../types/Booking';
 
 /**
  * Interface defining the booking state and operations
- * 
+ *
  * @typedef {Object} BookingState
  * @property {Booking[]} bookings - List of bookings
  * @property {Booking|null} bookingDetails - Details of selected booking
@@ -49,18 +49,18 @@ interface BookingState {
 
 /**
  * Zustand store for booking management
- * 
+ *
  * This store manages all booking-related state and operations, including
  * fetching, creating, updating, and deleting bookings. It handles API
  * interactions and maintains the loading/error states.
- * 
+ *
  * @example
  * // Fetch all bookings
  * useBookingAPI.getState().fetchBookings();
- * 
+ *
  * // Access booking data in a component
  * const { bookings, isLoading } = useBookingAPI();
- * 
+ *
  * // Create a new booking
  * const createBooking = useBookingAPI(state => state.createBooking);
  * createBooking({
@@ -104,15 +104,15 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
     }
   },
 
- /**
+  /**
    * Fetches booking details for a specific venue
-   * 
+   *
    * @async
    * @function fetchBookingDetails
    * @param {string} venueId - The ID of the venue to fetch bookings for
    * @returns {Promise<void>} A promise that resolves when the fetch operation completes
    * @throws {Error} If the API request fails
-   * 
+   *
    * @example
    * await useBookingAPI.getState().fetchBookingDetails('venue-123');
    */
@@ -139,7 +139,6 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
       const data = await response.json();
 
       set({ bookings: data.data.bookings, isLoading: false });
-
     } catch (error) {
       console.error('Error fetching user data', error);
       set({ isError: true, isLoading: false });
@@ -148,13 +147,13 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
 
   /**
    * Creates a new booking
-   * 
+   *
    * @async
    * @function createBooking
    * @param {Omit<Booking, 'id' | 'created' | 'updated'>} bookingData - The booking data to create
    * @returns {Promise<boolean>} A promise that resolves to true if successful, false otherwise
    * @throws {Error} If the API request fails
-   * 
+   *
    * @example
    * const success = await useBookingAPI.getState().createBooking({
    *   dateFrom: "2023-09-01T14:00:00.000Z",
@@ -163,7 +162,7 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
    *   venueId: "venue-123"
    * });
    */
-  
+
   createBooking: async (
     bookingData: Omit<Booking, 'id' | 'created' | 'updated'>
   ) => {
@@ -183,7 +182,7 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
 
       if (!response.ok) throw new Error('Could not crate booking');
 
-      await get().fetchBookings(); 
+      await get().fetchBookings();
       set({ isLoading: false });
       return true;
     } catch (error) {
@@ -195,14 +194,14 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
 
   /**
    * Updates an existing booking
-   * 
+   *
    * @async
    * @function updateBooking
    * @param {string} id - The ID of the booking to update
    * @param {Partial<Omit<Booking, 'id' | 'created' | 'updated'>>} updatedData - The updated booking data
    * @returns {Promise<boolean>} A promise that resolves to true if successful, false otherwise
    * @throws {Error} If the API request fails
-   * 
+   *
    * @example
    * const success = await useBookingAPI.getState().updateBooking('booking-123', {
    *   guests: 3
@@ -235,15 +234,15 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
     }
   },
 
- /**
+  /**
    * Deletes a booking
-   * 
+   *
    * @async
    * @function deleteBooking
    * @param {string} id - The ID of the booking to delete
    * @returns {Promise<boolean>} A promise that resolves to true if successful, false otherwise
    * @throws {Error} If the API request fails
-   * 
+   *
    * @example
    * const success = await useBookingAPI.getState().deleteBooking('booking-123');
    */
@@ -273,15 +272,15 @@ export const useBookingAPI = create<BookingState>((set, get) => ({
     }
   },
 
- /**
+  /**
    * Fetches bookings for a specific user
-   * 
+   *
    * @async
    * @function fetchBookingsByUser
    * @param {string} name - The username to fetch bookings for
    * @returns {Promise<void>} A promise that resolves when the fetch operation completes
    * @throws {Error} If the API request fails
-   * 
+   *
    * @example
    * await useBookingAPI.getState().fetchBookingsByUser('johndoe');
    */

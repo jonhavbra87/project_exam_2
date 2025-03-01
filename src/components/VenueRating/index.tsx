@@ -20,7 +20,9 @@ function VenueRating({ rating }: { rating: number }): JSX.Element {
     return (
       <div className="flex items-center text-ingress-desktop">
         <FaRegStar className="text-secondary" />
-        <p className="text-text-primary text-ingress-mobile md:text-ingress-desktop font-ingress ml-2">{rating}</p>
+        <p className="text-text-primary text-ingress-mobile md:text-ingress-desktop font-ingress ml-2">
+          {rating}
+        </p>
         <span className="sr-only">Rated 0 out of {totalStars} stars</span>
       </div>
     );

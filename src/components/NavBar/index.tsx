@@ -3,32 +3,32 @@ import { FiX } from 'react-icons/fi';
 import NavLinks from '../NavLinks';
 import { useState, useRef, useEffect } from 'react';
 /**
-* NavBar component providing responsive navigation for the application
-* 
-* @component
-* @returns {JSX.Element} - Rendered NavBar component
-* 
-* @description
-* A responsive navigation bar that adapts between mobile and desktop displays.
-* On mobile, it displays a hamburger menu that toggles a dropdown navigation menu.
-* On desktop, it shows the navigation links horizontally.
-* Includes accessibility features like proper ARIA attributes, keyboard navigation, 
-* and focus management.
-* 
-* Features:
-* - Toggle button for mobile menu with animated icon transition
-* - Focus trap and keyboard navigation (Escape key closes menu)
-* - Backdrop overlay on mobile to dismiss menu when clicking outside
-* - Automatic focus management when menu opens
-* - Fully responsive design with different layouts for mobile and desktop
-* 
-* @example
-* // Basic usage in a header
-* <Header>
-*   <div className="logo">My Site</div>
-*   <NavBar />
-* </Header>
-*/
+ * NavBar component providing responsive navigation for the application
+ *
+ * @component
+ * @returns {JSX.Element} - Rendered NavBar component
+ *
+ * @description
+ * A responsive navigation bar that adapts between mobile and desktop displays.
+ * On mobile, it displays a hamburger menu that toggles a dropdown navigation menu.
+ * On desktop, it shows the navigation links horizontally.
+ * Includes accessibility features like proper ARIA attributes, keyboard navigation,
+ * and focus management.
+ *
+ * Features:
+ * - Toggle button for mobile menu with animated icon transition
+ * - Focus trap and keyboard navigation (Escape key closes menu)
+ * - Backdrop overlay on mobile to dismiss menu when clicking outside
+ * - Automatic focus management when menu opens
+ * - Fully responsive design with different layouts for mobile and desktop
+ *
+ * @example
+ * // Basic usage in a header
+ * <Header>
+ *   <div className="logo">My Site</div>
+ *   <NavBar />
+ * </Header>
+ */
 
 function NavBar(): JSX.Element {
   const [menuOpen, setMenuOpen] = useState(false);

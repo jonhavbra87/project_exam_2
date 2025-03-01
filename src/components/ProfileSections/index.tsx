@@ -11,7 +11,7 @@ interface ProfileSectionProps {
 }
 /**
  * ProfileSection component for grouping related profile cards under a common heading
- * 
+ *
  * @component
  * @param {Object} props - Component props
  * @param {string} props.title - Section heading text
@@ -21,12 +21,12 @@ interface ProfileSectionProps {
  * @param {string} props.items[].description - Description text for the card
  * @param {string} props.items[].link - URL to navigate to when card is clicked
  * @returns {JSX.Element} - Rendered ProfileSection component
- * 
+ *
  * @description
  * A container component that groups related ProfileCard components under a common section title.
  * Creates a responsive layout with cards that wrap based on available space.
  * Each section represents a category of profile actions or information.
- * 
+ *
  * @example
  * // Account settings section with multiple cards
  * <ProfileSection

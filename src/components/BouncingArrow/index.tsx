@@ -8,14 +8,14 @@ import { ChevronDown } from 'lucide-react';
 
 /**
  * BouncingArrow component displays an animated downward arrow
- * 
+ *
  * @component
  * @returns {JSX.Element} - Rendered BouncingArrow component
- * 
+ *
  * @example
  * // Basic usage
  * <BouncingArrow />
- * 
+ *
  * @example
  * // Usage in a container
  * <div className="my-8">

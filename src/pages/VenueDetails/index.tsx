@@ -13,9 +13,34 @@ import VenueCalendar from '../../components/VenueCalendar';
 import { FaUser } from 'react-icons/fa';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import toast from 'react-hot-toast';
+/**
+ * VenueDetails Component
+ *
+ * Displays comprehensive details for a specific venue
+ *
+ * @component
+ * @returns {React.ReactElement} A detailed view of a venue with multiple sections
+ *
+ * @description
+ * Provides a comprehensive venue information page, including:
+ * - Media gallery
+ * - Venue details (name, description, rating)
+ * - Facilities and amenities
+ * - Venue manager information
+ * - Booking calendar
+ * - Location details with map
+ *
+ * @remarks
+ * - Fetches venue details based on URL parameter
+ * - Handles loading and error states
+ * - Responsive design with different layouts for mobile and desktop
+ *
+ * @example
+ * // Typical usage in routing configuration
+ * <Route path="/venue/:id" element={<VenueDetails />} />
+ */
 
-
-function VenueDetails() {
+function VenueDetails(): JSX.Element {
   const { id } = useParams();
   const { venueDetails, isLoading, isError, fetchVenueDetails } = useVenueAPI();
 
@@ -27,7 +52,9 @@ function VenueDetails() {
 
   useEffect(() => {
     if (isError) {
-      toast.error('An error occurred while fetching data. Please try again later.');
+      toast.error(
+        'An error occurred while fetching data. Please try again later.'
+      );
     }
   }, [isError]);
 
@@ -56,7 +83,7 @@ function VenueDetails() {
         </GradientHeading>
       </div>
 
-      {/* Image Gallery - needs fixing */}
+      {/* Image Gallery */}
       <div>
         <MediaGallery images={venueDetails.media} />
       </div>
@@ -72,7 +99,7 @@ function VenueDetails() {
             </span>
           </h2>
           <p className="text-ingress-mobile md:text-ingress-desktop text-text-secondary mb-4">
-            {venueDetails.location.country || "Secret location"}
+            {venueDetails.location.country || 'Secret location'}
           </p>
           <VenueRating rating={venueDetails.rating} />
 
@@ -84,11 +111,13 @@ function VenueDetails() {
           </p>
 
           <div className="flex flex-row  items-center text-body-large-desktop font-body text-text-primary mb-2 gap-2">
-            <FaUser className='text-secondary'/>{' '}
+            <FaUser className="text-secondary" />{' '}
             <p>{venueDetails.maxGuests}</p>
           </div>
-          <p className='text-body-large-mobile md:text-body-large-desktop font-body font-medium'>{venueDetails.price} NOK per night</p>
-          
+          <p className="text-body-large-mobile md:text-body-large-desktop font-body font-medium">
+            {venueDetails.price} NOK per night
+          </p>
+
           <h3 className="text-h3-mobile md:text-h3-desktop  font-ingress font-semibold mt-6">
             Facilities
           </h3>
@@ -102,8 +131,7 @@ function VenueDetails() {
           <div className="mt-4 flex items-center gap-4">
             <img
               src={
-                venueDetails.owner?.avatar?.url ||
-                'https://via.placeholder.com/150'
+                venueDetails.owner?.avatar?.url || 'https://placehold.com/150'
               }
               alt="Owner Avatar"
               className="w-16 h-16 rounded-full"
@@ -121,14 +149,22 @@ function VenueDetails() {
 
         {/* Right Column */}
         <div className="md:w-1/3">
-          <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-bold mb-4">Book your stay</h3>
-          <VenueCalendar venueId={id!} maxGuests={venueDetails.maxGuests} pricePerNight={venueDetails.price}/>
+          <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-bold mb-4">
+            Book your stay
+          </h3>
+          <VenueCalendar
+            venueId={id!}
+            maxGuests={venueDetails.maxGuests}
+            pricePerNight={venueDetails.price}
+          />
         </div>
       </div>
 
       {/* Location */}
       <div className="mt-6">
-        <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-semibold">Location</h3>
+        <h3 className="text-h3-mobile md:text-h3-desktop font-ingress font-semibold">
+          Location
+        </h3>
         <VenueAddress location={venueDetails.location} />
         <VenueMap venue={venueDetails} />
       </div>

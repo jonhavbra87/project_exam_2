@@ -6,14 +6,14 @@ import NavBar from '../NavBar';
  * @description Site header component that displays the company logo and navigation bar.
  * The header is fixed at the top of the page and spans the full width of the viewport.
  * It contains a logo that links to the homepage and the NavBar component for site navigation.
- * 
+ *
  * @component
  * @returns {JSX.Element} - Rendered Header component
- * 
+ *
  * @example
  * // Basic usage at the top of a page or layout
  * <Header />
- * 
+ *
  * @example
  * // Usage in a layout component
  * const MainLayout = () => {
@@ -28,7 +28,6 @@ import NavBar from '../NavBar';
  *   );
  * }
  */
-
 
 function Header() {
   return (

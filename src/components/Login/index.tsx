@@ -15,32 +15,38 @@ import * as yup from 'yup';
 const schema = yup.object().shape({
   email: yup
     .string()
-    .email("Invalid email")
-    .matches(/^[a-zA-Z0-9._%+-]+@stud\.noroff\.no$/, "Email must be a @stud.noroff.no address")
-    .required("Email is required"),
-  password: yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
+    .email('Invalid email')
+    .matches(
+      /^[a-zA-Z0-9._%+-]+@stud\.noroff\.no$/,
+      'Email must be a @stud.noroff.no address'
+    )
+    .required('Email is required'),
+  password: yup
+    .string()
+    .min(8, 'Password must be at least 8 characters')
+    .required('Password is required'),
 });
 
 /**
  * Login component for user authentication
- * 
+ *
  * @component
  * @returns {JSX.Element} - Rendered Login component
- * 
+ *
  * @description
  * Provides a form for users to log in with their Noroff student credentials.
  * The component uses react-hook-form for form handling and validation with Yup schema.
  * It requires a valid @stud.noroff.no email address and password with minimum 8 characters.
  * On successful login, the user is redirected to their profile page.
- * 
+ *
  * @example
  * // Basic usage in router
  * <Route path="/login" element={<Login />} />
- * 
+ *
  * @example
  * // Usage with navigation
  * const navigate = useNavigate();
- * 
+ *
  * // Redirect to login
  * const redirectToLogin = () => {
  *   navigate('/login');
@@ -61,7 +67,7 @@ function Login(): JSX.Element {
 
   /**
    * Interface for login form data
-   * 
+   *
    * @interface LoginFormData
    * @property {string} email - User's Noroff email address
    * @property {string} password - User's password
@@ -74,30 +80,32 @@ function Login(): JSX.Element {
 
   /**
    * Handles form submission for login
-   * 
+   *
    * @async
    * @function onSubmit
    * @param {LoginFormData} data - Form data with email and password
    * @returns {Promise<void>}
    */
-  
+
   const onSubmit = async (data: LoginFormData) => {
     if (Object.keys(errors).length > 0) {
-      toast.error("Please fix the errors before submitting! ❌");
+      toast.error('Please fix the errors before submitting! ❌');
       return;
     }
     try {
       const response = await login(data.email, data.password);
       if (!response) {
-        toast.error("Invalid username or password! ❌");
+        toast.error('Invalid username or password! ❌');
         return;
       }
-      toast.success("Successfully logged in! ✅");
+      toast.success('Successfully logged in! ✅');
       setTimeout(() => {
-        navigate("/profile");
+        navigate('/profile');
       }, 1000);
     } catch (error) {
-      toast.error("Login failed: " + ((error as Error).message || "Unknown error") + " ❌");
+      toast.error(
+        'Login failed: ' + ((error as Error).message || 'Unknown error') + ' ❌'
+      );
     }
   };
 
@@ -128,16 +136,20 @@ function Login(): JSX.Element {
               label="User e-mail"
               type="email"
               Icon={IoIosMail}
-              {...register("email")}
+              {...register('email')}
             />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email.message}</p>
+            )}
             <CustomInput
               label="Password"
               type="password"
               Icon={MdPassword}
-              {...register("password")}
+              {...register('password')}
             />
-            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+            {errors.password && (
+              <p className="text-red-500 text-sm">{errors.password.message}</p>
+            )}
             <p
               onClick={() => navigate('/register')}
               className="text-white text-body-medium-desktop border-t border-text-white font-ingress hover:cursor-pointer py-4"

@@ -5,7 +5,7 @@
 import styled, { keyframes } from 'styled-components';
 /**
  * Keyframes animation for rotating the loader 360 degrees
- * 
+ *
  * @constant
  * @type {Keyframes}
  */
@@ -16,7 +16,7 @@ const rotate = keyframes`
 /**
  * Keyframes animation for the clip-path animation effect
  * Creates a filling/sweeping effect using polygon clipping
- * 
+ *
  * @constant
  * @type {Keyframes}
  */
@@ -28,11 +28,10 @@ const prixClipFix = keyframes`
   100% { clip-path: polygon(50% 50%, 0 0, 100% 0, 100% 100%, 0 100%, 0 0); }
 `;
 
-
 /**
  * Styled fullscreen container for the loader
  * Creates a semi-transparent overlay that covers the entire viewport
- * 
+ *
  * @component
  * @example
  * <LoaderContainer>
@@ -48,7 +47,7 @@ export const LoaderContainer = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); 
+  background: rgba(0, 0, 0, 0.5);
   z-index: 9999;
 `;
 
@@ -56,7 +55,7 @@ export const LoaderContainer = styled.div`
  * Styled circular loader with animation effects
  * Features a dual-border design with rotating and sweeping animations
  * Includes responsive sizing based on screen width
- * 
+ *
  * @component
  * @example
  * <StyledLoader />
@@ -86,7 +85,6 @@ export const StyledLoader = styled.div`
       ${rotate} 0.5s linear infinite reverse;
     inset: 6px;
   }
-
 
   @media (max-width: 768px) {
     width: 64px;

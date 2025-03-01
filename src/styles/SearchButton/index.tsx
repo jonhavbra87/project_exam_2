@@ -7,15 +7,15 @@ import styled from 'styled-components';
 
 /**
  * Styled button component specifically designed for search functionality
- * 
+ *
  * Features a vibrant gradient background that transitions on hover, rounded corners
  * on the right side (for attaching to an input field), and subtle shadow effects
  * that respond to user interaction.
- * 
+ *
  * @component
  * @example
  * import { SearchButton } from './SearchStyles';
- * 
+ *
  * const SearchBar = () => {
  *   return (
  *     <form>

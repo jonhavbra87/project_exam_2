@@ -5,7 +5,7 @@
 
 /**
  * Interface representing a geographical location with address and coordinates
- * 
+ *
  * @interface Location
  * @property {string} address - Street address or specific location name
  * @property {string} city - City or town name
@@ -14,7 +14,7 @@
  * @property {string} continent - Continent name
  * @property {number} lat - Latitude coordinate
  * @property {number} lng - Longitude coordinate
- * 
+ *
  * @example
  * const venueLocation: Location = {
  *   address: "123 Ocean Drive",

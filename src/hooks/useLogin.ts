@@ -10,15 +10,15 @@ import { useAuthStore } from '../store/authStore';
 
 /**
  * Custom hook for handling user login functionality
- * 
+ *
  * @returns {Object} Login hook methods and state
  * @returns {function(email: string, password: string): Promise<Profile|null>} .login - Function to authenticate a user
  * @returns {boolean} .loading - Indicates if login operation is in progress
  * @returns {string|null} .error - Error message if login failed, null otherwise
- * 
+ *
  * @example
  * const { login, loading, error } = useLogin();
- * 
+ *
  * // Handle form submission
  * const handleSubmit = async (e) => {
  *   e.preventDefault();
@@ -33,16 +33,16 @@ const useLogin = () => {
   const [error, setError] = useState<string | null>(null);
   const { login: loginAuth } = useAuthStore();
 
-    /**
+  /**
    * Authenticates a user with email and password
-   * 
+   *
    * @async
    * @param {string} email - The user's email address
    * @param {string} password - The user's password
    * @returns {Promise<Profile|null>} The user profile if login successful, null otherwise
    * @throws {Error} If the network request fails
    */
-  
+
   const login = async (email: string, password: string) => {
     setLoading(true);
     setError(null);
@@ -63,7 +63,10 @@ const useLogin = () => {
       const result = await response.json();
 
       if (!response.ok || !result.data) {
-        console.error("❌ API error:", result.message || "Unexpected response format");
+        console.error(
+          '❌ API error:',
+          result.message || 'Unexpected response format'
+        );
         return null;
       }
 

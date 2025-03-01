@@ -8,7 +8,7 @@ import { Profile } from '../types/Profile';
 
 /**
  * Type definition for the authentication state
- * 
+ *
  * @typedef {Object} AuthState
  * @property {Profile|null} profile - The user's profile information or null if not logged in
  * @property {string|null} accessToken - The authentication token or null if not logged in
@@ -29,20 +29,20 @@ type AuthState = {
 };
 /**
  * Zustand store for authentication state management with persistence
- * 
+ *
  * This store manages user authentication state and provides methods for
  * logging in, logging out, and updating venue manager status. State is
  * persisted across page refreshes using local storage.
- * 
+ *
  * @example
  * // Login a user
  * const { login } = useAuthStore();
  * login(userProfile, token, isVenueManager);
- * 
+ *
  * @example
  * // Access authentication state
  * const { isAuthenticated, profile, venueManager } = useAuthStore();
- * 
+ *
  * @example
  * // Logout a user
  * const { logout } = useAuthStore();
@@ -57,7 +57,7 @@ export const useAuthStore = create<AuthState>()(
       venueManager: false,
       /**
        * Sets authentication state when a user logs in
-       * 
+       *
        * @function login
        * @param {Profile} profile - The user's profile information
        * @param {string} accessToken - The authentication token
@@ -73,7 +73,7 @@ export const useAuthStore = create<AuthState>()(
       },
       /**
        * Updates the user's venue manager status
-       * 
+       *
        * @function setVenueManager
        * @param {boolean} venueManager - Whether the user has venue manager privileges
        */
@@ -82,7 +82,7 @@ export const useAuthStore = create<AuthState>()(
       },
       /**
        * Clears authentication state when a user logs out
-       * 
+       *
        * @function logout
        */
       logout: () => {

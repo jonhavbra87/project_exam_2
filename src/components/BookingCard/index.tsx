@@ -9,7 +9,7 @@ import { useAuthStore } from '../../store/authStore';
 /**
  * @module BookingCard
  * @description A component that displays booking information in a card format.
- * The card shows venue details, booking dates, number of guests, amenities, 
+ * The card shows venue details, booking dates, number of guests, amenities,
  * and customer information. It also provides actions to view the venue or delete the booking.
  */
 
@@ -22,27 +22,27 @@ import { useAuthStore } from '../../store/authStore';
 
 /**
  * BookingCard component displays detailed information about a booking
- * 
+ *
  * @component
  * @param {Object} props - Component props
  * @param {Booking} props.booking - The booking object containing all booking information
  * @param {boolean} props.isExpired - Indicates whether the booking has expired
  * @param {Function} [props.onRefresh] - Optional callback to trigger data refresh in parent component
  * @returns {JSX.Element} - Rendered BookingCard component
- * 
+ *
  * @example
  * // Basic usage with a booking object
- * <BookingCard 
- *   booking={bookingData} 
- *   isExpired={false} 
+ * <BookingCard
+ *   booking={bookingData}
+ *   isExpired={false}
  * />
- * 
+ *
  * @example
  * // With refresh callback
- * <BookingCard 
- *   booking={bookingData} 
+ * <BookingCard
+ *   booking={bookingData}
  *   isExpired={true}
- *   onRefresh={() => fetchBookings()} 
+ *   onRefresh={() => fetchBookings()}
  * />
  */
 
@@ -61,15 +61,14 @@ const BookingCard = ({
   const { deleteBooking } = useBookingAPI();
   const { profile } = useAuthStore();
 
-
-/**
- * @function navigateToVenue
- * @description Navigates to the venue details page
- *  
- * @example
- * // Navigate to the venue page
- * navigateToVenue();
- * */
+  /**
+   * @function navigateToVenue
+   * @description Navigates to the venue details page
+   *
+   * @example
+   * // Navigate to the venue page
+   * navigateToVenue();
+   * */
 
   const navigateToVenue = () => {
     if (venue?.id) {
@@ -77,19 +76,19 @@ const BookingCard = ({
     }
   };
 
-/**
- * Handles the deletion of a booking
- * 
- * @async
- * @function handleDeleteBooking
- * @description Deletes the booking from the database
- * @returns {Promise<void>} - A promise that resolves after the booking is deleted
- * @throws {Error} - If the booking deletion fails
- * @example
- * // Delete the booking
- * handleDeleteBooking();
- *  
- * */
+  /**
+   * Handles the deletion of a booking
+   *
+   * @async
+   * @function handleDeleteBooking
+   * @description Deletes the booking from the database
+   * @returns {Promise<void>} - A promise that resolves after the booking is deleted
+   * @throws {Error} - If the booking deletion fails
+   * @example
+   * // Delete the booking
+   * handleDeleteBooking();
+   *
+   * */
   const handleDeleteBooking = async () => {
     if (!booking.id) {
       toast.error('Error: Booking ID not found.');
@@ -103,12 +102,17 @@ const BookingCard = ({
 
     try {
       const success = await deleteBooking(booking.id);
-      
+
       if (success) {
-        toast.success('Booking deleted successfully!');
-        if (onRefresh && typeof onRefresh === 'function') {
-          onRefresh();
-        }
+        // Use setTimeout to ensure toast and refresh happen after render
+        setTimeout(() => {
+          toast.success('Booking deleted successfully!');
+
+          // Ensure onRefresh is called after toast
+          if (onRefresh && typeof onRefresh === 'function') {
+            onRefresh();
+          }
+        }, 0);
       } else {
         throw new Error('Failed to delete booking');
       }
@@ -130,7 +134,7 @@ const BookingCard = ({
             className="w-full h-48 object-cover rounded-lg"
           />
         </div>
-        
+
         {/* Content */}
         <div className="flex flex-col flex-grow md:pr-4">
           {/* Venue details */}
@@ -141,26 +145,30 @@ const BookingCard = ({
             {venue?.description?.slice(0, 150)}...
           </p>
           <p className="text-body-large-mobile md:text-body-medium-desktop font-body text-text-secondary font-semibold mt-2 flex items-center gap-2">
-            <FaCalendarAlt /> <span>{new Date(booking.dateFrom).toLocaleDateString()} - {new Date(booking.dateTo).toLocaleDateString()}</span>
+            <FaCalendarAlt />{' '}
+            <span>
+              {new Date(booking.dateFrom).toLocaleDateString()} -{' '}
+              {new Date(booking.dateTo).toLocaleDateString()}
+            </span>
           </p>
           <p className="text-body-large-mobile md:text-body-medium-desktop font-body text-text-secondary font-semibold mt-1 flex items-center gap-2">
             <FaPeopleRoof /> <span>{booking.guests} guests</span>
           </p>
-          
+
           {/* Meta data */}
           <div className="mt-2 text-body-large-mobile md:text-body-medium-desktop font-body font-light text-text-secondary">
             <p>
               {[
-                venue?.meta?.wifi ? "WiFi" : null,
-                venue?.meta?.parking ? "Parking" : null,
-                venue?.meta?.breakfast ? "Breakfast" : null,
-                venue?.meta?.pets ? "Pets allowed" : null
+                venue?.meta?.wifi ? 'WiFi' : null,
+                venue?.meta?.parking ? 'Parking' : null,
+                venue?.meta?.breakfast ? 'Breakfast' : null,
+                venue?.meta?.pets ? 'Pets allowed' : null,
               ]
                 .filter(Boolean)
-                .join(" • ")}
+                .join(' • ')}
             </p>
           </div>
-          
+
           {/* Action buttons in a row */}
           <div className="flex flex-row items-center gap-3 mt-auto pt-4">
             <button
@@ -179,12 +187,14 @@ const BookingCard = ({
                 <FaTrash />
               </button>
             )}
-            
-            <span className={`ml-auto text-body-large-mobile md:text-body-medium-desktop font-body font-semibold rounded-md py-2 px-3 ${isExpired ? 'bg-text-secondary text-text-contrast' : 'bg-primary text-text-contrast'}`}>
+
+            <span
+              className={`ml-auto text-body-large-mobile md:text-body-medium-desktop font-body font-semibold rounded-md py-2 px-3 ${isExpired ? 'bg-text-secondary text-text-contrast' : 'bg-primary text-text-contrast'}`}
+            >
               {isExpired ? 'Expired' : 'Active'}
             </span>
           </div>
-          
+
           {/* Customer info */}
           <div className="mt-4 flex items-center gap-4 border-t pt-4">
             <img
@@ -193,12 +203,16 @@ const BookingCard = ({
               className="w-10 h-10 rounded-full border"
             />
             <div>
-              <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-semibold text-text-primary">{customer?.name || 'Unknown customer'}</p>
-              <p className="text-body-small-mobile md:text-body-small-desktop font-body font-light text-text-secondary">{customer?.email}</p>
+              <p className="text-body-large-mobile md:text-body-medium-desktop font-body font-semibold text-text-primary">
+                {customer?.name || 'Unknown customer'}
+              </p>
+              <p className="text-body-small-mobile md:text-body-small-desktop font-body font-light text-text-secondary">
+                {customer?.email}
+              </p>
             </div>
           </div>
         </div>
-        
+
         {/* Image - Hidden on mobile, visible on larger screens */}
         <div className="hidden md:block md:flex-shrink-0 md:w-1/3 md:self-stretch">
           <img

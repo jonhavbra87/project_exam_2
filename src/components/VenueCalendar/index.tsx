@@ -9,6 +9,7 @@ import { CustomButton } from '../CustomButton';
 import { BookingCreateRequest } from '../../types/Booking';
 import isBetween from 'dayjs/plugin/isBetween';
 import { StyledDatePickerWrapper } from '../../styles/StyledDatePickerWrapper';
+import { BsCalendarXFill, BsFillCalendarCheckFill } from 'react-icons/bs';
 
 dayjs.extend(isBetween);
 
@@ -19,80 +20,88 @@ interface VenueCalendarProps {
 }
 
 /**
-* VenueCalendar component for booking venue accommodations
-* 
-* @component
-* @param {Object} props - Component props
-* @param {string} props.venueId - ID of the venue to book
-* @param {number} props.maxGuests - Maximum number of guests allowed for the venue
-* @param {number} props.pricePerNight - Price per night for the venue
-* @returns {JSX.Element | null} - Rendered VenueCalendar component or null if no venueId
-* 
-* @description
-* An interactive calendar component that allows users to book venues for specific dates.
-* Features:
-* - Date range selection with DatePicker
-* - Automatic blocking of already booked dates
-* - Guest count selection with validation against maximum allowed
-* - Real-time price calculation based on selected dates
-* - Booking submission with validation and error handling
-* - Loading state management
-* 
-* The component fetches existing bookings for the venue and prevents users from
-* selecting date ranges that overlap with existing bookings. It validates user
-* inputs and provides appropriate feedback through toast notifications.
-* 
-* Uses:
-* - react-datepicker for date selection
-* - dayjs for date manipulation and comparison
-* - react-hot-toast for notifications
-* 
-* @example
-* // Basic usage with venue data
-* <VenueCalendar 
-*   venueId="123abc" 
-*   maxGuests={4} 
-*   pricePerNight={1200} 
-* />
-*/
+ * VenueCalendar component for booking venue accommodations
+ *
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} props.venueId - ID of the venue to book
+ * @param {number} props.maxGuests - Maximum number of guests allowed for the venue
+ * @param {number} props.pricePerNight - Price per night for the venue
+ * @returns {JSX.Element | null} - Rendered VenueCalendar component or null if no venueId
+ *
+ * @description
+ * An interactive calendar component that allows users to book venues for specific dates.
+ * Features:
+ * - Date range selection with DatePicker
+ * - Automatic blocking of already booked dates
+ * - Guest count selection with validation against maximum allowed
+ * - Real-time price calculation based on selected dates
+ * - Booking submission with validation and error handling
+ * - Loading state management
+ *
+ * The component fetches existing bookings for the venue and prevents users from
+ * selecting date ranges that overlap with existing bookings. It validates user
+ * inputs and provides appropriate feedback through toast notifications.
+ *
+ * Uses:
+ * - react-datepicker for date selection
+ * - dayjs for date manipulation and comparison
+ * - react-hot-toast for notifications
+ *
+ * @example
+ * // Basic usage with venue data
+ * <VenueCalendar
+ *   venueId="123abc"
+ *   maxGuests={4}
+ *   pricePerNight={1200}
+ * />
+ */
 
-const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests, pricePerNight}) => {
-  const { fetchBookingDetails, createBooking, bookings, isLoading } = useBookingAPI();
+const VenueCalendar: React.FC<VenueCalendarProps> = ({
+  venueId,
+  maxGuests,
+  pricePerNight,
+}) => {
+  const { fetchBookingDetails, createBooking, bookings, isLoading } =
+    useBookingAPI();
   const { accessToken } = useAuthStore();
-  const [selectedDates, setSelectedDates] = useState<[Date | null, Date | null]>([null, null]);
+  const [selectedDates, setSelectedDates] = useState<
+    [Date | null, Date | null]
+  >([null, null]);
   const [guests, setGuests] = useState<number>(1);
   const [isBooking, setIsBooking] = useState(false);
   const [bookedDates, setBookedDates] = useState<Date[]>([]);
   const [totalPrice, setTotalPrice] = useState<number>(0);
-  
+
   useEffect(() => {
     if (venueId) {
       fetchBookingDetails(venueId);
     }
   }, [venueId, fetchBookingDetails]);
-  
-  
+
   useEffect(() => {
     if (!venueId || bookings.length === 0) return;
-    
+
     const venueBookings = bookings || [];
-    
+
     const booked: Date[] = venueBookings.flatMap((booking) => {
       const start = dayjs(booking.dateFrom).startOf('day');
       const end = dayjs(booking.dateTo).startOf('day');
       const dates: Date[] = [];
-      
-      for (let d = start; d.isBefore(end) || d.isSame(end, 'day'); d = d.add(1, 'day')) {
+
+      for (
+        let d = start;
+        d.isBefore(end) || d.isSame(end, 'day');
+        d = d.add(1, 'day')
+      ) {
         dates.push(d.toDate());
       }
       return dates;
     });
-    
+
     setBookedDates(booked);
   }, [bookings, venueId]);
-  
 
-  
   const handleDateChange = (dates: [Date | null, Date | null]) => {
     setSelectedDates(dates);
     if (dates[0] && dates[1]) {
@@ -102,20 +111,20 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests, price
       setTotalPrice(0);
     }
   };
-  
+
   const isDateRangeBooked = () => {
     const [start, end] = selectedDates;
     if (!start || !end) return false;
-  
+
     const selectedStart = dayjs(start);
     const selectedEnd = dayjs(end);
-  
+
     return bookedDates.some((bookedDate) => {
       const existing = dayjs(bookedDate);
       return existing.isBetween(selectedStart, selectedEnd, 'day', '[]');
     });
   };
-  
+
   const handleBooking = async () => {
     if (!accessToken) {
       toast.error('You have to be logged in to make a booking!');
@@ -143,12 +152,12 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests, price
       dateFrom: selectedDates[0].toISOString(),
       dateTo: selectedDates[1].toISOString(),
       guests,
-      venueId, 
+      venueId,
     };
 
     try {
       const success = await createBooking(newBooking);
-      
+
       if (success) {
         toast.success('Booking success!');
         fetchBookingDetails(venueId);
@@ -179,23 +188,26 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests, price
           <div className="space-y-6">
             <div>
               <StyledDatePickerWrapper>
-              <DatePicker
-                selected={selectedDates[0]}
-                onChange={handleDateChange}
-                startDate={selectedDates[0]}
-                endDate={selectedDates[1]}
-                selectsRange
-                inline
-                minDate={new Date()}
-                excludeDates={bookedDates}
-                selectsDisabledDaysInRange
-                dateFormat="dd/MM/yyyy"
-              />
+                <DatePicker
+                  selected={selectedDates[0]}
+                  onChange={handleDateChange}
+                  startDate={selectedDates[0]}
+                  endDate={selectedDates[1]}
+                  selectsRange
+                  inline
+                  minDate={new Date()}
+                  excludeDates={bookedDates}
+                  selectsDisabledDaysInRange
+                  dateFormat="dd/MM/yyyy"
+                />
               </StyledDatePickerWrapper>
             </div>
-                        
+
             <div>
-              <label htmlFor="guests" className="block text-body-small-mobile md:text-body-medium-desktop font-medium font-body mb-2">
+              <label
+                htmlFor="guests"
+                className="block text-body-small-mobile md:text-body-medium-desktop font-medium font-body mb-2"
+              >
                 Guests
               </label>
               <input
@@ -214,7 +226,9 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests, price
                 max={maxGuests}
                 className="w-full border rounded-md p-2"
               />
-              <p className="text-body-small-mobile md:text-body-small-desktop font-light font-body text-text-secondary">Max guests: {maxGuests}</p>
+              <p className="text-body-small-mobile md:text-body-small-desktop font-light font-body text-text-secondary">
+                Max guests: {maxGuests}
+              </p>
             </div>
             <div className="text-body-large-mobile md:text-body-large-desktop font-semibold font-body text-text-primary">
               Total Price: {totalPrice} NOK
@@ -223,6 +237,16 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests, price
               text={isBooking ? 'Booking...' : 'Book now'}
               onClick={handleBooking}
               disabled={!selectedDates[0] || !selectedDates[1] || isBooking}
+              variant="accent"
+              icon={
+                isBooking ? (
+                  <BsCalendarXFill />
+                ) : selectedDates[0] && selectedDates[1] ? (
+                  <BsFillCalendarCheckFill />
+                ) : (
+                  <BsCalendarXFill />
+                )
+              }
             />
           </div>
         )}

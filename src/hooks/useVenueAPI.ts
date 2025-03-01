@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 
 /**
  * Interface defining the venue state and operations
- * 
+ *
  * @typedef {Object} VenueState
  * @property {Venues[]} venues - List of venues
  * @property {Venues|null} venueDetails - Details of selected venue
@@ -53,18 +53,18 @@ interface VenueState {
 
 /**
  * Zustand store for venue management
- * 
+ *
  * This store manages all venue-related state and operations, including
  * fetching, creating, updating, and deleting venues. It also handles
  * pagination, search functionality, and filtering venues by user.
- * 
+ *
  * @example
  * // Fetch all venues
  * useVenueAPI.getState().fetchVenues(`${BASE_API_URL}${API_VENUES}`);
- * 
+ *
  * // Access venues data in a component
  * const { venues, isLoading } = useVenueAPI();
- * 
+ *
  * // Create a new venue
  * const createVenue = useVenueAPI(state => state.createVenue);
  * createVenue({
