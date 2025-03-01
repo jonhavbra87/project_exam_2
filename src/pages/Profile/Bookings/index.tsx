@@ -85,6 +85,11 @@ function Bookings():JSX.Element {
           key={`active-${booking.id}-${index}`}
           booking={booking}
           isExpired={false}
+          onRefresh={() => {
+            if (profile?.name) {
+              fetchBookingsByUser(profile.name);
+            }
+          }}
         />
       ))}
     </div>
@@ -95,12 +100,17 @@ function Bookings():JSX.Element {
     <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold mb-4 text-text-secondary">
       Expired Bookings
     </h2>
-    <div className="grid gap-6 opacity-70">
+    <div className="grid gap-6 opacity-80 grayscale">
       {expiredBookings.map((booking, index) => (
         <BookingCard
           key={`expired-${booking.id}-${index}`}
           booking={booking}
           isExpired={true}
+          onRefresh={() => {
+            if (profile?.name) {
+              fetchBookingsByUser(profile.name);
+            }
+          }}
         />
       ))}
           </div>
