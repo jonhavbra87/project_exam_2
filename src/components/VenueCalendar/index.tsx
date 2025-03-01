@@ -9,6 +9,7 @@ import { CustomButton } from '../CustomButton';
 import { BookingCreateRequest } from '../../types/Booking';
 import isBetween from 'dayjs/plugin/isBetween';
 import { StyledDatePickerWrapper } from '../../styles/StyledDatePickerWrapper';
+import { BsCalendarXFill, BsFillCalendarCheckFill } from 'react-icons/bs';
 
 dayjs.extend(isBetween);
 
@@ -236,6 +237,14 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({
               text={isBooking ? 'Booking...' : 'Book now'}
               onClick={handleBooking}
               disabled={!selectedDates[0] || !selectedDates[1] || isBooking}
+              variant='accent'
+              icon={
+                isBooking 
+                  ? <BsCalendarXFill /> 
+                  : (selectedDates[0] && selectedDates[1] 
+                      ? <BsFillCalendarCheckFill /> 
+                      : <BsCalendarXFill />)
+              }
             />
           </div>
         )}

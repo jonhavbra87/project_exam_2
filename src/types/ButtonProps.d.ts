@@ -3,6 +3,8 @@
  * @module components/Button
  */
 
+import { ReactNode } from "react";
+
 /**
  * Interface for props used by the Button component
  *
@@ -29,7 +31,7 @@
  * />
  */
 export interface ButtonProps {
-  icon?: string;
+  icon?: string | ReactNode;
   text: string;
   onClick?: () => void;
   type?: 'button' | 'submit' | 'reset';
