@@ -6,8 +6,44 @@ import { FaUser } from 'react-icons/fa';
 import VenueImage from '../VenueImage';
 import { CustomButton } from '../CustomButton';
 import { TiHeartFullOutline } from 'react-icons/ti';
+/**
+* VenueCard component for displaying venue preview information
+* 
+* @component
+* @param {Object} props - Component props
+* @param {Venues} props.venue - Venue data object containing details to display
+* @returns {JSX.Element} - Rendered VenueCard component
+* 
+* @description
+* A card component that displays key information about a venue in a compact, visually appealing format.
+* Used in venue listing pages to show multiple venues in a grid or list layout.
+* 
+* Features:
+* - Primary venue image with hover effect
+* - Venue name and location
+* - Star rating display
+* - Guest capacity indicator
+* - Price information
+* - View button for navigation to detailed venue page
+* - Wishlist heart icon (currently decorative)
+* 
+* The entire card is clickable and navigates to the venue detail page.
+* Includes proper accessibility attributes for navigation.
+* 
+* @example
+* // Basic usage with venue data
+* <VenueCard venue={venueData} />
+* 
+* @example
+* // Usage in a venue listing
+* <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+*   {venues.map(venue => (
+*     <VenueCard key={venue.id} venue={venue} />
+*   ))}
+* </div>
+*/
 
-export const VenueCard = ({ venue }: { venue: Venues }) => {
+const VenueCard = ({ venue }: { venue: Venues }) => {
   const navigate = useNavigate();
 
   const navigateToVenue = () => {
@@ -16,7 +52,6 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-lg border border-black hover:shadow-xl transition-shadow relative">
-      {/* Content that wraps product image and text */}
       <div
         className="cursor-pointer block relative group"
         onClick={navigateToVenue}
@@ -30,7 +65,6 @@ export const VenueCard = ({ venue }: { venue: Venues }) => {
               : 'No image'
           }
         />
-        {/* Hover overlay */}
         <div className="absolute inset-0 bg-black bg-opacity-30 opacity-0 group-hover:opacity-100 transition-opacity"></div>
       </div>
 

@@ -4,8 +4,37 @@ import { BiSearchAlt, BiX } from 'react-icons/bi';
 interface SearchBarProps {
   onSearch: (query: string) => void;
 }
+/**
+* SearchBar component for venue search functionality
+* 
+* @component
+* @param {Object} props - Component props
+* @param {Function} props.onSearch - Callback function when search is performed
+* @returns {JSX.Element} - Rendered SearchBar component
+* 
+* @description
+* A search input that allows users to search for venues.
+* Features:
+* - Search icon on the left side
+* - Clear button (X) that appears when text is entered
+* - Proper accessibility attributes and labels
+* - Form submission handling
+* 
+* The component maintains its own query state and calls the onSearch callback
+* when the user submits the form or clears the search. The search can be
+* submitted by pressing Enter or by form submission.
+* 
+* @example
+* // Basic usage
+* const handleSearch = (query) => {
+*   console.log('Searching for:', query);
+*   // Perform search logic here
+* };
+* 
+* <SearchBar onSearch={handleSearch} />
+*/
 
-function SearchBar({ onSearch }: SearchBarProps) {
+function SearchBar({ onSearch }: SearchBarProps): JSX.Element {
   const [query, setQuery] = useState<string>('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -19,8 +48,8 @@ function SearchBar({ onSearch }: SearchBarProps) {
   };
 
   const clearSearch = () => {
-    setQuery(''); // Emty the search input
-    onSearch(''); // Clear the search results
+    setQuery('');
+    onSearch(''); 
   };
 
   return (
@@ -30,23 +59,18 @@ function SearchBar({ onSearch }: SearchBarProps) {
       role="search"
       aria-label="Search"
     >
-      {/* Accessible Label (Hidden) */}
       <label htmlFor="searchInput" className="sr-only">
         Search for products
       </label>
-
-      {/* Search Icon inside input */}
       <div className="absolute left-8 top-1/2 transform -translate-y-1/2 text-text-primary">
         <BiSearchAlt />
       </div>
-
       <input
         id="searchInput"
         placeholder="Search for Venues & press enter"
         type="text"
         value={query}
         onChange={handleInputChange}
-        // onKeyUp={handleSearch}
         className="rounded-md grow border-text-primary border-r border-b text-text-secondary p-4 ps-16 focus:outline-none focus:outline-primary focus:-outline-offset-2"
       />
       {/* Clear Button (X) - Visible only when query is not empty */}

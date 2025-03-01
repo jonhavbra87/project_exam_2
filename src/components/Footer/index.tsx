@@ -4,6 +4,40 @@ import { BsTwitterX } from 'react-icons/bs';
 import { CustomInput } from '../CustomInput';
 import { IoIosMail } from 'react-icons/io';
 import { useNavigate } from 'react-router-dom';
+/**
+ * @module Footer
+ * @description Website footer component that displays company branding, newsletter subscription form,
+ * navigation links, copyright information, and social media links.
+ * The footer is responsive and adapts its layout based on screen size.
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered Footer component
+ * 
+ * @example
+ * // Basic usage at the bottom of a page or layout
+ * <Footer />
+ * 
+ * @example
+ * // Usage in a layout component
+ * const MainLayout = () => {
+ *   return (
+ *     <div className="min-h-screen flex flex-col">
+ *       <Header />
+ *       <main className="flex-grow">
+ *         {children}
+ *       </main>
+ *       <Footer />
+ *     </div>
+ *   );
+ * }
+ * 
+ * @functionality
+ * - Displays company logo and tagline
+ * - Provides a newsletter subscription form
+ * - Includes navigation links to Terms, Privacy, Account, and Contact pages
+ * - Displays copyright information
+ * - Includes social media links with appropriate accessibility attributes
+ */
 
 function Footer() {
   const navigate = useNavigate();
@@ -20,7 +54,6 @@ function Footer() {
             <span className="text-accent"> together</span>
           </div>
         </div>
-
         {/* Newsletter */}
         <div className="flex flex-col items-center md:items-start">
           <h3 className="text-body-large-desktop font-semibold text-white font-body">
@@ -32,21 +65,7 @@ function Footer() {
             travel tips. Let’s explore the world together!
           </p>
           <form className="flex items-center w-full max-w-lg ">
-
-{/* 
-            <CiMail className="ml-3 w-5 h-5 text-neutral-900" />
-            <label htmlFor="emailInput" className="sr-only">
-              Enter your email
-            </label>
-            <input
-              type="email"
-              id="emailInput"
-              placeholder="Enter your email"
-              className="flex-grow bg-neutral-50 px-3 py-2 text-neutral-800 placeholder-neutral-800 focus:outline-none"
-              required
-            /> */}
             <div className='flex-grow'>
-
             <CustomInput
               label="User e-mail"
               type="email"
@@ -55,8 +74,6 @@ function Footer() {
               defaultValue="" 
               />
               </div>
-
-
             {/* Submit Button */}
             <button
               type="submit"
@@ -66,7 +83,6 @@ function Footer() {
             </button>
           </form>
         </div>
-
         {/* Legal Info */}
       </div>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 mt-8 gap-8 text-text-muted border-t-2 border-text-muted ">
@@ -81,7 +97,6 @@ function Footer() {
               Privacy
             </p>
           </li>
-
           <p className="text-body-large-desktop">|</p>
           <li>
             <p onClick={() => navigate("/profile")} className="hover:text-secondary cursor-pointer transition">

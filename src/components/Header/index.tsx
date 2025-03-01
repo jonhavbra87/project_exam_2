@@ -1,6 +1,34 @@
 import { Link } from 'react-router-dom';
 import Logo from '../../assets/holidaze_logo.svg';
 import NavBar from '../NavBar';
+/**
+ * @module Header
+ * @description Site header component that displays the company logo and navigation bar.
+ * The header is fixed at the top of the page and spans the full width of the viewport.
+ * It contains a logo that links to the homepage and the NavBar component for site navigation.
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered Header component
+ * 
+ * @example
+ * // Basic usage at the top of a page or layout
+ * <Header />
+ * 
+ * @example
+ * // Usage in a layout component
+ * const MainLayout = () => {
+ *   return (
+ *     <div className="min-h-screen flex flex-col">
+ *       <Header />
+ *       <main className="flex-grow pt-20">
+ *         {children}
+ *       </main>
+ *       <Footer />
+ *     </div>
+ *   );
+ * }
+ */
+
 
 function Header() {
   return (

@@ -6,7 +6,7 @@ import L from 'leaflet';
 import LoadingSpinner from '../LoadingSpinner';
 import toast from 'react-hot-toast';
 
-// 📌 **Custom Leaflet Marker**
+// **Custom Leaflet Marker**
 const customIcon = new L.Icon({
   iconUrl:
     'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
@@ -26,6 +26,37 @@ const MapUpdater = ({ lat, lng }: { lat: number; lng: number }) => {
 
   return null;
 };
+/**
+* VenueMap component for displaying venue location on an interactive map
+* 
+* @component
+* @param {Object} props - Component props
+* @param {Venues} props.venue - Venue data object containing location information
+* @returns {JSX.Element} - Rendered VenueMap component
+* 
+* @description
+* An interactive map component that displays the location of a venue using Leaflet.
+* Handles various edge cases for location data:
+* - Uses exact coordinates when available
+* - Falls back to Oslo coordinates when specific coordinates aren't available
+* - Displays address information in a popup
+* - Shows loading state while preparing map data
+* 
+* Features:
+* - Custom map marker
+* - Popup with venue name, description, and address
+* - Address display in overlay
+* - Automatic map centering using MapUpdater subcomponent
+* - Error handling for missing coordinates
+* 
+* @example
+* // Basic usage with venue data
+* <VenueMap venue={venueData} />
+* 
+* @example
+* // Usage with conditional rendering
+* {venue.location && <VenueMap venue={venue} />}
+*/
 
 function VenueMap({ venue }: { venue: Venues }) {
   const [coordinates, setCoordinates] = useState<[number, number] | null>(null);
@@ -56,7 +87,7 @@ function VenueMap({ venue }: { venue: Venues }) {
         setAddressAvailable(true);
       } else {
         setLocationText('No address available');
-        setCoordinates([59.9139, 10.7522]); // 🔹 Fallback to Oslo
+        setCoordinates([59.9139, 10.7522]); // Fallback to Oslo
         setAddressAvailable(false);
       }
     }

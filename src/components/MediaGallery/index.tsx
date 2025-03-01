@@ -12,8 +12,21 @@ const coverflowSettings = {
   modifier: 1,
   slideShadows: false,
 };
+/**
+ * Internal thumbnail gallery component for displaying smaller venue images
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {Venues['media']} props.images - Array of media objects from venue
+ * @param {number} props.mainImageIndex - Index of the currently displayed main image
+ * @param {Function} props.setMainImageIndex - Function to update the main image index
+ * @returns {JSX.Element} - Rendered thumbnail gallery
+ * 
+ * @description
+ * Displays a responsive grid of thumbnail images that adapts its layout based on 
+ * the number of available thumbnails. Clicking a thumbnail updates the main image.
+ */
 
-// Thumbnail-component for MediaGallery
 const ThumbnailGallery = ({
   images,
   mainImageIndex,
@@ -70,7 +83,7 @@ const ThumbnailGallery = ({
               <img
                 src={image.url}
                 alt={image.alt || `Thumbnail ${originalIndex + 1}`}
-                className={`object-cover w-full h-full cursor-pointer hover:opacity-90 transition-opacity ${cornerClasses}`}
+                className={`object-cover w-full h-full cursor-pointer hover:opacity-90 transition-opacity ${cornerClasses} object-center`}
                 onClick={() => setMainImageIndex(originalIndex)}
               />
             </div>
@@ -81,11 +94,47 @@ const ThumbnailGallery = ({
   );
 };
 
+/**
+ * Interface for MediaGallery props
+ * 
+ * @typedef {Object} MediaGalleryProps
+ * @property {Venues['media']} images - Array of media objects containing url and alt text
+ */
+
 type MediaGalleryProps = {
   images: Venues['media'];
 };
 
-function MediaGallery({ images }: MediaGalleryProps) {
+/**
+ * Responsive media gallery for displaying venue images
+ * 
+ * @component
+ * @param {MediaGalleryProps} props - Component props
+ * @param {Venues['media']} props.images - Array of media objects from venue
+ * @returns {JSX.Element} - Rendered media gallery component
+ * 
+ * @description
+ * A responsive image gallery that adapts to different screen sizes:
+ * - On mobile: Shows a carousel with swipe functionality using Swiper
+ * - On desktop: Shows a grid layout with main image and thumbnails
+ * 
+ * Features:
+ * - Handles empty or single-image cases gracefully
+ * - Shows image count indicator on mobile carousel
+ * - Allows clicking thumbnails to change main image on desktop
+ * - Optimized layout based on number of available images
+ * - Accessibility attributes for screen readers
+ * 
+ * @example
+ * // Basic usage with venue media
+ * <MediaGallery images={venue.media} />
+ * 
+ * @example
+ * // Fallback behavior with empty array
+ * <MediaGallery images={[]} /> // Will show a placeholder image
+ */
+
+function MediaGallery({ images }: MediaGalleryProps): JSX.Element {
   const [mainImageIndex, setMainImageIndex] = useState(0);
   const [activeIndex, setActiveIndex] = useState(0);
   const totalSlides = images.length;
@@ -154,7 +203,7 @@ function MediaGallery({ images }: MediaGalleryProps) {
             <img
               src={safeImages[0].url}
               alt={safeImages[0].alt || "Venue image"}
-              className="object-cover w-full h-full rounded-lg"
+              className="object-cover w-full rounded-lg object-center"
               aria-label="Venue image"
             />
           </div>
@@ -165,7 +214,7 @@ function MediaGallery({ images }: MediaGalleryProps) {
               <img
                 src={mainImage.url}
                 alt={mainImage.alt || "Main image of the venue"}
-                className="object-cover w-full h-full rounded-tl-lg rounded-bl-lg"
+                className="object-cover w-full h-full rounded-tl-lg rounded-bl-lg object-center"
                 aria-label="Main image of the venue"
               />
             </div>

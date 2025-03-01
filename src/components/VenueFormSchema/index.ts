@@ -1,4 +1,51 @@
 import * as yup from 'yup';
+/**
+* Validation schema for venue data
+* 
+* @module venueSchema
+* @description
+* A Yup validation schema that defines validation rules for venue data.
+* Used for form validation when creating or updating venues.
+* 
+* Validates the following venue properties:
+* - name: Required string
+* - description: Required string with minimum length of 10 characters
+* - media: Array of objects with url (valid URL format) and alt text
+* - rating: Number between 1 and 5
+* - price: Positive number
+* - maxGuests: Positive integer
+* - meta: Object containing boolean flags for amenities (wifi, parking, breakfast, pets)
+* - location: Object with address, city, zip, country, continent, and coordinates
+*   - lat: Number between -90 and 90
+*   - lng: Number between -180 and 180
+* 
+* Also exports a TypeScript type derived from the schema for type safety.
+* 
+* @example
+* // Using the schema for form validation with react-hook-form
+* import { useForm } from 'react-hook-form';
+* import { yupResolver } from '@hookform/resolvers/yup';
+* import { venueSchema, VenueFormData } from './venueSchema';
+* 
+* const VenueForm = () => {
+*   const { register, handleSubmit, formState: { errors } } = useForm<VenueFormData>({
+*     resolver: yupResolver(venueSchema)
+*   });
+*   
+*   const onSubmit = (data: VenueFormData) => {
+*     // Submit validated data
+*   };
+*   
+*   return (
+*     < onSubmit={handleSubmit(onSubmit)}>
+*      <input {...register('name')} />
+*     {errors.name && <p>{errors.name.message}</p>}
+*      // form fields...
+*    <button type="submit">Submit</button>
+*     </form>
+*   );
+* };
+*/
 
 export const venueSchema = yup
   .object({
