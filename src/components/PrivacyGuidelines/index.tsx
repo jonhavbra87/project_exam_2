@@ -1,6 +1,23 @@
 import GradientHeading from "../../styles/GradientHeading";
+/**
+* PrivacyGuidelines component displays the privacy policy
+* 
+* @component
+* @returns {JSX.Element} - Rendered PrivacyGuidelines component
+* 
+* @description
+* Displays a formatted privacy policy document with sections covering 
+* data collection, usage, security, user rights, data storage, third-party 
+* services, and policy updates. Uses GradientHeading for the main title
+* and consistent styling for section headers and paragraphs. Designed to be
+* responsive across different screen sizes with appropriate typography classes.
+* 
+* @example
+* // Usage in a route
+* <Route path="/privacy" element={<PrivacyGuidelines />} />
+*/
 
-const PrivacyGuidelines = () => {
+const PrivacyGuidelines = (): JSX.Element => {
   return (
     <>
       <GradientHeading>Privacy Guidelines</GradientHeading>

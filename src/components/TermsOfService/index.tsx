@@ -1,4 +1,23 @@
 import GradientHeading from "../../styles/GradientHeading";
+/**
+* TermsOfService component displays the terms of service document
+* 
+* @component
+* @returns {JSX.Element} - Rendered TermsOfService component
+* 
+* @description
+* Displays a formatted terms of service document with sections covering
+* introduction, user accounts, profile and venue creation, booking and cancellations,
+* platform conduct, liability, amendments, and contact information.
+* 
+* Uses GradientHeading for the main title and consistent styling for section
+* headers and paragraphs. Designed to be responsive across different screen sizes
+* with appropriate typography classes.
+* 
+* @example
+* // Usage in a route
+* <Route path="/terms" element={<TermsOfService />} />
+*/
 
 const TermsOfService = () => {
   return (

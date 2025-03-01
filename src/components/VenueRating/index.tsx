@@ -10,7 +10,7 @@ import { FaStar, FaRegStar, FaStarHalf } from 'react-icons/fa';
  * @returns {JSX.Element} A visual representation of the rating with stars.
  */
 
-function VenueRating({ rating }: { rating: number }) {
+function VenueRating({ rating }: { rating: number }): JSX.Element {
   const totalStars = 5;
   const filledStars = Math.floor(rating);
   const halfStar = rating % 1 !== 0;

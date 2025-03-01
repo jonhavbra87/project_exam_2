@@ -2,7 +2,37 @@ import { useNavigate } from "react-router-dom";
 import { FiLock } from "react-icons/fi";
 import { CustomButton } from "../CustomButton";
 import NoroffLogo from '../../assets/noroff_logo.svg';
-function UnauthProfile() {
+/**
+* UnauthProfile component displays an access denied message for unauthenticated users
+* 
+* @component
+* @returns {JSX.Element} - Rendered UnauthProfile component
+* 
+* @description
+* A protective component that prevents unauthorized access to profile features.
+* Displays a friendly but clear access denied message with a lock icon
+* and a login button that redirects users to the login page.
+* 
+* Used as a fallback when unauthenticated users attempt to access protected routes.
+* The component is responsive with different text sizes for mobile and desktop views.
+* 
+* @example
+* // Usage in a protected route
+* const ProfileRoute = () => {
+*   const { isAuthenticated } = useAuthStore();
+*   
+*   return isAuthenticated ? <ProfilePage /> : <UnauthProfile />;
+* };
+* 
+* @example
+* // Usage with React Router and conditional rendering
+* <Route 
+*   path="/profile" 
+*   element={isAuthenticated ? <ProfilePage /> : <UnauthProfile />} 
+* />
+*/
+
+function UnauthProfile(): JSX.Element {
   const navigate = useNavigate();
 
   return (

@@ -18,6 +18,44 @@ interface VenueCalendarProps {
   pricePerNight: number;
 }
 
+/**
+* VenueCalendar component for booking venue accommodations
+* 
+* @component
+* @param {Object} props - Component props
+* @param {string} props.venueId - ID of the venue to book
+* @param {number} props.maxGuests - Maximum number of guests allowed for the venue
+* @param {number} props.pricePerNight - Price per night for the venue
+* @returns {JSX.Element | null} - Rendered VenueCalendar component or null if no venueId
+* 
+* @description
+* An interactive calendar component that allows users to book venues for specific dates.
+* Features:
+* - Date range selection with DatePicker
+* - Automatic blocking of already booked dates
+* - Guest count selection with validation against maximum allowed
+* - Real-time price calculation based on selected dates
+* - Booking submission with validation and error handling
+* - Loading state management
+* 
+* The component fetches existing bookings for the venue and prevents users from
+* selecting date ranges that overlap with existing bookings. It validates user
+* inputs and provides appropriate feedback through toast notifications.
+* 
+* Uses:
+* - react-datepicker for date selection
+* - dayjs for date manipulation and comparison
+* - react-hot-toast for notifications
+* 
+* @example
+* // Basic usage with venue data
+* <VenueCalendar 
+*   venueId="123abc" 
+*   maxGuests={4} 
+*   pricePerNight={1200} 
+* />
+*/
+
 const VenueCalendar: React.FC<VenueCalendarProps> = ({ venueId, maxGuests, pricePerNight}) => {
   const { fetchBookingDetails, createBooking, bookings, isLoading } = useBookingAPI();
   const { accessToken } = useAuthStore();

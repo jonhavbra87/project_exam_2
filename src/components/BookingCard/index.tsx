@@ -6,6 +6,46 @@ import useToastNotification from '../../hooks/useToastNotification';
 import { useBookingAPI } from '../../hooks/useBookingAPI';
 import { useAuthStore } from '../../store/authStore';
 
+/**
+ * @module BookingCard
+ * @description A component that displays booking information in a card format.
+ * The card shows venue details, booking dates, number of guests, amenities, 
+ * and customer information. It also provides actions to view the venue or delete the booking.
+ */
+
+/**
+ * @typedef {Object} BookingCardProps
+ * @property {Booking} booking - The booking object containing venue and customer details
+ * @property {boolean} isExpired - Flag indicating if the booking has expired
+ * @property {Function} [onRefresh] - Optional callback function to refresh the parent component after deletion
+ */
+
+/**
+ * BookingCard component displays detailed information about a booking
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {Booking} props.booking - The booking object containing all booking information
+ * @param {boolean} props.isExpired - Indicates whether the booking has expired
+ * @param {Function} [props.onRefresh] - Optional callback to trigger data refresh in parent component
+ * @returns {JSX.Element} - Rendered BookingCard component
+ * 
+ * @example
+ * // Basic usage with a booking object
+ * <BookingCard 
+ *   booking={bookingData} 
+ *   isExpired={false} 
+ * />
+ * 
+ * @example
+ * // With refresh callback
+ * <BookingCard 
+ *   booking={bookingData} 
+ *   isExpired={true}
+ *   onRefresh={() => fetchBookings()} 
+ * />
+ */
+
 const BookingCard = ({
   booking,
   isExpired,
@@ -21,12 +61,35 @@ const BookingCard = ({
   const { deleteBooking } = useBookingAPI();
   const { profile } = useAuthStore();
 
+
+/**
+ * @function navigateToVenue
+ * @description Navigates to the venue details page
+ *  
+ * @example
+ * // Navigate to the venue page
+ * navigateToVenue();
+ * */
+
   const navigateToVenue = () => {
     if (venue?.id) {
       navigate(`/venue/${venue.id}`);
     }
   };
 
+/**
+ * Handles the deletion of a booking
+ * 
+ * @async
+ * @function handleDeleteBooking
+ * @description Deletes the booking from the database
+ * @returns {Promise<void>} - A promise that resolves after the booking is deleted
+ * @throws {Error} - If the booking deletion fails
+ * @example
+ * // Delete the booking
+ * handleDeleteBooking();
+ *  
+ * */
   const handleDeleteBooking = async () => {
     if (!booking.id) {
       toast.error('Error: Booking ID not found.');

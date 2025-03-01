@@ -1,7 +1,3 @@
-/**
- * @fileoverview API store for managing venue-related operations and state
- * @module store/venueStore
- */
 import { create } from 'zustand';
 import { Venues } from '../types/Venues';
 import {

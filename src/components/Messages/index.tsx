@@ -1,5 +1,31 @@
 import { TiMessages } from "react-icons/ti";
 
+/**
+ * Messages component displays an empty state for the messaging interface
+ * 
+ * @component
+ * @returns {JSX.Element} - Rendered Messages component with empty state UI
+ * 
+ * @description
+ * A placeholder component that displays when a user has no messages.
+ * It shows a friendly message encouraging users to start conversations
+ * with their customers to increase engagement. The component includes
+ * an icon, heading, and descriptive text styled responsively for different
+ * screen sizes.
+ * 
+ * @example
+ * // Basic usage in a route
+ * <Route path="/messages" element={<Messages />} />
+ * 
+ * @example
+ * // Usage in a conditional render
+ * {messages.length === 0 ? (
+ *   <Messages />
+ * ) : (
+ *   <MessageList messages={messages} />
+ * )}
+ */
+
 const Messages = () => {
     return (
         <div>

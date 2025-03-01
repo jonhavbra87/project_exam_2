@@ -23,8 +23,39 @@ const schema = yup.object().shape({
   password: yup.string().min(8, "Password must be at least 8 characters").required("Password is required"),
   venueManager: yup.boolean(),
 });
+/**
+* Register component for user registration
+* 
+* @component
+* @returns {JSX.Element} - Rendered Register component
+* 
+* @description
+* A comprehensive registration form that allows users to create an account with Noroff credentials.
+* The component uses react-hook-form for form handling and validation with Yup schema.
+* Users can provide their name, email, password, and choose to register as a venue manager.
+* The form enforces validation rules including:
+* - Name must be at least 2 characters
+* - Email must be a valid @stud.noroff.no address
+* - Password must be at least 8 characters
+* 
+* On successful registration, the user is automatically logged in and redirected to their profile.
+* Default avatar and banner images are assigned to new accounts.
+* 
+* @example
+* // Basic usage in router
+* <Route path="/register" element={<Register />} />
+* 
+* @example
+* // Usage with navigation
+* const navigate = useNavigate();
+* 
+* // Redirect to registration
+* const redirectToRegister = () => {
+*   navigate('/register');
+* };
+*/
 
-function Register() {
+function Register(): JSX.Element {
   const navigate = useNavigate();
   const { register: registerUser, loading, error } = useRegister();
   // ✅ React Hook Form setup
@@ -157,95 +188,3 @@ function Register() {
 }
 
 export default Register;
-
-
-
-// import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
-// import useRegister from '../../hooks/useRegiser';
-
-
-// function Register() {
-//   const { register } = useRegister();
-//   const [venueManager, setVenueManager] = useState(false); // ✅ Bruker kan velge Venue Manager
-//   const [error, setError] = useState<string | null>(null);
-//   const navigate = useNavigate();
-
-//   const handleSubmit = async (event: React.FormEvent) => {
-//     event.preventDefault();
-//     setError(null);
-
-//     try {
-//       await register(name, email, password, venueManager);
-//       navigate('/profile'); // ✅ Naviger til profil etter registrering
-//     } catch (error) {
-//       setError('Registration failed. Please try again.');
-//       console.error(error);
-//     }
-//   };
-
-//   return (
-//     <div className="flex justify-center items-center h-screen">
-//       <form
-//         onSubmit={handleSubmit}
-//         className="p-6 bg-white shadow-md rounded-lg w-96"
-//       >
-//         <h2 className="text-2xl font-bold text-center mb-4">Register</h2>
-
-//         {error && (
-//           <p className="text-red-500 text-sm text-center mb-3">{error}</p>
-//         )}
-
-//         <input
-//           type="text"
-//           placeholder="Name"
-//           className="w-full p-2 border rounded mb-2"
-//           value={name}
-//           onChange={(e) => setName(e.target.value)}
-//           required
-//         />
-
-//         <input
-//           type="email"
-//           placeholder="Email"
-//           className="w-full p-2 border rounded mb-2"
-//           value={email}
-//           onChange={(e) => setEmail(e.target.value)}
-//           required
-//         />
-
-//         <input
-//           type="password"
-//           placeholder="Password"
-//           className="w-full p-2 border rounded mb-2"
-//           value={password}
-//           onChange={(e) => setPassword(e.target.value)}
-//           required
-//         />
-
-//         {/* ✅ Venue Manager Toggle */}
-//         <div className="flex items-center justify-between mt-4">
-//           <label htmlFor="venueManager" className="text-md text-gray-700">
-//             Register as Venue Manager?
-//           </label>
-//           <input
-//             id="venueManager"
-//             type="checkbox"
-//             className="w-5 h-5 ml-2 cursor-pointer"
-//             checked={venueManager}
-//             onChange={() => setVenueManager(!venueManager)}
-//           />
-//         </div>
-
-//         <button
-//           type="submit"
-//           className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600 mt-4"
-//         >
-//           Register
-//         </button>
-//       </form>
-//     </div>
-//   );
-// }
-
-// export default Register;

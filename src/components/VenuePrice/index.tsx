@@ -1,5 +1,14 @@
 import { Venues } from '../../types/Venues';
-
+/**
+ * VenuePrice component
+ * @param product - Venue object
+ * @returns Venue price
+ * @example
+ * ```tsx
+ * <VenuePrice product={product} />
+ * ```
+ * 
+ */
 export const VenuePrice = ({ product }: { product: Venues }) => {
   return (
     <div className="flex gap-2 items-center">

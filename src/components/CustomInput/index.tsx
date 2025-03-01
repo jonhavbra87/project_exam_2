@@ -1,5 +1,63 @@
 import { useState, forwardRef } from "react";
 import { InputProps } from "../../types/InputProps";
+/**
+ * @module CustomInput
+ * @description A reusable input component with floating label animation and icon support.
+ * This component uses forwardRef to allow parent components to access the input element directly.
+ * The label transitions between positions based on focus and input value state.
+ * 
+ * @component
+ * @param {Object} props - Component props
+ * @param {string} props.label - Label text for the input field
+ * @param {string} [props.type="text"] - HTML input type attribute
+ * @param {React.ComponentType} [props.Icon] - Optional icon component to display before input
+ * @param {boolean} [props.required] - Whether the input is required
+ * @param {React.Ref<HTMLInputElement>} ref - Forwarded ref to access the input element
+ * @param {Object} rest - Additional HTML input attributes passed via spread
+ * @param {string} [rest.defaultValue] - Default value for the input (uncontrolled)
+ * @param {string} [rest.value] - Value for the input (controlled)
+ * @param {Function} [rest.onChange] - Event handler for input changes
+ * @param {string} [rest.placeholder] - Input placeholder text
+ * @param {string} [rest.name] - Input name attribute
+ * @returns {JSX.Element} - Rendered CustomInput component
+ * 
+ * @example
+ * // Basic text input with label
+ * <CustomInput 
+ *   label="Username" 
+ *   name="username"
+ *   required={true}
+ * />
+ * 
+ * @example
+ * // Password input with icon and ref
+ * import { LockIcon } from 'your-icon-library';
+ * 
+ * const MyForm = () => {
+ *   const passwordRef = useRef(null);
+ *   
+ *   return (
+ *     <CustomInput 
+ *       label="Password"
+ *       type="password"
+ *       Icon={LockIcon}
+ *       ref={passwordRef}
+ *       name="password"
+ *     />
+ *   );
+ * }
+ * 
+ * @example
+ * // Email input with default value
+ * <CustomInput 
+ *   label="Email" 
+ *   type="email"
+ *   defaultValue="user@example.com"
+ *   name="email"
+ * />
+ */
+
+
 
 export const CustomInput = forwardRef<HTMLInputElement, InputProps>(
   ({ label, type = "text", Icon, required, ...rest }, ref) => {
