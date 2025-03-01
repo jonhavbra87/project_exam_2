@@ -15,12 +15,12 @@ import LoadingSpinner from '../../components/LoadingSpinner';
 import toast from 'react-hot-toast';
 /**
  * VenueDetails Component
- * 
+ *
  * Displays comprehensive details for a specific venue
- * 
+ *
  * @component
  * @returns {React.ReactElement} A detailed view of a venue with multiple sections
- * 
+ *
  * @description
  * Provides a comprehensive venue information page, including:
  * - Media gallery
@@ -29,12 +29,12 @@ import toast from 'react-hot-toast';
  * - Venue manager information
  * - Booking calendar
  * - Location details with map
- * 
+ *
  * @remarks
  * - Fetches venue details based on URL parameter
  * - Handles loading and error states
  * - Responsive design with different layouts for mobile and desktop
- * 
+ *
  * @example
  * // Typical usage in routing configuration
  * <Route path="/venue/:id" element={<VenueDetails />} />
@@ -131,8 +131,7 @@ function VenueDetails(): JSX.Element {
           <div className="mt-4 flex items-center gap-4">
             <img
               src={
-                venueDetails.owner?.avatar?.url ||
-                'https://placehold.com/150'
+                venueDetails.owner?.avatar?.url || 'https://placehold.com/150'
               }
               alt="Owner Avatar"
               className="w-16 h-16 rounded-full"

@@ -94,20 +94,20 @@ const BookingCard = ({
       toast.error('Error: Booking ID not found.');
       return;
     }
-  
+
     const confirmDelete = window.confirm(
       'Are you sure you want to delete this booking?'
     );
     if (!confirmDelete) return;
-  
+
     try {
       const success = await deleteBooking(booking.id);
-      
+
       if (success) {
         // Use setTimeout to ensure toast and refresh happen after render
         setTimeout(() => {
           toast.success('Booking deleted successfully!');
-          
+
           // Ensure onRefresh is called after toast
           if (onRefresh && typeof onRefresh === 'function') {
             onRefresh();

@@ -31,17 +31,23 @@ import PlaceholderImg from '../../assets/signup_collage.webp';
  * />
  */
 
-const VenueImage = ({ src, alt }: { src: string; alt: string }): JSX.Element => {
+const VenueImage = ({
+  src,
+  alt,
+}: {
+  src: string;
+  alt: string;
+}): JSX.Element => {
   return (
     <div className="w-full aspect-[4/3] bg-gray-200 rounded-t-lg overflow-hidden">
       <img
         src={src || PlaceholderImg}
         alt={alt || 'Venue image'}
         loading="lazy"
-        onError={(event) => { 
+        onError={(event) => {
           const imgElement = event.target as HTMLImageElement;
-          imgElement.onerror = null; 
-          imgElement.src = PlaceholderImg; 
+          imgElement.onerror = null;
+          imgElement.src = PlaceholderImg;
         }}
         className="mb-4 w-full object-cover h-full "
       />

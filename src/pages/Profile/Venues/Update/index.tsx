@@ -18,12 +18,12 @@ import { useEffect, useState } from 'react';
 import { API_VENUES, BASE_API_URL } from '../../../../api/apiConfig';
 /**
  * ProfileVenueUpdate Component
- * 
+ *
  * Provides a comprehensive form for updating an existing venue with detailed information
- * 
+ *
  * @component
  * @returns {React.ReactElement} A detailed venue update form with pre-filled data
- * 
+ *
  * @description
  * Allows authenticated venue owners to update their venue details, including:
  * - Venue basic information (name, description)
@@ -31,13 +31,13 @@ import { API_VENUES, BASE_API_URL } from '../../../../api/apiConfig';
  * - Pricing and capacity details
  * - Facility options (WiFi, parking, breakfast, pets)
  * - Detailed location information
- * 
+ *
  * @remarks
  * - Requires user authentication
  * - Fetches existing venue details based on URL parameter
  * - Uses react-hook-form for form management
  * - Provides toast notifications for submission status
- * 
+ *
  * @example
  * // Typical usage in a protected route
  * <Route path="/profile/update-venue/:id" element={<ProfileVenueUpdate />} />

@@ -14,25 +14,25 @@ import { FiSettings } from 'react-icons/fi';
 import UnauthProfile from '../../components/UnauthProfile';
 /**
  * ProfilePage Component
- * 
+ *
  * Provides a comprehensive user profile dashboard with various management options
- * 
+ *
  * @component
  * @returns {React.ReactElement} A detailed profile page with user information and navigation menu
- * 
+ *
  * @description
  * Displays user profile with features including:
  * - User banner and avatar
  * - Venue manager status
  * - Customizable profile menu sections
  * - Options for venue management, bookings, messages, and account settings
- * 
+ *
  * @remarks
  * - Requires user authentication
  * - Dynamically renders menu items based on user's venue manager status
  * - Provides logout functionality
  * - Responsive design with different layouts for mobile and desktop
- * 
+ *
  * @example
  * // Typical usage in routing configuration
  * <Route path="/profile" element={<ProfilePage />} />

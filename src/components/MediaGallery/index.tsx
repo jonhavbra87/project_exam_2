@@ -182,10 +182,10 @@ function MediaGallery({ images }: MediaGalleryProps): JSX.Element {
             alt={safeImages[0].alt || 'Venue image'}
             className="rounded-lg object-cover w-full h-[500px]"
             aria-label="Img carousel with one image"
-            onError={(event) => { 
+            onError={(event) => {
               const imgElement = event.target as HTMLImageElement;
-              imgElement.onerror = null; 
-              imgElement.src = PlaceholderImg; 
+              imgElement.onerror = null;
+              imgElement.src = PlaceholderImg;
             }}
           />
         ) : (
@@ -240,9 +240,9 @@ function MediaGallery({ images }: MediaGalleryProps): JSX.Element {
               alt={safeImages[0].alt || 'Venue image'}
               className="object-cover w-full rounded-lg object-center"
               aria-label="Venue image"
-              onError={(event) => { 
+              onError={(event) => {
                 const imgElement = event.target as HTMLImageElement;
-                imgElement.onerror = null; 
+                imgElement.onerror = null;
                 imgElement.src = PlaceholderImg;
               }}
             />
@@ -256,9 +256,9 @@ function MediaGallery({ images }: MediaGalleryProps): JSX.Element {
                 alt={mainImage.alt || 'Main image of the venue'}
                 className="object-cover w-full h-full rounded-tl-lg rounded-bl-lg object-center"
                 aria-label="Main image of the venue"
-                onError={(event) => { 
+                onError={(event) => {
                   const imgElement = event.target as HTMLImageElement;
-                  imgElement.onerror = null; 
+                  imgElement.onerror = null;
                   imgElement.src = PlaceholderImg;
                 }}
               />

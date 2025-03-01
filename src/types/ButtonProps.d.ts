@@ -3,7 +3,7 @@
  * @module components/Button
  */
 
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 /**
  * Interface for props used by the Button component

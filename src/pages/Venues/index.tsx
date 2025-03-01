@@ -10,12 +10,12 @@ import ScrollToTopButton from '../../components/ScrollToTopButton';
 
 /**
  * Venues Component
- * 
+ *
  * Displays a paginated and searchable list of venues
- * 
+ *
  * @component
  * @returns {React.ReactElement} A comprehensive venues page with infinite scrolling and search functionality
- * 
+ *
  * @description
  * Provides advanced venue browsing features including:
  * - Infinite scroll pagination
@@ -23,12 +23,12 @@ import ScrollToTopButton from '../../components/ScrollToTopButton';
  * - Loading and error states
  * - Responsive grid layout
  * - Engaging landing section with navigation arrow
- * 
+ *
  * @remarks
  * - Uses Intersection Observer for infinite scrolling
  * - Dynamically loads venues based on user interaction
  * - Handles different states (loading, error, empty)
- * 
+ *
  * @example
  * // Typical usage in routing configuration
  * <Route path="/venues" element={<Venues />} />
@@ -47,7 +47,6 @@ function Venues(): JSX.Element {
   const [searchTerm, setSearchTerm] = useState('');
   const [page, setPage] = useState(2);
   const [showLoader, setShowLoader] = useState(false);
-
 
   useEffect(() => {
     if (!searchTerm) {
@@ -103,7 +102,9 @@ function Venues(): JSX.Element {
   }
 
   if (isError) {
-    toast.error('An error occurred while fetching data. Please try again later.');
+    toast.error(
+      'An error occurred while fetching data. Please try again later.'
+    );
     return (
       <div className="flex flex-col items-center justify-center min-h-screen text-center">
         <h2 className="text-h2-mobile md:text-h2-desktop font-heading font-semibold text-secondary mb-4">

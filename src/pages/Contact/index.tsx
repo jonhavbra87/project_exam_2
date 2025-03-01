@@ -42,20 +42,20 @@ type FormData = yup.InferType<typeof schema>;
 
 /**
  * Contact Component - Renders a contact form with validation
- * 
+ *
  * This component provides a comprehensive contact form with:
  * - Input fields for first name, last name, email, and message
  * - Client-side validation using Yup schema
  * - Responsive design for mobile and desktop
  * - Toast notification on successful form submission
- * 
+ *
  * @component
  * @returns {React.ReactElement} Rendered contact form with additional contact information
- * 
+ *
  * @example
  * // Typical usage in a parent component
  * import Contact from './Contact';
- * 
+ *
  * function App() {
  *   return (
  *     <div>
@@ -65,7 +65,7 @@ type FormData = yup.InferType<typeof schema>;
  * }
  */
 
-function Contact():JSX.Element {
+function Contact(): JSX.Element {
   const {
     register,
     handleSubmit,

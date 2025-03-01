@@ -237,13 +237,15 @@ const VenueCalendar: React.FC<VenueCalendarProps> = ({
               text={isBooking ? 'Booking...' : 'Book now'}
               onClick={handleBooking}
               disabled={!selectedDates[0] || !selectedDates[1] || isBooking}
-              variant='accent'
+              variant="accent"
               icon={
-                isBooking 
-                  ? <BsCalendarXFill /> 
-                  : (selectedDates[0] && selectedDates[1] 
-                      ? <BsFillCalendarCheckFill /> 
-                      : <BsCalendarXFill />)
+                isBooking ? (
+                  <BsCalendarXFill />
+                ) : selectedDates[0] && selectedDates[1] ? (
+                  <BsFillCalendarCheckFill />
+                ) : (
+                  <BsCalendarXFill />
+                )
               }
             />
           </div>
