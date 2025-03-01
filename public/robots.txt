@@ -1,0 +1,7 @@
+# Robots.txt file for Holidaze
+# Allow all web crawlers to access all content
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://pe2-jahb.netlify.app/sitemap.xml
