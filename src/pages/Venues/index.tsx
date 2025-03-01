@@ -6,7 +6,6 @@ import GradientHeading from '../../styles/GradientHeading';
 import BouncingArrow from '../../components/BouncingArrow';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import toast from 'react-hot-toast';
-// import ScrollToTopButton from '../../components/ScrollToTopButton';
 
 /**
  * Venues Component
@@ -157,7 +156,6 @@ function Venues(): JSX.Element {
         })}
       </ul>
       {showLoader && <LoadingSpinner isLoading={isLoading} />}
-      {/* <ScrollToTopButton /> */}
     </div>
   );
 }
