@@ -70,7 +70,7 @@ const VenueCard = ({ venue }: { venue: Venues }) => {
 
       <div className="p-4">
         <div className="flex flex-row justify-between items-center">
-          <h2 className="text-ingress-desktop font-ingress font-bold mb-2 text-text-primary">
+          <h2 className="text-ingress-desktop font-ingress font-bold mb-2 text-text-primary line-clamp-1">
             {venue.name}
           </h2>
           <VenueRating rating={venue.rating} />
