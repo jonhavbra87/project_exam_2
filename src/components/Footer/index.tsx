@@ -85,87 +85,89 @@ function Footer(): JSX.Element {
         {/* Legal Info */}
       </div>
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-3 mt-8 gap-8 text-text-muted border-t-2 border-text-muted ">
-  <ul className="flex flex-wrap justify-center md:justify-start items-center md:items-start gap-x-4 mt-4 text-body-medium-desktop font-body">
-    <li>
-      {/* Bruker Link fra react-router-dom i stedet for onClick + navigate */}
-      <Link
-        to="/profile/termsofservice"
-        className="hover:text-secondary cursor-pointer transition"
-      >
-        Terms
-      </Link>
-    </li>
-    <li>
-      {/* Bruker Link-komponenten istedenfor p-element med onClick */}
-      <Link
-        to="/profile/privacyguidelines"
-        className="hover:text-secondary cursor-pointer transition"
-      >
-        Privacy
-      </Link>
-    </li>
-    <li className="text-body-large-desktop" aria-hidden="true">|</li>
-    <li>
-      <Link
-        to="/profile"
-        className="hover:text-secondary cursor-pointer transition"
-      >
-        My Account
-      </Link>
-    </li>
-    <li>
-      <Link
-        to="/contact"
-        className="hover:text-secondary cursor-pointer transition"
-      >
-        Contact
-      </Link>
-    </li>
-  </ul>
-  <div>
-    <p className="flex justify-center md:justify-end items-center mt-4 text-body-medium-desktop font-body">
-      &copy; 2025 HOLIDAZE | All Rights Reserved
-    </p>
-  </div>
-  <div className="flex gap-4 md:text-body-large-desktop my-4 text-white justify-center md:justify-end">
-    <a
-      href="https://twitter.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="hover:text-opacity-60 transition"
-      aria-label="Visit our Twitter page"
-    >
-      <BsTwitterX />
-    </a>
-    <a
-      href="https://www.linkedin.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="hover:text-opacity-60 transition"
-      aria-label="Visit our LinkedIn page"
-    >
-      <FaFacebookSquare />
-    </a>
-    <a
-      href="https://www.instagram.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="hover:text-opacity-60 transition"
-      aria-label="Visit our Instagram page"
-    >
-      <FaInstagram />
-    </a>
-    <a
-      href="https://www.snapchat.com"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="hover:text-opacity-60 transition"
-      aria-label="Visit our Snapchat page"
-    >
-      <FaSnapchat />
-    </a>
-  </div>
-</div>
+        <ul className="flex flex-wrap justify-center md:justify-start items-center md:items-start gap-x-4 mt-4 text-body-medium-desktop font-body">
+          <li>
+            {/* Bruker Link fra react-router-dom i stedet for onClick + navigate */}
+            <Link
+              to="/profile/termsofservice"
+              className="hover:text-secondary cursor-pointer transition"
+            >
+              Terms
+            </Link>
+          </li>
+          <li>
+            {/* Bruker Link-komponenten istedenfor p-element med onClick */}
+            <Link
+              to="/profile/privacyguidelines"
+              className="hover:text-secondary cursor-pointer transition"
+            >
+              Privacy
+            </Link>
+          </li>
+          <li className="text-body-large-desktop" aria-hidden="true">
+            |
+          </li>
+          <li>
+            <Link
+              to="/profile"
+              className="hover:text-secondary cursor-pointer transition"
+            >
+              My Account
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/contact"
+              className="hover:text-secondary cursor-pointer transition"
+            >
+              Contact
+            </Link>
+          </li>
+        </ul>
+        <div>
+          <p className="flex justify-center md:justify-end items-center mt-4 text-body-medium-desktop font-body">
+            &copy; 2025 HOLIDAZE | All Rights Reserved
+          </p>
+        </div>
+        <div className="flex gap-4 md:text-body-large-desktop my-4 text-white justify-center md:justify-end">
+          <a
+            href="https://twitter.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-opacity-60 transition"
+            aria-label="Visit our Twitter page"
+          >
+            <BsTwitterX />
+          </a>
+          <a
+            href="https://www.linkedin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-opacity-60 transition"
+            aria-label="Visit our LinkedIn page"
+          >
+            <FaFacebookSquare />
+          </a>
+          <a
+            href="https://www.instagram.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-opacity-60 transition"
+            aria-label="Visit our Instagram page"
+          >
+            <FaInstagram />
+          </a>
+          <a
+            href="https://www.snapchat.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-opacity-60 transition"
+            aria-label="Visit our Snapchat page"
+          >
+            <FaSnapchat />
+          </a>
+        </div>
+      </div>
     </footer>
   );
 }
