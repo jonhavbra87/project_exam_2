@@ -134,3 +134,7 @@ This is a Noroff Courtse Assignemt for the second exam. I appreciate a peer revi
     <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/65dea6c4eaca7da319e552c09f4cf5a9a8dab2c8/icons/Gmail-Dark.svg" width="50" > 
   </a>
 </p>
+
+## License
+
+All work in this repository is licensed under the [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/).
